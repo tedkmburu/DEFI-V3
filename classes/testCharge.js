@@ -16,16 +16,15 @@ class TestCharge extends Charge
 
     display()
     {
-        let canvas = foreGroundCanvas;
         let testCharge = this;
 
-        canvas.push();
-        canvas.stroke(0);
-            canvas.fill(testCharge.color);
+        push();
+        stroke(0);
+            fill(testCharge.color);
             let x = testCharge.position.x;
             let y = testCharge.position.y;
-            canvas.ellipse(x, y, testChargeDiameter, testChargeDiameter);
-        canvas.pop();
+            ellipse(x, y, testChargeDiameter, testChargeDiameter);
+        pop();
     }
 
     move()

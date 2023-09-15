@@ -9,6 +9,13 @@ function navigateTo(nextScreen)
     screens[2].buttons[0].visible = false;
 
     if (currentScreen == 3) elapsedTime = 0;
+
+    for (let i = 0; i < charges.length; i++) 
+    {
+        charges[i].slider.style("visibility", "hidden");
+    }
+    charges = []
+    buildMode = true;
 }
 
 function navigateBack()

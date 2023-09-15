@@ -1,51 +1,53 @@
 class PointCharge extends Charge
 {
-    constructor(position, charge)
+    constructor(props)
     {
-        super(position, charge)
+        super(props)
 
         this.radius = chargeRadius;
 
-        this.selected = false;
+        this.selected = true;
         this.dragging = false;
 
-        this.slider = canvas.createSlider(-5, 5, charge, 1);
+        this.slider = createSlider(-5, 5, this.charge, 1);
         this.slider.style("zIndex", "999");
-        this.slider.input( function(){  createDataFromSidePanel(); equiLines = []; } ); // recalculate everything that's displayed on screen
-        this.slider.changed( function(){  createDataFromSidePanel(); equiLines = [];  } ); // recalculate everything that's displayed on screen
+        this.slider.style("visibility", "visible");
+        this.slider.input( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen
+        this.slider.changed( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen
     }
 
     display()
     {
-        let canvas = foreGroundCanvas;
         let pointCharge = this;
 
         if (pointCharge.selected)
         {
-            pointCharge.slider.position(pointCharge.position.x - 75, pointCharge.position.y + chargeRadius + 10, "fixed");
+            pointCharge.slider.position(pointCharge.pos.x - 75, pointCharge.pos.y + chargeRadius + 10, "fixed");
             pointCharge.charge = pointCharge.slider.value();
         }
 
-        // if a charge is no longer being dragged and is over the trash can, it will be removed
-        if (!pointCharge.dragging && pointCharge.position.x < 100 && pointCharge.position.y > innerHeight - 100)
+        if (pointCharge.dragging)
         {
-            let index = charges.findIndex(charge => {
-                return !charge.dragging && charge.position.x < 100 && charge.position.y > innerHeight - 100;
-            });
-            
-            removeCharge(index);
-            createDataFromSidePanel();
+            pointCharge.slider.value();
+            this.slider.style("visibility", "hidden");
         }
 
-        canvas.push();
+        // if a charge is no longer being dragged and is over the trash can, it will be removed
+        if (!pointCharge.dragging && pointCharge.pos.x < 100 && pointCharge.pos.y > innerHeight - 100)
+        {         
+            pointCharge.remove();
+            createFieldLines();
+        }
+
+        push();
             if (pointCharge.selected) // if the charge has been selected, create a white stroke around it and display its slider
             {
-                canvas.stroke(255);
+                stroke(255);
                 pointCharge.slider.style("visibility", "visible");
             }
             else
             {
-                canvas.stroke(0);
+                stroke(0);
                 pointCharge.slider.style("visibility", "hidden");
             }
 
@@ -56,32 +58,40 @@ class PointCharge extends Charge
             if (pointCharge.charge < 0) fillColor = negativeChargeColor;
 
             // draw the circle
-            canvas.fill(fillColor);
-            canvas.ellipse(pointCharge.position.x, pointCharge.position.y, chargeDiameter, chargeDiameter);
+            fill(fillColor);
+            ellipse(pointCharge.pos.x, pointCharge.pos.y, chargeDiameter, chargeDiameter);
 
             // write down the charge of the point charge ontop of it
-            canvas.textSize(16);
-            canvas.textFont(buttonFont);
-            canvas.fill("white");
-            canvas.noStroke();
+            textSize(16);
+            // textFont(buttonFont);
+            fill("white");
+            noStroke();
             if (pointCharge.charge > 0) // if the charge > 0, add a "+" sign before the number 
             {
                 let chargeStringLength = pointCharge.charge.toString().length + 1.5;
                 let chargeToShow = "+" + pointCharge.charge.toString(); 
-                let textPositionX = pointCharge.position.x - (chargeStringLength * 4);
-                let textPositionY = pointCharge.position.y + 7;
+                let textPosX = pointCharge.pos.x - (chargeStringLength * 4);
+                let textPosY = pointCharge.pos.y + 7;
 
-                canvas.text(chargeToShow, textPositionX, textPositionY);
+                text(chargeToShow, textPosX, textPosY);
             }
             else
             {
                 let chargeStringLength = pointCharge.charge.toString().length;
-                let textPositionX = pointCharge.position.x - (chargeStringLength * 4);
-                let textPositionY = pointCharge.position.y + 7;
+                let textPosX = pointCharge.pos.x - (chargeStringLength * 4);
+                let textPosY = pointCharge.pos.y + 7;
                 
-                canvas.text(pointCharge.charge, textPositionX, textPositionY);
+                text(pointCharge.charge, textPosX, textPosY);
             }
-        canvas.pop();
+        pop();
         
+    }
+
+    remove()
+    {
+        let i = charges.findIndex(charge => charge.selected === true);
+
+        charges[i].slider.remove();
+        charges.splice(i,1);
     }
 }

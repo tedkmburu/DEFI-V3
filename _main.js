@@ -43,43 +43,7 @@ function draw()
     mousePosition = new p5.Vector(mouseX, mouseY)
 }
 
-function mouseClicked()
-{
-    let buttonWasClicked = false; 
 
-    screens[currentScreen].buttons.forEach(button => {
-        if (isPointInRectangle(mousePosition, button))
-        {
-            buttonWasClicked = true;
-            button.clicked()
-        }
-    });
-
-    if (!buttonWasClicked)
-    {
-        if (currentScreen == 3 && buildMode)
-        {
-            console.log("new charge");
-        }
-    }
-}
-
-function mouseWheel(event) 
-{
-    
-    // console.log(scrollOffset);
-    
-    if (currentScreen == 1)
-    {
-        scrollOffset -= event.delta
-        screens[1].buttons[0].pos.y += event.delta
-        screens[1].buttons.forEach(button => { button.pos.y -= event.delta })
-        screens[1].images.forEach(image => { image.pos.y -= event.delta })
-        screens[1].textBoxes.forEach(textBox => { textBox.pos.y -= event.delta })
-        screens[1].shapes.forEach(shape => { shape.pos.y -= event.delta })
-    }
-    // pos += event.delta;
-}
 
 
 function isPointInRectangle(point, rect) 
@@ -119,4 +83,141 @@ function getScaledImagePos(maxWidth, maxHeight, imageSize)
     let maxSize = new p5.Vector(maxWidth, maxHeight)
     let posWithOffset = maxSize.sub(myImageSize.copy().mult(0.8)).div(2)
     return posWithOffset
+}
+
+function createFieldLines()
+{
+    noPositiveCharges = !charges.some(charge => charge.charge > 0); // if a positive charge exists, this will be false
+
+    fieldLines = [];
+    fieldLineArrows = []
+
+    charges.forEach(charge => {
+
+        let radius = chargeRadius / 2;
+        let times = Math.abs(charge.charge) * fieldLinesPerCoulomb;
+        let origin = charge.pos;
+
+        let point = createVector(radius,radius);
+        for (let a = 0; a < times; a++)
+        {
+            let startingPosition = createVector(point.x + origin.x, point.y + origin.y)
+            getFieldLinePoints(startingPosition);
+
+            point.rotate((2 * Math.PI) / times);
+        }
+        
+    });
+}
+
+
+
+
+function getFieldLinePoints(startingPosition, numberOfLoops, listOfPoints)
+{
+    // let minVectorSize = 3;
+    // let maxVectorSize = chargeRadius;
+    let vectorMag;
+
+    if (listOfPoints == undefined) // only true the first time this funciton runs
+    {
+        listOfPoints = [];
+        numberOfLoops = 0; 
+        vectorMag = chargeRadius;
+    }
+    else
+    {
+        // let previousPosition = listOfPoints[listOfPoints.length - 1];
+        // let angleBetweenPoints =  Math.abs( startingPosition.angleBetween(previousPosition) ) * (180 / Math.PI) ;
+        // let angleBetweenPoints =  Math.abs( myAngleBetween(startingPosition, previousPosition) );
+        // console.log(angleBetweenPoints);
+        // vectorMag = Math.round(maxVectorSize * Math.pow(2, angleBetweenPoints));
+        vectorMag = chargeRadius;
+
+        // console.log(numberOfLoops);
+        if (numberOfLoops < 10)
+        {
+            vectorMag = chargeRadius / 4;
+        }
+        // vectorMag = 1000 / angleBetweenPoints ;
+
+        // console.log(vectorMag);
+
+        // if (vectorMag > maxVectorSize) vectorMag = maxVectorSize;
+        // if (vectorMag < minVectorSize) vectorMag = minVectorSize;
+    }
+
+    listOfPoints.push(startingPosition);
+
+    let forceVector = netForceAtPoint(startingPosition).setMag(vectorMag);
+    if (noPositiveCharges) 
+    {
+        forceVector.mult(-1);
+    }
+
+    let forceVectorFinalPosition = p5.Vector.add(forceVector, startingPosition);
+
+    if (numberOfLoops % 7 == 0 && numberOfLoops > 6) 
+    {
+        let arrowPosition = startingPosition;
+        let arrowAngle = noPositiveCharges ? forceVector.mult(-1).heading() : forceVector.heading();
+
+        fieldLineArrows.push(new FieldLineArrow(arrowPosition, arrowAngle));
+    }
+
+    let distanceToCharges = [];
+    charges.forEach(charge => {
+        let finalPositionToChargeDistance = p5.Vector.dist(startingPosition, charge.pos);
+        distanceToCharges.push(finalPositionToChargeDistance);
+    })
+    let closestChargeDistance = Math.min(...distanceToCharges)
+
+    let index = distanceToCharges.indexOf(closestChargeDistance);
+
+    if (closestChargeDistance > chargeRadius / 2 && numberOfLoops < 110) 
+    {
+        getFieldLinePoints(forceVectorFinalPosition, numberOfLoops + 1, listOfPoints);
+    }
+    else if (closestChargeDistance < chargeRadius / 2 && charges[index].charge == 0)
+    {
+        getFieldLinePoints(forceVectorFinalPosition, numberOfLoops + 1, listOfPoints);
+    }
+    else if (closestChargeDistance < chargeRadius / 2 && charges[index].charge != 0)
+    {
+        listOfPoints.push(charges[index].pos);
+        fieldLines.push(new FieldLine(listOfPoints));
+    }
+    else
+    {
+        fieldLines.push(new FieldLine(listOfPoints));
+    }
+}
+
+
+function netForceAtPoint(position) // given a vector, it will return the net force at that point as a vector
+{
+  let finalVector = createVector(0, 0);
+
+  // these are all the pointcharges
+  charges.forEach(charge => {
+      
+    //F = KQ / (r^2)
+    let kq = charge.charge  * k;
+    let r = p5.Vector.dist(position, charge.pos) / 10;
+
+    if (r < 0.5) r = 0.5
+    
+    let rSquared = Math.pow(r,2);
+    let force = kq / rSquared;
+
+    let theta = p5.Vector.sub(charge.pos, position).heading();
+    let forceX = force * Math.cos(theta);
+    let forceY = force * Math.sin(theta);
+
+    let forceVectors = createVector(forceX, forceY).mult(-1);
+
+    finalVector.add(forceVectors);
+  });
+
+  return finalVector;
 }

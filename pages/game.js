@@ -79,6 +79,8 @@ function createGameScreen()
         updateTrackImage()
         updateTimer()
         displayStars()
+        createFieldLines()
+        displayCharges()
     }
 
     return new Screen({
@@ -128,6 +130,11 @@ function millisecondsToString(milliseconds)
     return timeString;
 }
 
+function drawEquiPotentialLines()
+{
+    console.log("draw <3");
+}
+
 function displayStars()
 {
     // console.log(levels[currentLevel].stars);
@@ -146,4 +153,11 @@ function resetGame()
 function toggleHelp()
 {
 
+}
+
+function displayCharges()
+{
+    charges.forEach(charge => {
+        charge.display()
+    })
 }

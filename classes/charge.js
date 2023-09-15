@@ -1,8 +1,8 @@
 class Charge
 {
-    constructor(position, charge)
+    constructor(props)
     {
-        this.position = position;
-        this.charge = charge;
+        this.pos = props.pos || mousePosition;
+        this.charge = props.charge || 0;
     }
 }
