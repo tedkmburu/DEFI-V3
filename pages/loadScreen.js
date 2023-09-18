@@ -15,6 +15,7 @@ function createLoadingScreen()
         }),
         new Button({
             text: "Back",
+            myImage: icons.back,
             pos: new p5.Vector(10, 10), 
             fontSize: 24,
             textAlign: CENTER,

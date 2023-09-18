@@ -4,6 +4,7 @@ function createGameScreen()
     let buttons = [
         new Button({
             text: "Back",
+            myImage: icons.back,
             pos: new p5.Vector(10, 10), 
             fontSize: 18,
             fontAlign: LEFT,
@@ -14,6 +15,7 @@ function createGameScreen()
         }),
         new Button({
             text: "Help",
+            myImage: icons.help,
             pos: new p5.Vector(844 - 120, 10), 
             fontSize: 18,
             fontAlign: LEFT,
@@ -24,6 +26,7 @@ function createGameScreen()
         }),
         new Button({
             text: "Restart",
+            myImage: icons.redo,
             pos: new p5.Vector(844 - 60, 10), 
             fontSize: 18,
             fontAlign: LEFT,
@@ -34,13 +37,17 @@ function createGameScreen()
         }),
         new Button({
             text: "Build",
+            myImage: (buildMode) ? icons.play : icons.edit,
             pos: new p5.Vector(844 - 60, 390 - 60), 
             fontSize: 18,
             fontAlign: LEFT,
             size: new p5.Vector(50, 50),
             fontColor: 255,
             fillColor: "rgba(0, 0, 0, 0.5)",
-            onClick: function(){ buildMode =! buildMode },
+            onClick: function()
+            { 
+                toggleBuildMode()
+            },
         }),]
 
     
@@ -60,7 +67,7 @@ function createGameScreen()
         new myImage({
             pos: new p5.Vector(50, 50).add(imagePos), 
             size: imageSize.copy().mult(0.8),
-            myImage: levels[currentLevel].buildImage,
+            myImage: (buildMode) ? levels[currentLevel].buildImage : levels[currentLevel].trackImage ,
         })]
 
     let textBoxes = [
@@ -81,6 +88,15 @@ function createGameScreen()
         displayStars()
         createFieldLines()
         displayCharges()
+        updatePlayButton()
+        if (!buildMode) checkStarCollisions()
+    }
+
+    testCharges = []
+    for (let i = 0; i < levels[currentLevel].testChargeStartingPos.length; i++) 
+    {
+        let testChargePos = levels[currentLevel].testChargeStartingPos[i].copy()
+        testCharges.push(new TestCharge({pos: testChargePos}))
     }
 
     return new Screen({
@@ -137,17 +153,25 @@ function drawEquiPotentialLines()
 
 function displayStars()
 {
-    // console.log(levels[currentLevel].stars);
-    
     levels[currentLevel].stars[0].display()
     levels[currentLevel].stars[1].display()
     levels[currentLevel].stars[2].display()
-    
 }
 
 function resetGame()
 {
+    charges.forEach(charge => {
+        charge.hideSlider()
+        charge.selected = false;
+        charge.dragging = false;
+    })
 
+    charges = []
+    elapsedTime = 0
+
+    levels[currentLevel].stars.forEach(star => {
+        star.angle = 0;
+    })
 }
 
 function toggleHelp()
@@ -155,9 +179,91 @@ function toggleHelp()
 
 }
 
+function toggleBuildMode()
+{
+    buildMode =! buildMode;
+    
+    resetCharges()
+    resetStars()
+    resetTestCharges()
+}
+
+function resetCharges()
+{
+    charges.forEach(charge =>  {
+        charge.hideSlider()
+        charge.selected = false;
+        charge.dragging = false;
+    }) 
+}
+
+function resetStars()
+{
+    levels[currentLevel].stars.forEach(star => {
+        star.visible = true;
+    })
+}
+
+function resetTestCharges()
+{
+    testCharges.forEach(testCharge => {
+        testCharge.pos = testCharge.startingPos.copy()
+        testCharge.vel = new p5.Vector(0, 0)
+    })
+}
+
 function displayCharges()
 {
+    displayFieldLines()
+    displayFieldLineArrows()
+    displayTestCharges()
+
     charges.forEach(charge => {
         charge.display()
+    })
+}
+
+function displayFieldLines()
+{
+    fieldLines.forEach(fieldLine => {
+        fieldLine.display()
+    })
+}
+
+function displayFieldLineArrows()
+{
+    fieldLineArrows.forEach(fieldLineArrow => {
+        fieldLineArrow.display()
+    })
+}
+
+function displayTestCharges()
+{
+    testCharges.forEach(testCharge => {
+        testCharge.display()
+        if (!buildMode) 
+        {
+            testCharge.moveTestCharge()    
+        }
+    })
+}
+
+function updatePlayButton()
+{
+    screens[currentScreen].buttons[3].myImage = (buildMode) ? icons.play : icons.edit
+    screens[currentScreen].buttons[3].text = (buildMode) ? "Play" : "Build";
+}
+
+function checkStarCollisions()
+{
+    testCharges.forEach(testCharge => {
+        
+        for (let i = 0; i < 3; i++) 
+        {
+            if (circleOverlapsCirlce(testCharge, levels[currentLevel].stars[i]))
+            {
+                levels[currentLevel].stars[i].visible = false; 
+            }
+        }
     })
 }

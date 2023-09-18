@@ -1,7 +1,7 @@
 let screens = []
 let currentScreen;
 
-let currentLevel = 3;
+let currentLevel = 0;
 
 let levels = []
 

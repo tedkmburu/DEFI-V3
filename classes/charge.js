@@ -1,8 +1,8 @@
-class Charge
+class Charge extends Particle
 {
     constructor(props)
     {
-        this.pos = props.pos || mousePosition;
+        super(props)
         this.charge = props.charge || 0;
     }
 }

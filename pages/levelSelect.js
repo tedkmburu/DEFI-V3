@@ -4,10 +4,11 @@ function createLevelSelect()
     let images = []
     let textBoxes = []
     let shapes = []
-    let yPos = 50
+    let yPos = 100
 
     buttons.push(new Button({
         text: "Back",
+        myImage: icons.back,
         pos: new p5.Vector(10, 10), 
         fontSize: 24,
         textAlign: CENTER,
@@ -15,6 +16,12 @@ function createLevelSelect()
         fontColor: 255,
         fillColor: "rgba(0, 0, 0, 0.5)",
         onClick: function(){ navigateTo("Home"); }
+    }))
+
+    shapes.push(new Shape({
+        pos: new p5.Vector(0, 0), 
+        size: new p5.Vector(innerWidth, 70),
+        fillColor: "rgba(0, 0, 0, 0.5)",
     }))
 
     
@@ -56,7 +63,7 @@ function createLevelSelect()
         yPos+= 200
     }
     
-    yPos = 50
+    yPos = 100
 
     for (let i = 0; i < levels.length - 1; i+=2) 
     {
@@ -113,7 +120,7 @@ function createLevelSelect()
         yPos += 200
     }
 
-    yPos = 50
+    yPos = 100
 
 
     for (let i = 0; i < levels.length - 1; i+=2) 

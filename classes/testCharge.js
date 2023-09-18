@@ -1,13 +1,15 @@
 class TestCharge extends Charge
 {
-    constructor(position, charge)
+    constructor(props)
     {
-        let canvas = foreGroundCanvas;
-        super(position, charge) // inherited from the Charge class
+        super(props) // inherited from the Charge class
+        this.startingPos = this.pos.copy()
+        this.charge = testChargeCharge;
 
-        this.velocity = canvas.createVector(0, 0);
-        this.acceleration = canvas.createVector(0, 0);
-        this.radius = testChargeRadius; 
+        this.radius = testChargeDiameter / 2;
+        this.diameter = testChargeDiameter;
+
+        this.futurePos = []
 
         if (this.charge > 0) this.color = positiveChargeColor;
         if (this.charge < 0) this.color = negativeChargeColor;
@@ -16,21 +18,20 @@ class TestCharge extends Charge
 
     display()
     {
-        let testCharge = this;
-
         push();
-        stroke(0);
-            fill(testCharge.color);
-            let x = testCharge.position.x;
-            let y = testCharge.position.y;
-            ellipse(x, y, testChargeDiameter, testChargeDiameter);
+            stroke(0);
+            fill(this.color);
+            let x = this.pos.x;
+            let y = this.pos.y;
+            ellipse(x, y, this.diameter, this.diameter);
         pop();
+
+        if (buildMode) this.displayTrail()
     }
 
-    move()
+    moveTestCharge()
     {
-        let testCharge = this;
-        let force = netForceAtPoint(testCharge.position);
+        let force = netForceAtPoint(this.pos);
 
         if (force.mag() != Infinity)
         {
@@ -39,35 +40,10 @@ class TestCharge extends Charge
             // a  = (qE)/m
             // m = 1
             // a  = q*E
-            testCharge.acceleration = force.mult(testCharge.charge);
-            testCharge.velocity.add(testCharge.acceleration);
-            testCharge.position.add(testCharge.velocity);
+            this.acc = force.mult(this.charge);
+            this.vel.add(this.acc);
+            this.pos.add(this.vel);
         }
-    }
-
-    moveMetal()
-    {
-        let force = netForceAtPoint(this.position).div(1000);
-
-        if (force.mag() != Infinity)
-        {
-            // F  = qE
-            // ma = qE
-            // a  = (qE)/m
-            // m = 1
-            // a  = q*E
-            this.acceleration = force.mult(this.charge);
-            this.velocity.add(this.acceleration);
-            this.position.add(this.velocity);
-        }
-    }
-
-    brownian(magnitude)
-    {
-        let rand1 = Math.round(Math.random() * 2) - 1
-        let rand2 = Math.round(Math.random() * 2) - 1
-        this.position.x += rand1 * magnitude;
-        this.position.y += rand2 * magnitude;
     }
 
     checkWallCollision()
@@ -81,5 +57,37 @@ class TestCharge extends Charge
         }
     }
 
+    createTrail()
+    {
+        this.futurePos = []
+        let currentPos = this.pos.copy()
+        let currentVel = this.vel.copy()
+        let currentAcc = this.acc.copy()
 
+        for (let i = 0; i < 10; i++) 
+        {
+            let force = netForceAtPoint(currentPos).mult(250);
+
+            currentAcc = force.mult(this.charge);
+            currentVel.add(currentAcc);
+            currentPos.add(currentVel);       
+
+            this.futurePos.push(currentPos.copy())
+        }
+    }
+
+    displayTrail()
+    {
+        this.createTrail()
+
+        this.futurePos.forEach((pos, i) => {
+            push();
+                noStroke()
+                fill("rgba(255, 255, 255, " + (1/i) + ")");
+                let x = this.pos.x;
+                let y = this.pos.y;
+                ellipse(pos.x, pos.y, this.radius, this.radius);
+            pop();
+        })
+    }
 }

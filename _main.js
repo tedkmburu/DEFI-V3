@@ -1,4 +1,3 @@
-
 function preload() 
 {
     spaceImage = loadImage('images/background.png');
@@ -11,21 +10,18 @@ function preload()
         info: loadImage('images/icons/info.png'),
         lock: loadImage('images/icons/lock.png'),
         play: loadImage('images/icons/play.png'),
+        edit: loadImage('images/icons/edit.png'),
         redo: loadImage('images/icons/redo.png'),
         settings: loadImage('images/icons/settings.png'),
         soundOff: loadImage('images/icons/soundOff.png'),
         soundOn: loadImage('images/icons/soundOn.png'),
         star: loadImage('images/icons/star.png'),
         starEmpty: loadImage('images/icons/starEmpty.png'),
-        // back: loadImage('images/icons/homeTrack.png'),
         };
-
 
     scale = new p5.Vector(1, 1, 1)
 
-
     createLevels()
-    
 }
 
 function setup()
@@ -39,12 +35,24 @@ function setup()
 function draw()
 {
     background(0)
-    displayCurrentScreen()
     mousePosition = new p5.Vector(mouseX, mouseY)
+    
+    displayCurrentScreen()
+    
 }
 
 
+function circleOverlapsCirlce(circle1, circle2)
+{
+    let circle1Pos = circle1.pos.copy();
+    let circle2Pos = circle2.pos.copy();
 
+    let distanceBetweenCircles = circle1Pos.dist(circle2Pos)
+    let minimumDistance = circle1.radius + circle2.radius; 
+
+    if (distanceBetweenCircles > minimumDistance) return false;
+    else return true;
+}
 
 function isPointInRectangle(point, rect) 
 {

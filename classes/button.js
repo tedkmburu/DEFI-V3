@@ -4,7 +4,7 @@ class Button extends Particle
     {
         super(props)
         
-        this.image = props.image || null
+        this.myImage = props.myImage || null
         this.size = props.size || new p5.Vector(100, 50);
         this.size = this.size.copy().mult(scale);
 
@@ -37,12 +37,12 @@ class Button extends Particle
                 rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
             }
     
-            if (this.image != null)
+            if (this.myImage != null)
             {
-                image(this.image, this.pos.x, this.pos.y, this.size.x, this.size.y)
+                image(this.myImage, this.pos.x, this.pos.y, this.size.x, this.size.y)
             }
     
-            if (this.text != "")
+            if (this.text != "" && this.myImage == null)
             {
                 textAlign(this.fontAlign, CENTER)
                 textSize(this.fontSize)

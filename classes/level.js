@@ -12,6 +12,7 @@ class Level
         this.buildImage = props.buildImage
 
         this.stars = props.stars || [];
+        this.testChargeStartingPos = props.testChargeStartingPos || [];
     }
 
 }

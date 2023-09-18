@@ -5,13 +5,14 @@ class PointCharge extends Charge
         super(props)
 
         this.radius = chargeRadius;
+        this.diameter = this.radius * 2;
 
         this.selected = true;
         this.dragging = false;
 
         this.slider = createSlider(-5, 5, this.charge, 1);
         this.slider.style("zIndex", "999");
-        this.slider.style("visibility", "visible");
+        this.showSlider();
         this.slider.input( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen
         this.slider.changed( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen
     }
@@ -19,21 +20,25 @@ class PointCharge extends Charge
     display()
     {
         let pointCharge = this;
+        this.slider.position(this.pos.x - 75, this.pos.y + this.radius + 10, "fixed");
 
-        if (pointCharge.selected)
+        if (this.selected && !this.dragging)
         {
-            pointCharge.slider.position(pointCharge.pos.x - 75, pointCharge.pos.y + chargeRadius + 10, "fixed");
-            pointCharge.charge = pointCharge.slider.value();
+            this.showSlider();
+            
+            this.charge = this.slider.value();
         }
-
-        if (pointCharge.dragging)
+        else if (this.dragging)
         {
-            pointCharge.slider.value();
-            this.slider.style("visibility", "hidden");
+            this.hideSlider();
+        }
+        else
+        {
+            this.hideSlider();
         }
 
         // if a charge is no longer being dragged and is over the trash can, it will be removed
-        if (!pointCharge.dragging && pointCharge.pos.x < 100 && pointCharge.pos.y > innerHeight - 100)
+        if (!this.dragging && this.pos.x < 100 && this.pos.y > innerHeight - 100)
         {         
             pointCharge.remove();
             createFieldLines();
@@ -43,12 +48,12 @@ class PointCharge extends Charge
             if (pointCharge.selected) // if the charge has been selected, create a white stroke around it and display its slider
             {
                 stroke(255);
-                pointCharge.slider.style("visibility", "visible");
+                // pointCharge.slider.style("visibility", "visible");
             }
             else
             {
                 stroke(0);
-                pointCharge.slider.style("visibility", "hidden");
+                // pointCharge.slider.style("visibility", "hidden");
             }
 
             // set the fill color of the charge
@@ -59,7 +64,7 @@ class PointCharge extends Charge
 
             // draw the circle
             fill(fillColor);
-            ellipse(pointCharge.pos.x, pointCharge.pos.y, chargeDiameter, chargeDiameter);
+            ellipse(pointCharge.pos.x, pointCharge.pos.y, this.diameter, this.diameter);
 
             // write down the charge of the point charge ontop of it
             textSize(16);
@@ -83,8 +88,7 @@ class PointCharge extends Charge
                 
                 text(pointCharge.charge, textPosX, textPosY);
             }
-        pop();
-        
+        pop();  
     }
 
     remove()
@@ -93,5 +97,15 @@ class PointCharge extends Charge
 
         charges[i].slider.remove();
         charges.splice(i,1);
+    }
+
+    hideSlider()
+    {
+        this.slider.style("visibility", "hidden");
+    }
+
+    showSlider()
+    {
+        this.slider.style("visibility", "visible");
     }
 }

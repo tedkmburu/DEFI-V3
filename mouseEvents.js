@@ -10,7 +10,7 @@ function mouseClicked()
         }
     });
 
-    if (!buttonWasClicked)
+    if (!buttonWasClicked && buildMode)
     {
         charges.forEach(charge => {charge.dragging = false; charge.selected = false;} )
         
@@ -58,7 +58,7 @@ function mouseReleased()
 function mouseDragged()
 {
     let noChargeIsBeingDragged = !charges.some(charge => charge.dragging) // this will be true if no charge is currently being dragged.
-    if (noChargeIsBeingDragged) // if no charge is being dragged, check if the mouse is over a charge and is dragging
+    if (noChargeIsBeingDragged && buildMode) // if no charge is being dragged, check if the mouse is over a charge and is dragging
     {
         charges.forEach(charge => {
             let distanceToCharge = charge.pos.dist(mousePosition)
@@ -70,11 +70,11 @@ function mouseDragged()
 
     let chargeToMove = charges.find(charge => charge.dragging) // this searches the charges array and finds the first charge with a true dragging property and sets it equal to the variable
 
-    if (chargeToMove != undefined)
+    if (chargeToMove != undefined && buildMode)
     {
         chargeToMove.pos = mousePosition.copy();
         chargeToMove.selected = true
-        console.log("moce");
+        // console.log("moce");
     }
 
     // charges.forEach(charge => {
@@ -107,11 +107,15 @@ function mouseWheel(event)
 {
     if (currentScreen == 1)
     {
-        scrollOffset -= event.delta
-        screens[1].buttons[0].pos.y += event.delta
-        screens[1].buttons.forEach(button => { button.pos.y -= event.delta })
-        screens[1].images.forEach(image => { image.pos.y -= event.delta })
-        screens[1].textBoxes.forEach(textBox => { textBox.pos.y -= event.delta })
-        screens[1].shapes.forEach(shape => { shape.pos.y -= event.delta })
+        if (true)
+        {
+            scrollOffset -= event.delta
+            screens[1].buttons[0].pos.y += event.delta
+            screens[1].shapes[0].pos.y += event.delta
+            screens[1].buttons.forEach(button => { button.pos.y -= event.delta })
+            screens[1].images.forEach(image => { image.pos.y -= event.delta })
+            screens[1].textBoxes.forEach(textBox => { textBox.pos.y -= event.delta })
+            screens[1].shapes.forEach(shape => { shape.pos.y -= event.delta })
+        } 
     }
 }

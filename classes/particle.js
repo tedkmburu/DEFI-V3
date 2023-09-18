@@ -2,7 +2,7 @@ class Particle
 {
     constructor(props)
     {
-        this.pos = props.pos || new p5.Vector(0, 0);
+        this.pos = props.pos || new p5.Vector(mouseX, mouseY);
         this.vel = props.vel || new p5.Vector(0, 0);
         this.acc = props.acc || new p5.Vector(0, 0);
 

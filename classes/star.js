@@ -4,6 +4,8 @@ class Star extends Particle
     {
         super(props)
         
+        this.radius = 10; 
+        this.diameter = 20;
         this.size = props.size || new p5.Vector(20, 20);
         this.size = this.size.copy().mult(scale);
         this.visible = true;

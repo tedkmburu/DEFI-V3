@@ -98,6 +98,58 @@ function createLevels()
         ],
     ]
 
+    let testChargePositions = [
+        [ // lv 1
+            createVector(190, 190)
+        ],
+        [ // lv 2
+            createVector(370, 150)
+        ],
+        [ // lv 3
+            createVector(250, 130)
+        ],
+        [ // lv 4
+            createVector(500, 120)
+        ],
+        [ // lv 5
+            createVector(150, 150), 
+            createVector(300, 150), 
+            createVector(400, 150)
+        ],
+        [ // lv 6
+            createVector(125, 145), 
+        ],
+        [ // lv 7
+            createVector(200, 50), 
+        ],
+        [ // lv 8
+            createVector(580, 21), 
+            createVector(660, 50), 
+        ],
+        [ // lv 9
+            createVector(417, 13), 
+            createVector(480, 70), 
+        ],
+        [ // lv 10
+            createVector(417, 13), 
+        ],
+        [ // lv 11
+            createVector(250, 55), 
+        ],
+        [ // lv 12
+            createVector(200, 50), 
+        ],
+        [ // lv 13
+            createVector(151, 151), 
+        ],
+        [ // lv 14
+            createVector(167, 92), 
+        ],
+        [ // lv 15
+            createVector(167, 92), 
+        ],
+    ]
+
 
 
     trackImages.forEach((trackImage, i) => {
@@ -110,10 +162,13 @@ function createLevels()
             }))
         })
 
+        testChargeStartingPos = testChargePositions[i]
+
         levels.push(new Level({
             playImage: trackImage.play,
             buildImage: trackImage.build,
-            stars: starObjects
+            stars: starObjects,
+            testChargeStartingPos: testChargeStartingPos
         }))
     });
     
