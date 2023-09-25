@@ -331,10 +331,9 @@ function checkWinConditions()
             }
         })
 
-        // calculate high score
-        let maxScore = 3
-
-        let score = 123;
+        // calculate score
+        let score = 10000 / ((0.0001 * elapsedTime) + 0.1);
+        if (starsCollected > 1) score *= starsCollected
         updateLevelData(currentLevel, score, elapsedTime, starsCollected) 
 
         // unlock next level

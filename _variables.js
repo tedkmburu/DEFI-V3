@@ -8,7 +8,7 @@ let levels = []
 let scale;
 let scrollOffset = 0;
 
-let buildMode = true;
+let buildMode = false;
 let helpMode = false;
 let elapsedTime = 0;
 

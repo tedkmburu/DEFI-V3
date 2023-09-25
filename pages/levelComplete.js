@@ -92,7 +92,7 @@ function createLevelCompleteScreen()
             size: new p5.Vector(200, 25),
         }),
         new TextBox({
-            text: "123456",
+            text: round(userData[currentLevel].highScore),
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 16,
@@ -108,7 +108,7 @@ function createLevelCompleteScreen()
             size: new p5.Vector(200, 25),
         }),
         new TextBox({
-            text: millisecondsToString(elapsedTime),
+            text: millisecondsToString(round(userData[currentLevel].fastestTime)),
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 16,
@@ -140,7 +140,7 @@ function createLevelCompleteScreen()
             size: new p5.Vector(100, 25),
         }),
         new TextBox({
-            text: millisecondsToString(elapsedTime),
+            text: millisecondsToString(round(levelCompleteData.timeToComplete)),
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 16,
