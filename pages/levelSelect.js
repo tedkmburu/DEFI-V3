@@ -1,9 +1,12 @@
 function createLevelSelect()
 {
+    let screenName = "Level Select"
+
     let buttons = []
     let images = []
     let textBoxes = []
     let shapes = []
+
     let yPos = 100
 
     buttons.push(new Button({
@@ -98,7 +101,7 @@ function createLevelSelect()
                     myImage: levels[k].buildImage,
                 }))
 
-                let numberOfStars = levels[k].starsCollected + 1;
+                let numberOfStars = userData[k].mostStars;
                 for (let a = 0; a < numberOfStars; a++) 
                 {
                     images.push(new myImage({
@@ -141,7 +144,9 @@ function createLevelSelect()
             }
             else
             {
-                let imageScale =  (levels[k].size.y / levels[k].size.x)
+                let timeToComplete = millisecondsToString(userData[k].fastestTime)
+                let highScore = userData[k].highScore
+                
                 textBoxes.push(new TextBox({
                     text: "Level " + (k + 1),
                     fillColor: "rgba(0, 0, 0, 0)",
@@ -152,7 +157,7 @@ function createLevelSelect()
                 }))
 
                 textBoxes.push(new TextBox({
-                    text: "Best Time:\n" + "00:00:00",
+                    text: "Best Time:\n" + timeToComplete,
                     fillColor: "rgba(0, 0, 0, 0)",
                     fontColor: "white",
                     fontSize: 16,
@@ -161,7 +166,7 @@ function createLevelSelect()
                 }))
 
                 textBoxes.push(new TextBox({
-                    text: "High Score:\n" + "12:34:56.78",
+                    text: "High Score:\n" + highScore,
                     fillColor: "rgba(0, 0, 0, 0)",
                     fontColor: "white",
                     fontSize: 16,
@@ -174,7 +179,7 @@ function createLevelSelect()
     }
 
     return new Screen({
-        name: "Level Select",
+        name: screenName,
         backgroundImage: spaceImage,
         buttons: buttons,
         images: images,

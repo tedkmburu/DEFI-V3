@@ -6,8 +6,10 @@ class TestCharge extends Charge
         this.startingPos = this.pos.copy()
         this.charge = testChargeCharge;
 
-        this.radius = testChargeDiameter / 2;
+        this.radius = testChargeRadius;
         this.diameter = testChargeDiameter;
+
+        this.stuck = false; 
 
         this.futurePos = []
 
@@ -18,6 +20,8 @@ class TestCharge extends Charge
 
     display()
     {
+        if (buildMode) this.displayTrail()
+
         push();
             stroke(0);
             fill(this.color);
@@ -25,15 +29,16 @@ class TestCharge extends Charge
             let y = this.pos.y;
             ellipse(x, y, this.diameter, this.diameter);
         pop();
-
-        if (buildMode) this.displayTrail()
     }
 
     moveTestCharge()
     {
         let force = netForceAtPoint(this.pos);
+        
+        let currentFinishLine = levels[currentLevel].finishLine
+        let testChargeIsInFinishArea = circleIsInRect(this, currentFinishLine)
 
-        if (force.mag() != Infinity)
+        if (force.mag() != Infinity && !testChargeIsInFinishArea)
         {
             // F  = qE
             // ma = qE
@@ -48,13 +53,20 @@ class TestCharge extends Charge
 
     checkWallCollision()
     {
-        for (let i = 0; i < walls.length; i++)
+
+        levels[currentLevel].border.forEach(point)
+
+        for (let i = 0; i < levels[currentLevel].border.length - 1; i++) 
         {
-            if (collideRectCircle(walls[i].x, walls[i].y, walls[i].width * gridSize, walls[i].height * gridSize, this.position.x, this.position.y, testChargeDiameter))
+            let point1 = {pos: levels[currentLevel].border[i]};
+            let point2 = {pos: levels[currentLevel].border[i + 1]};
+
+            if (isLineIntersectingCircle(point1, point2, this))
             {
-                this.velocity = createVector(0, 0);
+                this.stuck = true
             }
         }
+
     }
 
     createTrail()
@@ -64,15 +76,20 @@ class TestCharge extends Charge
         let currentVel = this.vel.copy()
         let currentAcc = this.acc.copy()
 
-        for (let i = 0; i < 10; i++) 
+        for (let i = 0; i < 500; i++) 
         {
-            let force = netForceAtPoint(currentPos).mult(250);
+            let force = netForceAtPoint(currentPos).mult(1);
 
             currentAcc = force.mult(this.charge);
             currentVel.add(currentAcc);
             currentPos.add(currentVel);       
 
-            this.futurePos.push(currentPos.copy())
+
+            if (i % 20 == 0)
+            {
+                this.futurePos.push(currentPos.copy())
+            }
+            
         }
     }
 
@@ -81,13 +98,31 @@ class TestCharge extends Charge
         this.createTrail()
 
         this.futurePos.forEach((pos, i) => {
+            
+            let opacity = (this.pos.dist(pos) < trailLength) ? 1 : 0;
+
+            if (opacity == 1)
+            {
+                opacity = (this.futurePos.length / (i * 50))
+            }
             push();
                 noStroke()
-                fill("rgba(255, 255, 255, " + (1/i) + ")");
+                fill("rgba(255, 255, 255, " + opacity + ")");
                 let x = this.pos.x;
                 let y = this.pos.y;
                 ellipse(pos.x, pos.y, this.radius, this.radius);
             pop();
         })
+    }
+
+    checkStarCollisions()
+    {
+        for (let i = 0; i < 3; i++) 
+        {
+            if (circleOverlapsCirlce(this, levels[currentLevel].stars[i]))
+            {
+                levels[currentLevel].stars[i].visible = false; 
+            }
+        }
     }
 }

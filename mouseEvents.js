@@ -39,6 +39,14 @@ function mouseClicked()
             charges.push(new PointCharge({}))
         }
     }
+
+    if (!buildMode)
+    {
+        dataToPrint += `new p5.Vector(` + mouseX + `, ` + mouseY + `),
+`;
+    }
+
+    console.log(`new p5.Vector(` + mouseX + `, ` + mouseY + `)`);
 }
 
 

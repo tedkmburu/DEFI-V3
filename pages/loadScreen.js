@@ -1,7 +1,13 @@
 function createLoadingScreen()
 {
+    let screenName = "Loading Screen";
+
+    let buttons = []
+    let images = []
+    let textBoxes = []
+    let shapes = []
     
-    let buttons = [
+    buttons = [
         new Button({
             text: "Play >",
             visible: false,
@@ -37,14 +43,14 @@ function createLoadingScreen()
     let imageSize = scaleImageToSize(maxWidth, maxHeight, originalWidth, originalHeight) 
     let imagePos = getScaledImagePos(maxWidth, maxHeight, imageSize)
 
-    let images = [
+    images = [
         new myImage({
             pos: new p5.Vector(75, 50).add(imagePos), 
             size: imageSize.copy().mult(0.8),
             myImage: levels[currentLevel].buildImage,
         })]
 
-    let textBoxes = [
+    textBoxes = [
         new TextBox({
             text: "1. Collect all the stars \n 2. as fast as possible \n 3. don't hit the walls",
             fillColor: "rgba(0, 0, 0, 0)",
@@ -55,7 +61,7 @@ function createLoadingScreen()
         }),
         ]
 
-    let shapes = [
+    shapes = [
         new Shape({
             shape: "rect",
             fillColor: "rgba(0, 0, 0, 0.5)",
@@ -76,7 +82,7 @@ function createLoadingScreen()
         }),
     ]
 
-    let functions = () => {
+    functions = () => {
         let loadBarSize = screens[2].shapes[1].size.x
         if (loadBarSize < innerWidth)
         {
@@ -91,7 +97,7 @@ function createLoadingScreen()
     }
 
     return new Screen({
-        name: "Loading Screen",
+        name: screenName,
         backgroundImage: spaceImage,
         buttons: buttons,
         images: images,

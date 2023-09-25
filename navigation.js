@@ -3,6 +3,8 @@ function navigateTo(nextScreen)
     let nextScreenIndex = screens.findIndex(obj => obj.name == nextScreen)
     if (nextScreenIndex == -1) { console.error(nextScreen, " Not Found"); }
     else { currentScreen = nextScreenIndex }
+
+    if (nextScreen == "Game") resetGame()
     
     scrollOffset = 0;
     screens[2].shapes[1].size.x = 1
@@ -16,6 +18,8 @@ function navigateTo(nextScreen)
     }
     charges = []
     buildMode = true;
+
+    reloadSavedData()
 }
 
 function navigateBack()
@@ -36,4 +40,7 @@ function createScreens()
     screens.push(createLevelSelect())
     screens.push(createLoadingScreen())
     screens.push(createGameScreen())
+    screens.push(createLevelCompleteScreen())
 }
+
+// function setScreenName

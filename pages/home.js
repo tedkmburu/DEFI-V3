@@ -1,5 +1,12 @@
 function createHomeScreen()
 {
+    let screenName = "Home"
+
+    let buttons = []
+    let images = []
+    let textBoxes = []
+    let shapes = []
+
     buttons = [
         new Button({
             text: "PLAY",
@@ -46,7 +53,7 @@ function createHomeScreen()
         })]
 
     return new Screen({
-        name: "Home",
+        name: screenName,
         backgroundImage: spaceImage,
         buttons: buttons,
         images: images,

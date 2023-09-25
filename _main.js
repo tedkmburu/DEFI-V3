@@ -27,6 +27,7 @@ function preload()
 function setup()
 {
     currentScreen = 3;
+    saveData()
     unlockLevels()
     createScreens()
     createCanvas(innerWidth, innerHeight)
@@ -38,9 +39,46 @@ function draw()
     mousePosition = new p5.Vector(mouseX, mouseY)
     
     displayCurrentScreen()
-    
 }
 
+
+// calculate the distance from the line to the center of the circle
+// and compare it to the circle's radius. If the distance is less than
+// or equal to the radius, the line intersects or is inside the circle
+function isLineIntersectingCircle(point1, point2, circle) 
+{
+    const lineX1 = point1.pos.x;
+    const lineY1 = point1.pos.y;
+    const lineX2 = point2.pos.x;
+    const lineY2 = point2.pos.y;
+    const circleX = circle.pos.x;
+    const circleY = circle.pos.y;
+    const circleRadius = circle.radius;
+
+    // Calculate the squared length of the line segment
+    const lineLengthSquared = Math.pow(lineX2 - lineX1, 2) + Math.pow(lineY2 - lineY1, 2);
+
+    // Calculate the vector from the line start to the circle center
+    const dx = circleX - lineX1;
+    const dy = circleY - lineY1;
+
+    // Calculate the projection of the circle center onto the line
+    const t = (dx * (lineX2 - lineX1) + dy * (lineY2 - lineY1)) / lineLengthSquared;
+
+    // Calculate the closest point on the line to the circle center
+    const closestX = lineX1 + t * (lineX2 - lineX1);
+    const closestY = lineY1 + t * (lineY2 - lineY1);
+
+    // Calculate the squared distance from the circle center to the closest point on the line
+    const distanceSquared = Math.pow(circleX - closestX, 2) + Math.pow(circleY - closestY, 2);
+
+    // If the squared distance is less than or equal to the squared radius, the line intersects or is inside the circle
+    if (distanceSquared <= Math.pow(circleRadius, 2)) {
+        return true;
+    }
+
+    return false;
+}
 
 function circleOverlapsCirlce(circle1, circle2)
 {
@@ -67,6 +105,25 @@ function isPointInRectangle(point, rect)
     } else {
       return false; // The point is outside the rectangle.
     }
+}
+
+function circleIsInRect(circle, rect) 
+{
+    // Calculate the distance between the circle's center and the rectangle's center
+    const deltaX = Math.abs(circle.pos.x - (rect.pos.x + rect.size.x / 2));
+    const deltaY = Math.abs(circle.pos.y - (rect.pos.y + rect.size.y / 2));
+
+    // Check if the circle's center is inside the rectangle based on its dimensions
+    if (deltaX <= (rect.size.x / 2) && deltaY <= (rect.size.y / 2)) 
+    {
+        // The circle's center is inside the rectangle's boundaries
+        // Now, check if the entire circle is inside the rectangle
+        if (deltaX <= (rect.size.x / 2 - circle.radius) && deltaY <= (rect.size.y / 2 - circle.radius)) 
+        {
+            return true; // The circle is completely inside the rectangle
+        }
+    }
+    return false; // The circle is not inside the rectangle or partially inside
 }
 
 function scaleImageToSize(maxWidth, maxHeight, originalWidth, originalHeight)

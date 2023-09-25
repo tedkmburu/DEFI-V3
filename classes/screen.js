@@ -21,14 +21,12 @@ class Screen
         this.images.forEach(image => { image.display() });
         this.buttons.forEach(button => { button.display() });
         this.textBoxes.forEach(textBox => { textBox.display() });
-        
         if (screen.functions != null) {  screen.functions();  }
 
-        this.update()
-    }
-
-    update()
-    {
-        // console.log(screens[1].buttons[1].visible);
+        push()
+            // let fps = frameCount / (performance.now() / 1000)
+            textSize(24)
+            text(Math.round(frameRate()), 10, innerHeight - 30)
+        pop()
     }
 }

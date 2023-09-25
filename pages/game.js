@@ -1,7 +1,13 @@
 function createGameScreen()
 {
+    let screenName = "Game";
 
-    let buttons = [
+    let buttons = []
+    let images = []
+    let textBoxes = []
+    let shapes = []
+
+    buttons = [
         new Button({
             text: "Back",
             myImage: icons.back,
@@ -63,14 +69,14 @@ function createGameScreen()
     let imageSize = scaleImageToSize(maxWidth, maxHeight, originalWidth, originalHeight) 
     let imagePos = getScaledImagePos(maxWidth, maxHeight, imageSize)
 
-    let images = [
+    images = [
         new myImage({
             pos: new p5.Vector(50, 50).add(imagePos), 
             size: imageSize.copy().mult(0.8),
             myImage: (buildMode) ? levels[currentLevel].buildImage : levels[currentLevel].trackImage ,
         })]
 
-    let textBoxes = [
+    textBoxes = [
         new TextBox({
             text: millisecondsToString(elapsedTime),
             fillColor: "rgba(0, 0, 0, 0)",
@@ -89,18 +95,17 @@ function createGameScreen()
         createFieldLines()
         displayCharges()
         updatePlayButton()
-        if (!buildMode) checkStarCollisions()
-    }
-
-    testCharges = []
-    for (let i = 0; i < levels[currentLevel].testChargeStartingPos.length; i++) 
-    {
-        let testChargePos = levels[currentLevel].testChargeStartingPos[i].copy()
-        testCharges.push(new TestCharge({pos: testChargePos}))
+        if (!buildMode)
+        {
+            checkStarsCollisions();
+            checkBorderCollisions();
+        }
+        displayTrackBorder()
+        checkWinConditions()
     }
 
     return new Screen({
-        name: "Game",
+        name: screenName,
         backgroundImage: buildMode ? blueprintImage : spaceImage,
         buttons: buttons,
         images: images,
@@ -153,9 +158,12 @@ function drawEquiPotentialLines()
 
 function displayStars()
 {
-    levels[currentLevel].stars[0].display()
-    levels[currentLevel].stars[1].display()
-    levels[currentLevel].stars[2].display()
+    levels[currentLevel].stars.forEach(star => {
+        if (star.visible)
+        {
+            star.display()
+        }
+    })
 }
 
 function resetGame()
@@ -172,6 +180,9 @@ function resetGame()
     levels[currentLevel].stars.forEach(star => {
         star.angle = 0;
     })
+
+    resetTestCharges()
+    resetStars()
 }
 
 function toggleHelp()
@@ -206,16 +217,17 @@ function resetStars()
 
 function resetTestCharges()
 {
-    testCharges.forEach(testCharge => {
+    levels[currentLevel].testCharges.forEach(testCharge => {
         testCharge.pos = testCharge.startingPos.copy()
         testCharge.vel = new p5.Vector(0, 0)
+        testCharge.stuck = false
     })
 }
 
 function displayCharges()
 {
-    displayFieldLines()
-    displayFieldLineArrows()
+    displayFieldAllLines()
+    displayFieldAllLineArrows()
     displayTestCharges()
 
     charges.forEach(charge => {
@@ -223,14 +235,14 @@ function displayCharges()
     })
 }
 
-function displayFieldLines()
+function displayFieldAllLines()
 {
     fieldLines.forEach(fieldLine => {
         fieldLine.display()
     })
 }
 
-function displayFieldLineArrows()
+function displayFieldAllLineArrows()
 {
     fieldLineArrows.forEach(fieldLineArrow => {
         fieldLineArrow.display()
@@ -239,31 +251,96 @@ function displayFieldLineArrows()
 
 function displayTestCharges()
 {
-    testCharges.forEach(testCharge => {
+    levels[currentLevel].testCharges.forEach(testCharge => {
         testCharge.display()
-        if (!buildMode) 
+        if (!buildMode && !testCharge.stuck) 
         {
             testCharge.moveTestCharge()    
         }
     })
+
 }
 
+// updates the image on the play button
 function updatePlayButton()
 {
     screens[currentScreen].buttons[3].myImage = (buildMode) ? icons.play : icons.edit
     screens[currentScreen].buttons[3].text = (buildMode) ? "Play" : "Build";
 }
 
-function checkStarCollisions()
+// checks to see if any test charge collides with a star
+function checkStarsCollisions()
 {
-    testCharges.forEach(testCharge => {
-        
-        for (let i = 0; i < 3; i++) 
-        {
-            if (circleOverlapsCirlce(testCharge, levels[currentLevel].stars[i]))
-            {
-                levels[currentLevel].stars[i].visible = false; 
-            }
-        }
+    levels[currentLevel].testCharges.forEach(testCharge => {
+        testCharge.checkStarCollisions()
     })
+}
+
+// checks to see if any test charge collides with the edge
+function checkBorderCollisions()
+{
+    levels[currentLevel].testCharges.forEach(testCharge => {
+        testCharge.checkWallCollision()
+    })
+}
+
+// used to see the actual borders
+function displayTrackBorder()
+{
+    push()
+        stroke("red")
+        fill("rgba(255, 0, 0, 0.4)")
+        beginShape();
+        levels[currentLevel].border.forEach(point => {
+            vertex(point.x, point.y);
+        })
+        endShape(CLOSE);
+    pop()
+
+    let currentFinishLine = levels[currentLevel].finishLine
+
+    push()
+        stroke("green")
+        fill("rgba(0, 255, 0, 0.4)")
+        rect(currentFinishLine.pos.x, currentFinishLine.pos.y, currentFinishLine.size.x, currentFinishLine.size.y)
+        rect()
+    pop()
+}
+
+// checks if all of the test charges are in the finish are
+function checkWinConditions()
+{
+    let currentFinishLine = levels[currentLevel].finishLine
+
+    // check to see if all the test charges are in the finish area
+    let testChargeInFinishArea = []
+    levels[currentLevel].testCharges.forEach(testCharge => {
+        let testChargeIsInFinishArea = circleIsInRect(testCharge, currentFinishLine)
+        testChargeInFinishArea.push(testChargeIsInFinishArea)
+    })
+
+    // if win condition is true
+    if (testChargeInFinishArea.every(isInFinishLine => isInFinishLine === true))
+    {
+        // count how many stars are collected
+        let starsCollected = 0;
+        levels[currentLevel].stars.forEach(star => {
+            if (!star.visible)
+            {
+                starsCollected++;
+            }
+        })
+
+        // calculate high score
+        let maxScore = 3
+
+        let score = 123;
+        updateLevelData(currentLevel, score, elapsedTime, starsCollected) 
+
+        // unlock next level
+        levels[currentLevel + 1].locked = false;
+
+        // go to the next screen
+        navigateTo("Level Complete")
+    }
 }
