@@ -334,12 +334,16 @@ function checkWinConditions()
         // calculate score
         let score = 10000 / ((0.0001 * elapsedTime) + 0.1);
         if (starsCollected > 1) score *= starsCollected
+
+        // check if it's a highscore
         updateLevelData(currentLevel, score, elapsedTime, starsCollected) 
+        
 
         // unlock next level
         levels[currentLevel + 1].locked = false;
 
         // go to the next screen
+        screens[4] = createLevelCompleteScreen()
         navigateTo("Level Complete")
     }
 }

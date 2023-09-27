@@ -360,6 +360,14 @@ function createLevels()
 function unlockLevels()
 {
     levels[0].locked = false; 
+    levels[1].locked = false; 
+    levels[2].locked = false; 
+    levels[3].locked = false; 
+    levels[4].locked = false; 
+    levels[5].locked = false; 
+    levels[6].locked = false; 
+    levels[7].locked = false; 
+    levels[8].locked = false; 
     levels.forEach((level, i) => {
         let width = level.buildImage.width
         let height = level.buildImage.height

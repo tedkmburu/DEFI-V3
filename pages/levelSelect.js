@@ -166,7 +166,7 @@ function createLevelSelect()
                 }))
 
                 textBoxes.push(new TextBox({
-                    text: "High Score:\n" + highScore,
+                    text: "High Score:\n" + round(highScore),
                     fillColor: "rgba(0, 0, 0, 0)",
                     fontColor: "white",
                     fontSize: 16,

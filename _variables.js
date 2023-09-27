@@ -1,14 +1,14 @@
 let screens = []
 let currentScreen;
 
-let currentLevel = 0;
+let currentLevel = 5;
 
 let levels = []
 
 let scale;
 let scrollOffset = 0;
 
-let buildMode = false;
+let buildMode = true;
 let helpMode = false;
 let elapsedTime = 0;
 
@@ -19,7 +19,7 @@ let equiLines = []
 let testCharges = [];
 let fieldLines = [];
 let fieldLineArrows = [];
-const trailLength = 200;
+const trailLength = 800;
 const chargeDiameter = 40; // diameter of a point charge
 const chargeRadius = chargeDiameter / 2;
 const testChargeDiameter = 10;
@@ -42,4 +42,4 @@ let dataToPrint = ""
 const GAME_DATA_KEY = 'gameData';
 let userData;
 
-let levelCompleteData = {score: 0, starsCollected: 0, timeToComplete: Infinity}
+let levelCompleteData = {score: 0, starsCollected: 0, timeToComplete: 9999999999999999999999999999999999}
