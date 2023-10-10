@@ -53,7 +53,7 @@ function createLevelCompleteScreen()
     //     })]
 
     let numberOfStarsCollected = levelCompleteData.starsCollected;
-    console.log(numberOfStarsCollected);
+    // console.log(numberOfStarsCollected);
     let x = 544;
     let y = 50;
 
@@ -75,7 +75,7 @@ function createLevelCompleteScreen()
         }))
     }
 
-    console.log("levelCompleteData: ", levelCompleteData)
+    // console.log("levelCompleteData: ", levelCompleteData)
 
     textBoxes = [
         new TextBox({

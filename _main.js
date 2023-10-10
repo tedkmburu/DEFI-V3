@@ -26,7 +26,6 @@ function preload()
 
 function setup()
 {
-    currentScreen = 3;
     saveData()
     unlockLevels()
     createScreens()

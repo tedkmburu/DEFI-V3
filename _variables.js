@@ -1,5 +1,5 @@
 let screens = []
-let currentScreen;
+let currentScreen = 2;
 
 let currentLevel = 5;
 
