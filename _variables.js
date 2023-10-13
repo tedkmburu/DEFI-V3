@@ -1,7 +1,7 @@
 let gameDevMode = true;
 
 let screens = []
-let currentScreen;
+let currentScreen = 2;
 
 let currentLevel = 0;
 

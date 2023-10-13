@@ -42,12 +42,37 @@ function createLoadingScreen()
     let imageSize = scaleImageToSize(maxWidth, maxHeight, originalWidth, originalHeight) 
     let imagePos = getScaledImagePos(maxWidth, maxHeight, imageSize)
 
+    let starPositions = []
+    levels[currentLevel].stars.forEach(star => {
+        starPositions.push(star.pos.copy())
+    })
+
+    let starSize = new p5.Vector(20, 20).mult(scale).mult(0.8);
+
+    console.log("stars: " , starPositions);
+
     images = [
         new myImage({
             pos: new p5.Vector(75, 50).add(imagePos), 
             size: imageSize.copy().mult(0.8),
             myImage: levels[currentLevel].buildImage,
-        })]
+        }),
+        new myImage({
+            pos: starPositions[0], 
+            size: starSize,
+            myImage: icons.star,
+        }),
+        new myImage({
+            pos: starPositions[1], 
+            size: starSize,
+            myImage: icons.star,
+        }),
+        new myImage({
+            pos: starPositions[2], 
+            size: starSize,
+            myImage: icons.star,
+        }),
+    ]
 
     textBoxes = [
         new TextBox({

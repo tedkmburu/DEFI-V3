@@ -351,7 +351,7 @@ function checkWinConditions()
 
         // calculate score
         let score = 10000 / ((0.0001 * elapsedTime) + 0.1);
-        if (starsCollected > 1) score *= starsCollected
+        if (starsCollected > 1) score *= (starsCollected * 10)
 
         // check if it's a highscore
         updateLevelData(currentLevel, score, elapsedTime, starsCollected) 
