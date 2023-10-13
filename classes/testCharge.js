@@ -4,6 +4,7 @@ class TestCharge extends Charge
     {
         super(props) // inherited from the Charge class
         this.startingPos = this.pos.copy()
+        this.path = [this.startingPos]
         this.charge = testChargeCharge;
 
         // let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
@@ -21,7 +22,28 @@ class TestCharge extends Charge
 
     display()
     {
-        if (buildMode) this.displayTrail()
+        if (buildMode) 
+        {
+            this.displayTrail()
+            this.path = [this.startingPos]
+        }
+        else 
+        {
+            if (frameCount % 10 == 0)
+            {
+                this.path.push(this.pos.copy())
+            }
+
+            push();
+                noFill();
+                stroke(255);
+                strokeWeight(3)
+                point(this.startingPos.x, this.startingPos.y)
+                this.path.forEach(pos => {
+                    point(pos.x, pos.y);
+                })
+            pop()
+        }
 
         push();
             stroke(0);
@@ -32,6 +54,7 @@ class TestCharge extends Charge
         pop();
 
         if (this.countFrames) { this.frameCount++ }
+        
     }
 
     moveTestCharge()

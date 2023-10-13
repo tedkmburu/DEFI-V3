@@ -5,9 +5,18 @@ class myImage extends Particle
         super(props)
         
         this.myImage = props.myImage || null;
-        this.size = props.size || new p5.Vector(100, 50);
-        let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
-        this.size = this.size.copy().mult(myScale);
+
+        this.size = new p5.Vector(props.myImage.width, props.myImage.height);
+        
+        if (props.size != null)
+        {
+            let width = props.size;
+            let height = props.size * (props.myImage.height / props.myImage.width)
+            this.size = new p5.Vector(width, height) 
+        }
+
+        console.log(this.size);
+        this.size = this.size.copy().mult(scale);
         
         this.text = props.text || ""
         this.fontAlign = props.fontAlign || CENTER;

@@ -1,4 +1,4 @@
-let gameDevMode = true;
+let gameDevMode = false;
 
 let screens = []
 let currentScreen = 2;
@@ -48,3 +48,6 @@ let userData;
 let levelCompleteData = {score: 0, starsCollected: 0, timeToComplete: 9999999999999999999999999999999999}
 
 let animations = []
+
+const firstStarTime = 30000 // 30 s
+const secondStarTtime = 10000 // 10 s

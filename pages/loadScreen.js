@@ -9,12 +9,12 @@ function createLoadingScreen()
     
     buttons = [
         new Button({
-            text: "Play >",
+            text: "Begin!",
             visible: false,
-            pos: new p5.Vector(625, 300), 
-            fontSize: 36,
+            pos: new p5.Vector(600, 314), 
+            fontSize: 24,
             fontAlign: CENTER,
-            fillColor: "red",
+            fillColor: positiveChargeColor,
             size: new p5.Vector(200, 50),
             fontColor: 255,
             onClick: function(){ navigateTo("Game"); },
@@ -32,8 +32,8 @@ function createLoadingScreen()
     ]
 
     // Set the desired dimensions of the containing div
-    const maxWidth = 525; // Set your maximum width here
-    const maxHeight = 300; // Set your maximum height here
+    const maxWidth = 844 * 0.65; // Set your maximum width here
+    const maxHeight = 390 * 0.65; // Set your maximum height here
 
     // Get the original image dimensions
     const originalWidth = levels[currentLevel].size.x;
@@ -44,17 +44,17 @@ function createLoadingScreen()
 
     let starPositions = []
     levels[currentLevel].stars.forEach(star => {
-        starPositions.push(star.pos.copy())
+        starPositions.push(star.pos.copy().sub(50, -30))
     })
 
-    let starSize = new p5.Vector(20, 20).mult(scale).mult(0.8);
+    let starSize = 20 * scale.x * 0.7;
 
     console.log("stars: " , starPositions);
 
     images = [
         new myImage({
-            pos: new p5.Vector(75, 50).add(imagePos), 
-            size: imageSize.copy().mult(0.8),
+            pos: new p5.Vector(25, 105).add(imagePos), 
+            size: imageSize.x * 0.8,
             myImage: levels[currentLevel].buildImage,
         }),
         new myImage({
@@ -74,14 +74,48 @@ function createLoadingScreen()
         }),
     ]
 
+    // display stars
+    let numberOfStars = 0
+    numberOfStars+=userData[currentLevel].mostStars;
+    if (userData[currentLevel].fastestTime < firstStarTime) numberOfStars++
+    if (userData[currentLevel].fastestTime < secondStarTtime) numberOfStars++
+
+    print(numberOfStars)
+
+    let x = 180;
+    let y = 75;
+
+    for (let i = 0; i < 5; i++) 
+    {
+        if (i < numberOfStars)
+        {
+            images.push(
+                new myImage({
+                    pos: new p5.Vector(x + (60 * i), y), 
+                    size: 50,
+                    myImage: icons.star,
+                })
+            )
+        }  
+        else
+        {
+            images.push(
+                new myImage({
+                    pos: new p5.Vector(x + (60 * i), y), 
+                    size: 50,
+                    myImage: icons.starEmpty,
+                })
+            )
+        }  
+    }
+
     textBoxes = [
         new TextBox({
-            text: "1. Collect all the stars \n 2. as fast as possible \n 3. don't hit the walls",
-            fillColor: "rgba(0, 0, 0, 0)",
-            fontColor: "white",
+            text: "Goals: \n\nCollect each star \nFinish in less than 30s \nFinish in less than 10s",
             fontSize: 16,
-            pos: new p5.Vector(625, 50), 
-            size: new p5.Vector(200, 240),
+            fontAlign: LEFT,
+            pos: new p5.Vector(630, 110), 
+            size: new p5.Vector(170, 190),
         }),
         ]
 
@@ -101,15 +135,32 @@ function createLoadingScreen()
         new Shape({
             shape: "rect",
             fillColor: "rgba(0, 0, 0, 0.5)",
-            pos: new p5.Vector(75, 75), 
+            pos: new p5.Vector(35, 110), 
             size: new p5.Vector(maxWidth, maxHeight),
         }),
         new Shape({
             pos: new p5.Vector(0, 0), 
             size: new p5.Vector(innerWidth, 70),
             fillColor: "rgba(0, 0, 0, 0.5)",
-        })
+        }),
+        new TextBox({
+            fillColor: "rgba(255, 255, 255, 0.9)",
+            pos: new p5.Vector(600, 110), 
+            size: new p5.Vector(200, 190),
+        }),
     ]
+
+    levels[currentLevel].testCharges.forEach(testCharge => {
+        shapes.push(
+            new Shape({
+                shape: "ellipse",
+                pos: testCharge.pos.copy().sub(40, -40), 
+                size: new p5.Vector(testChargeDiameter, testChargeDiameter),
+                fillColor: positiveChargeColor,
+                
+            })
+        )
+    })
 
     functions = () => {
         let loadBarSize = screens[2].shapes[1].size.x

@@ -47,7 +47,10 @@ class Button extends Particle
     
             if (this.myImage != null)
             {
-                image(this.myImage, this.pos.x, this.pos.y, this.size.x, this.size.y)
+                let width = this.size.x;
+                let height = this.size.x * (this.myImage.height / this.myImage.width)
+                
+                image(this.myImage, this.pos.x, this.pos.y, width, height)
             }
     
             if (this.text != "" && this.myImage == null)

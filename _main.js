@@ -5,18 +5,18 @@ function preload()
     homeTrack = loadImage('images/homeTrack.png');
 
     icons = {
-        back: loadImage('images/icons/back.png'),
-        help: loadImage('images/icons/help.png'),
-        info: loadImage('images/icons/info.png'),
-        lock: loadImage('images/icons/lock.png'),
-        play: loadImage('images/icons/play.png'),
-        edit: loadImage('images/icons/edit.png'),
-        redo: loadImage('images/icons/redo.png'),
-        settings: loadImage('images/icons/settings.png'),
-        soundOff: loadImage('images/icons/soundOff.png'),
-        soundOn: loadImage('images/icons/soundOn.png'),
-        star: loadImage('images/icons/star.png'),
-        starEmpty: loadImage('images/icons/starEmpty.png'),
+        back: loadImage('images/icons/arrow-left-solid.svg'),
+        help: loadImage('images/icons/circle-question-solid.svg'),
+        info: loadImage('images/icons/circle-info-solid.svg'),
+        lock: loadImage('images/icons/lock-solid.svg'),
+        play: loadImage('images/icons/play-solid.svg'),
+        edit: loadImage('images/icons/screwdriver-wrench-solid.svg'),
+        redo: loadImage('images/icons/arrow-rotate-right-solid.svg'),
+        settings: loadImage('images/icons/gears-solid.svg'),
+        soundOff: loadImage('images/icons/volume-xmark-solid.svg'),
+        soundOn: loadImage('images/icons/volume-high-solid.svg'),
+        star: loadImage('images/icons/star-solid.svg'),
+        starEmpty: loadImage('images/icons/star-regular.svg'),
         };
 
     setScale()
@@ -27,7 +27,7 @@ function preload()
 
 function setup()
 {
-    currentScreen = 0;
+    currentScreen = 3;
     saveData()
     unlockLevels()
     createScreens()

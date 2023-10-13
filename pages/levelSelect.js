@@ -76,7 +76,7 @@ function createLevelSelect()
             {
                 images.push(new myImage({
                     pos: new p5.Vector(81 + (381 * j) + 100, yPos + 30), 
-                    size: new p5.Vector(100, 100),
+                    size: 100,
                     myImage: icons.lock,
                 }))
             }
@@ -96,7 +96,7 @@ function createLevelSelect()
 
                 images.push(new myImage({
                     pos: new p5.Vector(81 + (381 * j) + 75, yPos + 45).add(imagePos), 
-                    size: imageSize.copy().mult(0.8),
+                    size: imageSize.x * 0.8,
                     myImage: levels[k].buildImage,
                 }))
 
@@ -105,7 +105,7 @@ function createLevelSelect()
                 {
                     images.push(new myImage({
                         pos: new p5.Vector(195 + (381 * j) + 75 + (a * 35), yPos + 10), 
-                        size: new p5.Vector(30, 30),
+                        size: 30,
                         myImage: icons.star,
                     }))
                 }
@@ -113,7 +113,7 @@ function createLevelSelect()
                 {
                     images.push(new myImage({
                         pos: new p5.Vector(195 + (381 * j) + 75 + (a * 35), yPos + 10), 
-                        size: new p5.Vector(30, 30),
+                        size: 30,
                         myImage: icons.starEmpty,
                     }))
                 }

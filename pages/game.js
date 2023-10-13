@@ -16,7 +16,7 @@ function createGameScreen()
 
     buttons = [
         new Button({
-            text: "Back",
+            text: "Pause",
             myImage: icons.back,
             pos: new p5.Vector(10, 10), 
             fontSize: 18,
@@ -24,26 +24,6 @@ function createGameScreen()
             size: new p5.Vector(50, 50),
             fontColor: 255,
             onClick: function(){ navigateTo("Level Select"); },
-        }),
-        new Button({
-            text: "Help",
-            myImage: icons.help,
-            pos: new p5.Vector(844 - 120, 10), 
-            fontSize: 18,
-            fontAlign: LEFT,
-            size: new p5.Vector(50, 50),
-            fontColor: 255,
-            onClick: function(){ helpMode = !helpMode; },
-        }),
-        new Button({
-            text: "Restart",
-            myImage: icons.redo,
-            pos: new p5.Vector(844 - 60, 10), 
-            fontSize: 18,
-            fontAlign: LEFT,
-            size: new p5.Vector(50, 50),
-            fontColor: 255,
-            onClick: function(){ resetGame() },
         }),
         new Button({
             text: "Build",
@@ -75,9 +55,11 @@ function createGameScreen()
     images = [
         new myImage({
             pos: new p5.Vector(50, 50).add(imagePos), 
-            size: imageSize.copy().mult(0.8),
+            size: imageSize.x * 0.8,
             myImage: (buildMode) ? levels[currentLevel].buildImage : levels[currentLevel].trackImage ,
         })]
+
+    let personalBest = userData[currentLevel].fastestTime
 
     textBoxes = [
         new TextBox({
@@ -88,7 +70,22 @@ function createGameScreen()
             pos: new p5.Vector(322, 10), 
             size: new p5.Vector(200, 50),
         }),
+        
     ]
+
+    if (personalBest != null)
+    {
+        textBoxes.push(
+            new TextBox({
+                text: "Personal Best: " + millisecondsToString(personalBest),
+                fillColor: "rgba(0, 0, 0, 0)",
+                fontColor: "rgba(255, 255, 255, 0.5)",
+                fontSize: 12,
+                pos: new p5.Vector(322, 50), 
+                size: new p5.Vector(200, 50),
+            })
+        )
+    }
 
     let functions = () => {
         
@@ -271,8 +268,8 @@ function displayTestCharges()
 // updates the image on the play button
 function updatePlayButton()
 {
-    screens[currentScreen].buttons[3].myImage = (buildMode) ? icons.play : icons.edit
-    screens[currentScreen].buttons[3].text = (buildMode) ? "Play" : "Build";
+    screens[currentScreen].buttons[1].myImage = (buildMode) ? icons.play : icons.edit
+    screens[currentScreen].buttons[1].text = (buildMode) ? "Play" : "Build";
 }
 
 // checks to see if any test charge collides with a star

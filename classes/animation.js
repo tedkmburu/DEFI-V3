@@ -1,9 +1,9 @@
 
 function createAnimations()
 {
-    let maxOpacity = 0.25
+    let maxOpacity = 0.2
     let shapes = []
-    let chargeColors = ["rgba(235, 83, 83, 0.5)", "rgba(24, 116, 152, 0.5)"]
+    let chargeColors = ["rgba(235, 83, 83, 0.2)", "rgba(24, 116, 152, 0.2)"]
 
     shapes.push(new Shape({
         shape: "ellipse",

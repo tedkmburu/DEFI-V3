@@ -54,7 +54,7 @@ function createLevelCompleteScreen()
     // images = [
     //     new myImage({
     //         pos: new p5.Vector(50, 50), 
-    //         size: new p5.Vector(208.6 * 3, 96.2 * 3),
+    //         size: 208.6 * 3,
     //         myImage: homeTrack,
     //     })]
 
@@ -67,7 +67,7 @@ function createLevelCompleteScreen()
     {
         images.push(new myImage({
             pos: new p5.Vector((50 * i) + x, 50 + y), 
-            size: new p5.Vector(50, 50),
+            size: 50,
             myImage: icons.star,
         }))
     }
@@ -76,7 +76,7 @@ function createLevelCompleteScreen()
     {
         images.push(new myImage({
             pos: new p5.Vector((50 * i) + x, 50 + y), 
-            size: new p5.Vector(50, 50),
+            size: 50,
             myImage: icons.starEmpty,
         }))
     }
