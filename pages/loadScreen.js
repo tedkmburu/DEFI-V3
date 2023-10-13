@@ -27,7 +27,6 @@ function createLoadingScreen()
             textAlign: CENTER,
             size: new p5.Vector(50, 50),
             fontColor: 255,
-            fillColor: "rgba(0, 0, 0, 0.5)",
             onClick: function(){ navigateTo("Level Select"); }
         })
     ]
@@ -77,9 +76,14 @@ function createLoadingScreen()
         new Shape({
             shape: "rect",
             fillColor: "rgba(0, 0, 0, 0.5)",
-            pos: new p5.Vector(75, 50), 
+            pos: new p5.Vector(75, 75), 
             size: new p5.Vector(maxWidth, maxHeight),
         }),
+        new Shape({
+            pos: new p5.Vector(0, 0), 
+            size: new p5.Vector(innerWidth, 70),
+            fillColor: "rgba(0, 0, 0, 0.5)",
+        })
     ]
 
     functions = () => {
@@ -104,5 +108,6 @@ function createLoadingScreen()
         textBoxes: textBoxes,
         shapes: shapes,
         functions: functions,
+        backgroundAnimation: true,
     })
 }

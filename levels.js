@@ -28,7 +28,7 @@ function createLevels()
                 new Star({pos: new p5.Vector(500, 200)}), 
             ],
             testCharges: [
-                new TestCharge({pos: new p5.Vector(190, 190)})
+                new TestCharge({pos: new p5.Vector(150, 190)})
             ],
             finishLine: {
                 pos: new p5.Vector(560, 100),
@@ -94,10 +94,19 @@ function createLevels()
                 size: new p5.Vector(110, 60)
             },
             border: [
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100)
+                new p5.Vector(123, 79),
+                new p5.Vector(516, 78),
+                new p5.Vector(558, 87),
+                new p5.Vector(583, 107),
+                new p5.Vector(598, 141),
+                new p5.Vector(602, 158),
+                new p5.Vector(604, 310),
+                new p5.Vector(510, 309),
+                new p5.Vector(512, 180),
+                new p5.Vector(506, 174),
+                new p5.Vector(494, 173),
+                new p5.Vector(123, 170),
+                new p5.Vector(123, 79),
             ]
         },
         {   // lv 4
@@ -114,10 +123,25 @@ function createLevels()
                 size: new p5.Vector(50, 110)
             },
             border: [
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100)
+                new p5.Vector(439, 78),
+                new p5.Vector(510, 79),
+                new p5.Vector(548, 91),
+                new p5.Vector(590, 129),
+                new p5.Vector(610, 178),
+                new p5.Vector(606, 223),
+                new p5.Vector(585, 263),
+                new p5.Vector(557, 293),
+                new p5.Vector(518, 306),
+                new p5.Vector(482, 307),
+                new p5.Vector(119, 307),
+                new p5.Vector(118, 219),
+                new p5.Vector(499, 214),
+                new p5.Vector(512, 206),
+                new p5.Vector(516, 185),
+                new p5.Vector(505, 174),
+                new p5.Vector(492, 170),
+                new p5.Vector(442, 170),
+                new p5.Vector(439, 78)
             ]
         },
         {   // lv 5
@@ -134,10 +158,10 @@ function createLevels()
                 size: new p5.Vector(520, 50)
             },
             border: [
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100)
+                new p5.Vector(114, 96),
+                new p5.Vector(613, 95),
+                new p5.Vector(617, 296),
+                new p5.Vector(115, 292)
             ]
         },
         {   // lv 6
@@ -155,10 +179,17 @@ function createLevels()
                 angle: 45,
             },
             border: [
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100),
-                new p5.Vector(100, 100)
+                new p5.Vector(230, 76),
+                new p5.Vector(363, 210),
+                new p5.Vector(494, 81),
+                new p5.Vector(562, 149),
+                new p5.Vector(422, 290),
+                new p5.Vector(398, 303),
+                new p5.Vector(366, 310),
+                new p5.Vector(338, 308),
+                new p5.Vector(306, 292),
+                new p5.Vector(162, 150),
+                new p5.Vector(230, 76)
             ]
         },
         {   // lv 7
@@ -360,22 +391,22 @@ function createLevels()
 function unlockLevels()
 {
     levels[0].locked = false; 
-    levels[1].locked = false; 
-    levels[2].locked = false; 
-    levels[3].locked = false; 
-    levels[4].locked = false; 
-    levels[5].locked = false; 
-    levels[6].locked = false; 
-    levels[7].locked = false; 
-    levels[8].locked = false; 
+    // levels[1].locked = false; 
+    // levels[2].locked = false; 
+    // levels[3].locked = false; 
+    // levels[4].locked = false; 
+    // levels[5].locked = false; 
+    // levels[6].locked = false; 
+    // levels[7].locked = false; 
+    // levels[8].locked = false; 
     levels.forEach((level, i) => {
         let width = level.buildImage.width
         let height = level.buildImage.height
         level.size = new p5.Vector(width, height)
 
-        if (userData[i].highScore != null)
+        if (userData[i].highScore != null && i < levels.length - 1)
         {
-            level.locked = false
+            levels[i + 1].locked = false
         }
     })
 }

@@ -7,6 +7,13 @@ function createGameScreen()
     let textBoxes = []
     let shapes = []
 
+    shapes.push(new Shape({
+        pos: new p5.Vector(0, 0), 
+        size: new p5.Vector(innerWidth, 70),
+        fillColor: "rgba(0, 0, 0, 0.5)",
+    }))
+
+
     buttons = [
         new Button({
             text: "Back",
@@ -16,7 +23,6 @@ function createGameScreen()
             fontAlign: LEFT,
             size: new p5.Vector(50, 50),
             fontColor: 255,
-            fillColor: "rgba(0, 0, 0, 0.5)",
             onClick: function(){ navigateTo("Level Select"); },
         }),
         new Button({
@@ -27,7 +33,6 @@ function createGameScreen()
             fontAlign: LEFT,
             size: new p5.Vector(50, 50),
             fontColor: 255,
-            fillColor: "rgba(0, 0, 0, 0.5)",
             onClick: function(){ helpMode = !helpMode; },
         }),
         new Button({
@@ -38,7 +43,6 @@ function createGameScreen()
             fontAlign: LEFT,
             size: new p5.Vector(50, 50),
             fontColor: 255,
-            fillColor: "rgba(0, 0, 0, 0.5)",
             onClick: function(){ resetGame() },
         }),
         new Button({
@@ -49,7 +53,6 @@ function createGameScreen()
             fontAlign: LEFT,
             size: new p5.Vector(50, 50),
             fontColor: 255,
-            fillColor: "rgba(0, 0, 0, 0.5)",
             onClick: function()
             { 
                 toggleBuildMode()
@@ -100,7 +103,10 @@ function createGameScreen()
             checkStarsCollisions();
             checkBorderCollisions();
         }
-        displayTrackBorder()
+        if (gameDevMode)
+        {
+            displayTrackBorder()
+        }
         checkWinConditions()
     }
 
@@ -110,6 +116,7 @@ function createGameScreen()
         buttons: buttons,
         images: images,
         textBoxes: textBoxes,
+        shapes: shapes,
         functions: functions
     })
 }
@@ -287,6 +294,8 @@ function checkBorderCollisions()
 // used to see the actual borders
 function displayTrackBorder()
 {
+
+
     push()
         stroke("red")
         fill("rgba(255, 0, 0, 0.4)")
@@ -295,6 +304,15 @@ function displayTrackBorder()
             vertex(point.x, point.y);
         })
         endShape(CLOSE);
+
+        strokeWeight(20)
+        let wallIndex = Math.round(trueScrollOffset / 80)
+        let numberOfWallPoints = levels[currentLevel].border.length - 1;
+        if (wallIndex >= 0 && wallIndex <= numberOfWallPoints)
+        {
+            let pointPos = levels[currentLevel].border[wallIndex];
+            point(pointPos.x, pointPos.y)
+        }
     pop()
 
     let currentFinishLine = levels[currentLevel].finishLine

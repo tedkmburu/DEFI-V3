@@ -20,7 +20,7 @@ function mouseClicked()
         {
             let distanceToCharge = charges[i].pos.dist(mousePosition)
             
-            if (chargeRadius > distanceToCharge)
+            if (charges[i].radius > distanceToCharge)
             {
                 charges[i].selected = true;
                 chargeSelected = true; 
@@ -36,7 +36,9 @@ function mouseClicked()
 
         if (currentScreen == 3 && buildMode && !chargeSelected)
         {
-            charges.push(new PointCharge({}))
+            let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
+            pos = new p5.Vector(mouseX, mouseY).div(myScale);
+            charges.push(new PointCharge({pos: pos}))
         }
     }
 
@@ -46,7 +48,8 @@ function mouseClicked()
 `;
     }
 
-    console.log(`new p5.Vector(` + mouseX + `, ` + mouseY + `)`);
+    // console.log(`new p5.Vector(` + mouseX + `, ` + mouseY + `)`);
+    // console.log(dataToPrint);
 }
 
 
@@ -71,7 +74,7 @@ function mouseDragged()
         charges.forEach(charge => {
             let distanceToCharge = charge.pos.dist(mousePosition)
 
-            if (chargeRadius > distanceToCharge) charge.dragging = true;  // if the mouse is hovering over a charge while it's being dragged, set it's dragging property to true
+            if (charge.radius > distanceToCharge) charge.dragging = true;  // if the mouse is hovering over a charge while it's being dragged, set it's dragging property to true
             else charge.dragging = false;
         })
     }
@@ -126,4 +129,6 @@ function mouseWheel(event)
             screens[1].shapes.forEach(shape => { shape.pos.y -= event.delta })
         } 
     }
+
+    trueScrollOffset -= event.delta
 }

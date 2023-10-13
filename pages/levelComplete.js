@@ -7,6 +7,12 @@ function createLevelCompleteScreen()
     let textBoxes = []
     let shapes = []
 
+    shapes.push(new Shape({
+        pos: new p5.Vector(75, 75), 
+        size: new p5.Vector(400, 200),
+        fillColor: "rgba(0, 0, 0, 0.75)",
+    }))
+
     buttons = [
         new Button({
             text: "Leaderboard",
@@ -53,7 +59,7 @@ function createLevelCompleteScreen()
     //     })]
 
     let numberOfStarsCollected = levelCompleteData.starsCollected;
-    console.log(numberOfStarsCollected);
+    // console.log(numberOfStarsCollected);
     let x = 544;
     let y = 50;
 
@@ -75,7 +81,7 @@ function createLevelCompleteScreen()
         }))
     }
 
-    console.log("levelCompleteData: ", levelCompleteData)
+    // console.log("levelCompleteData: ", levelCompleteData)
 
     textBoxes = [
         new TextBox({
@@ -83,40 +89,40 @@ function createLevelCompleteScreen()
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 24,
-            pos: new p5.Vector(100, 50), 
-            size: new p5.Vector(200, 50),
+            pos: new p5.Vector(100, 100), 
+            size: new p5.Vector(350, 50),
         }),
         new TextBox({
             text: "Highest Score",
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 16,
-            pos: new p5.Vector(100, 100), 
-            size: new p5.Vector(200, 25),
+            pos: new p5.Vector(100, 150), 
+            size: new p5.Vector(350, 25),
         }),
         new TextBox({
             text: round(userData[currentLevel].highScore),
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 16,
-            pos: new p5.Vector(100, 125), 
-            size: new p5.Vector(200, 25),
+            pos: new p5.Vector(100, 175), 
+            size: new p5.Vector(350, 25),
         }),
         new TextBox({
             text: "Fastest Time",
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 16,
-            pos: new p5.Vector(100, 150), 
-            size: new p5.Vector(200, 25),
+            pos: new p5.Vector(100, 200), 
+            size: new p5.Vector(350, 25),
         }),
         new TextBox({
             text: millisecondsToString(userData[currentLevel].fastestTime),
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 16,
-            pos: new p5.Vector(100, 175), 
-            size: new p5.Vector(200, 25),
+            pos: new p5.Vector(100, 225), 
+            size: new p5.Vector(350, 25),
         }),
         new TextBox({
             text: "Excellent",
@@ -166,5 +172,7 @@ function createLevelCompleteScreen()
         buttons: buttons,
         textBoxes: textBoxes,
         images: images,
+        shapes: shapes,
+        backgroundAnimation: true,
     })
 }

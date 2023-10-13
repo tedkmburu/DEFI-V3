@@ -1,12 +1,15 @@
+let gameDevMode = true;
+
 let screens = []
 let currentScreen;
 
-let currentLevel = 5;
+let currentLevel = 0;
 
 let levels = []
 
 let scale;
 let scrollOffset = 0;
+let trueScrollOffset = 0;
 
 let buildMode = true;
 let helpMode = false;
@@ -24,8 +27,8 @@ const chargeDiameter = 40; // diameter of a point charge
 const chargeRadius = chargeDiameter / 2;
 const testChargeDiameter = 10;
 const testChargeRadius = testChargeDiameter / 2;
-const positiveChargeColor = "rgb(210, 41, 45)";
-const negativeChargeColor = "rgb(23, 97, 176)";
+const positiveChargeColor = "rgb(235, 83, 83)";
+const negativeChargeColor = "rgb(24, 116, 152)";
 const neutralChargeColor = "rgba(85, 85, 85, 0.75)";
 const starOmega = 0.025
 const testChargeCharge = 0.000005; //q = 5 micro coulombs;
@@ -43,3 +46,5 @@ const GAME_DATA_KEY = 'gameData';
 let userData;
 
 let levelCompleteData = {score: 0, starsCollected: 0, timeToComplete: 9999999999999999999999999999999999}
+
+let animations = []

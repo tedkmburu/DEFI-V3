@@ -7,7 +7,7 @@ function createLevelSelect()
     let textBoxes = []
     let shapes = []
 
-    let yPos = 100
+    let yPos = 75
 
     buttons.push(new Button({
         text: "Back",
@@ -17,7 +17,6 @@ function createLevelSelect()
         textAlign: CENTER,
         size: new p5.Vector(50, 50),
         fontColor: 255,
-        fillColor: "rgba(0, 0, 0, 0.5)",
         onClick: function(){ navigateTo("Home"); }
     }))
 
@@ -66,7 +65,7 @@ function createLevelSelect()
         yPos+= 200
     }
     
-    yPos = 100
+    yPos = 75
 
     for (let i = 0; i < levels.length - 1; i+=2) 
     {
@@ -123,7 +122,7 @@ function createLevelSelect()
         yPos += 200
     }
 
-    yPos = 100
+    yPos = 75
 
 
     for (let i = 0; i < levels.length - 1; i+=2) 
@@ -138,7 +137,7 @@ function createLevelSelect()
                     fillColor: "rgba(0, 0, 0, 0)",
                     fontColor: "white",
                     fontSize: 24,
-                    pos: new p5.Vector(81 + (381 * j) + 100, yPos + 0), 
+                    pos: new p5.Vector(81 + (381 * j) + 100, yPos + 100), 
                     size: new p5.Vector(100, 100),
                 }))
             }
@@ -185,5 +184,6 @@ function createLevelSelect()
         images: images,
         textBoxes: textBoxes,
         shapes: shapes,
+        backgroundAnimation: true,
     })
 }

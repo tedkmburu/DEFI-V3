@@ -5,7 +5,8 @@ class TextBox extends Particle
         super(props)
         
         this.size = props.size || new p5.Vector(100, 50);
-        this.size = this.size.copy().mult(scale);
+        let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
+        this.size = this.size.copy().mult(myScale);
 
         this.text = props.text || ""
         this.fontAlign = props.fontAlign || CENTER;
@@ -29,8 +30,8 @@ class TextBox extends Particle
             if (this.shape == "rect")
             {
                 fill(this.fillColor)
-                // stroke(this.strokeColor)
-                stroke(0)
+                stroke(this.strokeColor)
+                if (gameDevMode) stroke(0)
                 rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
             }
     
@@ -44,6 +45,8 @@ class TextBox extends Particle
             }
             pop()
         }
+
+        if (this.countFrames) { this.frameCount++ }
     }
 
     clicked() 

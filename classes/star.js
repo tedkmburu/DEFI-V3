@@ -19,9 +19,12 @@ class Star extends Particle
         if (this.visible)
         {
             push()
-                fill("yellow")
-                noStroke()
-                ellipse(this.pos.x, this.pos.y, this.diameter, this.diameter)
+                if (gameDevMode) 
+                {
+                    fill("yellow")
+                    noStroke()
+                    ellipse(this.pos.x, this.pos.y, this.diameter, this.diameter)
+                }
 
                 translate(this.pos.x, this.pos.y)
                 rotate(this.angle)
@@ -30,5 +33,7 @@ class Star extends Particle
 
             pop()
         }
+
+        if (this.countFrames) { this.frameCount++ }
     }
 }

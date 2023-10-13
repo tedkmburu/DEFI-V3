@@ -1,7 +1,7 @@
 function navigateTo(nextScreen)
 {
     let nextScreenIndex = screens.findIndex(obj => obj.name == nextScreen)
-    if (nextScreenIndex == -1) { console.error(nextScreen, " Not Found"); }
+    if (nextScreenIndex == -1) { console.error(nextScreen, " Not Found"); currentScreen = 5 }
     else { currentScreen = nextScreenIndex }
 
     if (nextScreen == "Game") resetGame()
@@ -41,6 +41,7 @@ function createScreens()
     screens.push(createLoadingScreen())
     screens.push(createGameScreen())
     screens.push(createLevelCompleteScreen())
+    screens.push(createComingSoonScreen())
 }
 
 // function setScreenName

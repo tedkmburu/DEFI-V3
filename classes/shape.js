@@ -5,7 +5,8 @@ class Shape extends Particle
         super(props)
         
         this.size = props.size || new p5.Vector(100, 50);
-        this.size = this.size.copy().mult(scale);
+        let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
+        this.size = this.size.copy().mult(myScale);
 
         this.fillColor = props.fillColor || "rgba(0, 0, 0, 0)";
         this.strokeColor = props.strokeColor || "rgba(0, 0, 0, 0)";
@@ -29,8 +30,16 @@ class Shape extends Particle
             {
                 rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
             }
+            if (this.shape == "ellipse")
+            {
+                ellipse(this.pos.x, this.pos.y, this.size.x, this.size.y)
+            }
 
             pop()
+
+            
         }
+
+        if (this.countFrames) { this.frameCount++ }
     }
 }

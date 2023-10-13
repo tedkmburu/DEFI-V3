@@ -19,14 +19,15 @@ function preload()
         starEmpty: loadImage('images/icons/starEmpty.png'),
         };
 
-    scale = new p5.Vector(1, 1, 1)
+    setScale()
 
     createLevels()
+    createAnimations()
 }
 
 function setup()
 {
-    currentScreen = 3;
+    currentScreen = 0;
     saveData()
     unlockLevels()
     createScreens()
@@ -41,43 +42,75 @@ function draw()
     displayCurrentScreen()
 }
 
+function setScale()
+{
+    const maxWidth = 1;
+    const maxHeight = 0.46208530805687204;
+    
+    const originalWidth = innerHeight;
+    const originalHeight = innerWidth;
+
+    // Calculate the aspect ratio of the original image
+    const aspectRatio = originalWidth / originalHeight;
+
+    // Calculate the new dimensions while keeping the aspect ratio
+    let newWidth, newHeight;
+    if (originalWidth > maxWidth || originalHeight > maxHeight) {
+        if (originalWidth / maxWidth > originalHeight / maxHeight) {
+            newWidth = maxWidth;
+            newHeight = maxWidth / aspectRatio;
+        } else {
+            newHeight = maxHeight;
+            newWidth = maxHeight * aspectRatio;
+        }
+    } else {
+        newWidth = originalWidth;
+        newHeight = originalHeight;
+    }
+
+
+    newWidth = innerWidth / 844
+    newHeight = innerHeight / 390
+
+
+    scale = new p5.Vector(newWidth, newHeight)
+}
 
 // calculate the distance from the line to the center of the circle
 // and compare it to the circle's radius. If the distance is less than
 // or equal to the radius, the line intersects or is inside the circle
 function isLineIntersectingCircle(point1, point2, circle) 
 {
-    const lineX1 = point1.pos.x;
-    const lineY1 = point1.pos.y;
-    const lineX2 = point2.pos.x;
-    const lineY2 = point2.pos.y;
+    const x1 = point1.pos.x;
+    const y1 = point1.pos.y;
+    const x2 = point2.pos.x;
+    const y2 = point2.pos.y;
     const circleX = circle.pos.x;
     const circleY = circle.pos.y;
     const circleRadius = circle.radius;
 
-    // Calculate the squared length of the line segment
-    const lineLengthSquared = Math.pow(lineX2 - lineX1, 2) + Math.pow(lineY2 - lineY1, 2);
+    // Calculate the length of the line segment
+    const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 
-    // Calculate the vector from the line start to the circle center
-    const dx = circleX - lineX1;
-    const dy = circleY - lineY1;
+    // Calculate the unit vector along the line segment
+    const unitX = (x2 - x1) / length;
+    const unitY = (y2 - y1) / length;
 
-    // Calculate the projection of the circle center onto the line
-    const t = (dx * (lineX2 - lineX1) + dy * (lineY2 - lineY1)) / lineLengthSquared;
+    // Iterate over points along the line segment
+    for (let t = 0; t <= length; t++) {
+        const pointX = x1 + t * unitX;
+        const pointY = y1 + t * unitY;
 
-    // Calculate the closest point on the line to the circle center
-    const closestX = lineX1 + t * (lineX2 - lineX1);
-    const closestY = lineY1 + t * (lineY2 - lineY1);
+        // Calculate the distance from the current point to the circle's center
+        const distance = Math.sqrt((pointX - circleX) ** 2 + (pointY - circleY) ** 2);
 
-    // Calculate the squared distance from the circle center to the closest point on the line
-    const distanceSquared = Math.pow(circleX - closestX, 2) + Math.pow(circleY - closestY, 2);
-
-    // If the squared distance is less than or equal to the squared radius, the line intersects or is inside the circle
-    if (distanceSquared <= Math.pow(circleRadius, 2)) {
-        return true;
+        // Check if the point is inside the circle
+        if (distance <= circleRadius) {
+            return true; // At least one point is inside the circle
+        }
     }
 
-    return false;
+    return false; // No points within the line segment are inside the circle
 }
 
 function circleOverlapsCirlce(circle1, circle2)
@@ -258,6 +291,33 @@ function getFieldLinePoints(startingPosition, numberOfLoops, listOfPoints)
     }
 }
 
+function netForceAtPointFromCharges(position, groupOfCharges)
+{
+    let finalVector = createVector(0, 0);
+
+    // these are all the pointcharges
+    groupOfCharges.forEach(charge => {
+        
+        //F = KQ / (r^2)
+        let kq = charge.charge  * k;
+        let r = p5.Vector.dist(position, charge.pos) / 10;
+
+        if (r < 0.5) r = 0.5
+        
+        let rSquared = Math.pow(r,2);
+        let force = kq / rSquared;
+
+        let theta = p5.Vector.sub(charge.pos, position).heading();
+        let forceX = force * Math.cos(theta);
+        let forceY = force * Math.sin(theta);
+
+        let forceVectors = createVector(forceX, forceY).mult(-1);
+
+        finalVector.add(forceVectors);
+    });
+
+    return finalVector;
+}
 
 function netForceAtPoint(position) // given a vector, it will return the net force at that point as a vector
 {

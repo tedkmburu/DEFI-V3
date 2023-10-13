@@ -6,8 +6,9 @@ class myImage extends Particle
         
         this.myImage = props.myImage || null;
         this.size = props.size || new p5.Vector(100, 50);
-        this.size = this.size.copy().mult(scale);
-
+        let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
+        this.size = this.size.copy().mult(myScale);
+        
         this.text = props.text || ""
         this.fontAlign = props.fontAlign || CENTER;
         this.fontSize = props.fontSize * scale.x || 12;
@@ -27,11 +28,18 @@ class myImage extends Particle
         {
             push()
 
-            if (this.shape == "rect")
+            if (this.shape == "rect" || gameDevMode)
             {
+                if (gameDevMode) 
+                {
+                    stroke("rgba(0, 0, 0, 1)")
+                    fill("rgba(0, 0, 0, 0.25)")
+                    rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
+                }
                 fill(this.fillColor)
                 noStroke()
                 rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
+                
             }
     
             if (this.myImage != null)
@@ -49,5 +57,7 @@ class myImage extends Particle
             }
             pop()
         }
+
+        if (this.countFrames) { this.frameCount++ }
     }
 }

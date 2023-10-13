@@ -6,8 +6,9 @@ class TestCharge extends Charge
         this.startingPos = this.pos.copy()
         this.charge = testChargeCharge;
 
-        this.radius = testChargeRadius;
-        this.diameter = testChargeDiameter;
+        // let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
+        this.radius = testChargeRadius * scale.x;
+        this.diameter = testChargeDiameter * scale.x;
 
         this.stuck = false; 
 
@@ -29,6 +30,8 @@ class TestCharge extends Charge
             let y = this.pos.y;
             ellipse(x, y, this.diameter, this.diameter);
         pop();
+
+        if (this.countFrames) { this.frameCount++ }
     }
 
     moveTestCharge()
@@ -45,7 +48,7 @@ class TestCharge extends Charge
             // a  = (qE)/m
             // m = 1
             // a  = q*E
-            this.acc = force.mult(this.charge);
+            this.acc = force.mult(this.charge).mult(scale);
             this.vel.add(this.acc);
             this.pos.add(this.vel);
         }
@@ -53,9 +56,6 @@ class TestCharge extends Charge
 
     checkWallCollision()
     {
-
-        levels[currentLevel].border.forEach(point)
-
         for (let i = 0; i < levels[currentLevel].border.length - 1; i++) 
         {
             let point1 = {pos: levels[currentLevel].border[i]};
@@ -64,6 +64,7 @@ class TestCharge extends Charge
             if (isLineIntersectingCircle(point1, point2, this))
             {
                 this.stuck = true
+                console.log("Hit the wall!");
             }
         }
 

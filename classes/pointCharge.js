@@ -4,8 +4,8 @@ class PointCharge extends Charge
     {
         super(props)
 
-        this.radius = chargeRadius;
-        this.diameter = this.radius * 2;
+        this.radius = chargeRadius * scale.x;
+        this.diameter = this.radius * 2 ;
 
         this.selected = true;
         this.dragging = false;
@@ -67,28 +67,23 @@ class PointCharge extends Charge
             ellipse(pointCharge.pos.x, pointCharge.pos.y, this.diameter, this.diameter);
 
             // write down the charge of the point charge ontop of it
-            textSize(16);
+            textSize(16 * scale.x);
             // textFont(buttonFont);
             fill("white");
             noStroke();
-            if (pointCharge.charge > 0) // if the charge > 0, add a "+" sign before the number 
-            {
-                let chargeStringLength = pointCharge.charge.toString().length + 1.5;
-                let chargeToShow = "+" + pointCharge.charge.toString(); 
-                let textPosX = pointCharge.pos.x - (chargeStringLength * 4);
-                let textPosY = pointCharge.pos.y + 7;
 
-                text(chargeToShow, textPosX, textPosY);
-            }
-            else
-            {
-                let chargeStringLength = pointCharge.charge.toString().length;
-                let textPosX = pointCharge.pos.x - (chargeStringLength * 4);
-                let textPosY = pointCharge.pos.y + 7;
-                
-                text(pointCharge.charge, textPosX, textPosY);
-            }
+            let chargeStringLength = pointCharge.charge.toString().length;
+            let chargeToShow = "";
+            if (pointCharge.charge > 0) { chargeToShow = "+"; chargeStringLength++ }
+            chargeToShow = chargeToShow + pointCharge.charge.toString(); 
+
+            let textPosX = pointCharge.pos.x - (chargeStringLength * (4 * scale.x));
+            let textPosY = pointCharge.pos.y + (7 * scale.x);
+            
+            text(chargeToShow, textPosX, textPosY);
         pop();  
+
+        if (this.countFrames) { this.frameCount++ }
     }
 
     remove()

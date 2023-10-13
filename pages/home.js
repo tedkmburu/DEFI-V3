@@ -7,43 +7,41 @@ function createHomeScreen()
     let textBoxes = []
     let shapes = []
 
+    let size = new p5.Vector(innerWidth / 4, 50)
+
     buttons = [
         new Button({
-            text: "PLAY",
-            pos: new p5.Vector(550, 50), 
-            fontSize: 36,
-            fontAlign: LEFT,
-            size: new p5.Vector(300, 50),
+            text: "Home",
+            pos: new p5.Vector(0, 340), 
+            fontSize: 12,
+            size: size,
             fontColor: 255,
             onClick: function(){ navigateTo("Level Select"); },
         }),
         new Button({
-            text: "LEADERBOARD",
-            pos: new p5.Vector(550, 125), 
-            fontSize: 36,
-            fontAlign: LEFT,
-            size: new p5.Vector(300, 50),
+            text: "Leaderboard",
+            pos: new p5.Vector(211, 340), 
+            fontSize: 12,
+            size: size,
             fontColor: 255,
             onClick: function(){ navigateTo("Leaderboard"); },
         }),
         new Button({
-            text: "SETTINGS",
-            pos: new p5.Vector(550, 200), 
-            fontSize: 36,
-            fontAlign: LEFT,
-            size: new p5.Vector(300, 50),
+            text: "Help",
+            pos: new p5.Vector(633, 340), 
+            fontSize: 12,
+            size: size,
+            fontColor: 255,
+            onClick: function(){ navigateTo("Help"); },
+        }),        new Button({
+            text: "Settings",
+            pos: new p5.Vector(422, 340), 
+            fontSize: 12,
+            size: size,
             fontColor: 255,
             onClick: function(){ navigateTo("Settings"); },
         }),
-        new Button({
-            text: "HELP",
-            pos: new p5.Vector(550, 275), 
-            fontSize: 36,
-            fontAlign: LEFT,
-            size: new p5.Vector(300, 50),
-            fontColor: 255,
-            onClick: function(){ navigateTo("Help"); },
-        }),]
+        ]
 
     images = [
         new myImage({
@@ -57,5 +55,6 @@ function createHomeScreen()
         backgroundImage: spaceImage,
         buttons: buttons,
         images: images,
+        backgroundAnimation: true,
     })
 }
