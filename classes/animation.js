@@ -5,18 +5,24 @@ function createAnimations()
     let shapes = []
     let chargeColors = ["rgba(235, 83, 83, 0.2)", "rgba(24, 116, 152, 0.2)"]
 
+    let randX = random(0, gameWidth / 4)
+    let randY = random(gameHeight / 4, 3 * gameHeight / 4)
+
     shapes.push(new Shape({
         shape: "ellipse",
-        pos: new p5.Vector(random(0, innerWidth / 4), random(innerHeight / 4, 3 * innerHeight / 4)),
+        pos: new p5.Vector(randX, randY),
         size: new p5.Vector(chargeDiameter, chargeDiameter),
         fillColor: chargeColors[0],
         frameCount: random(0, 100),
         countFrames: true
     }))
-
+        
+    randX = random(3 * innerWidth / 4, innerWidth)
+    randY = random(innerHeight / 4, 3 * innerHeight / 4)
+    
     shapes.push(new Shape({
         shape: "ellipse",
-        pos: new p5.Vector(random(3 * innerWidth / 4, innerWidth), random(innerHeight / 4, 3 * innerHeight / 4)),
+        pos: new p5.Vector(randX, randY),
         size: new p5.Vector(chargeDiameter, chargeDiameter),
         fillColor: chargeColors[1],
         frameCount: random(0, 100),
@@ -27,7 +33,7 @@ function createAnimations()
     
     let pos = new p5.Vector(random(0, innerWidth), random(0, innerHeight))
     let color = "rgba(255, 0, 0, " + maxOpacity + ")" 
-    let size = new p5.Vector(10, 10)
+    let size = new p5.Vector(testChargeDiameter, testChargeDiameter)
     let velMag = 0.5
 
     
@@ -48,7 +54,6 @@ function createAnimations()
     }
 
     functions = () => {
-        // print(animations[0])
         let groupOfCharges = [
             {
                 charge: 5,
@@ -62,7 +67,7 @@ function createAnimations()
 
 
         animations[0].shapes.forEach(shape => {
-            if (shape.size.x == 10 )
+            if (shape.size.x == size.x)
             {
                 let opacity = maxOpacity - (shape.frameCount / 500)
 

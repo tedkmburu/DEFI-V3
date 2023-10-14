@@ -7,7 +7,6 @@ class TestCharge extends Charge
         this.path = [this.startingPos]
         this.charge = testChargeCharge;
 
-        // let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
         this.radius = testChargeRadius * scale.x;
         this.diameter = testChargeDiameter * scale.x;
 

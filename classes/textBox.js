@@ -5,8 +5,7 @@ class TextBox extends Particle
         super(props)
         
         this.size = props.size || new p5.Vector(100, 50);
-        let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
-        this.size = this.size.copy().mult(myScale);
+        this.size = this.size.copy().mult(scale);
 
         this.text = props.text || ""
         this.fontAlign = props.fontAlign || CENTER;

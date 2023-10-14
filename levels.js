@@ -399,6 +399,7 @@ function unlockLevels()
     // levels[6].locked = false; 
     // levels[7].locked = false; 
     // levels[8].locked = false; 
+
     levels.forEach((level, i) => {
         let width = level.buildImage.width
         let height = level.buildImage.height
@@ -407,6 +408,8 @@ function unlockLevels()
         if (userData[i].highScore != null && i < levels.length - 1)
         {
             levels[i + 1].locked = false
+            // currentLevel = i + 1;
         }
+        
     })
 }

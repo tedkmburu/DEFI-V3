@@ -7,87 +7,105 @@ function createHomeScreen()
     let textBoxes = []
     let shapes = []
 
-    let size = new p5.Vector(844 / 4, 50)
+    let size = new p5.Vector(150, 150)
+    let xPos = 50;
+    let yPos = gameHeight - size.y - 100
 
     buttons = [
         new Button({
             text: "Home",
-            pos: new p5.Vector(0, 340), 
-            fontSize: 12,
+            shape: "ellipse",
+            pos: new p5.Vector(xPos, yPos), 
+            fontSize: 36,
             size: size,
             fontColor: 255,
-            fillColor: "rgba(0, 0, 0, 0)",
+            fillColor: purpleColor[0],
+            myImage: icons.home, 
             onClick: function(){ navigateTo("Home"); },
         }),
         new Button({
             text: "Leaderboard",
-            pos: new p5.Vector(211, 340), 
-            fontSize: 12,
+            shape: "ellipse",
+            pos: new p5.Vector((1 * gameWidth / 9) + xPos, yPos), 
+            fontSize: 36,
             size: size,
             fontColor: 255,
-            fillColor: "rgba(0, 0, 0, 0.5)",
+            fillColor: purpleColor[1],
+            myImage: icons.leaderboard, 
             onClick: function(){ navigateTo("Leaderboard"); },
         }),
         new Button({
             text: "Help",
-            pos: new p5.Vector(633, 340), 
-            fontSize: 12,
+            shape: "ellipse",
+            pos: new p5.Vector((2 * gameWidth / 9) + xPos,  yPos), 
+            fontSize: 36,
             size: size,
             fontColor: 255,
-            fillColor: "rgba(0, 0, 0, 0.5)",
+            fillColor: purpleColor[2],
+            myImage: icons.help, 
             onClick: function(){ navigateTo("Help"); },
         }),        new Button({
             text: "Settings",
-            pos: new p5.Vector(422, 340), 
-            fontSize: 12,
+            shape: "ellipse",
+            pos: new p5.Vector((3 * gameWidth / 9) + xPos,  yPos), 
+            fontSize: 36,
             size: size,
             fontColor: 255,
-            fillColor: "rgba(0, 0, 0, 0.5)",
+            fillColor: purpleColor[3],
+            myImage: icons.settings, 
             onClick: function(){ navigateTo("Settings"); },
         }),
         new Button({
             text: "More Levels",
-            pos: new p5.Vector(433, 250), 
-            fontSize: 12,
-            size: new p5.Vector(150, 50),
+            pos: new p5.Vector(1920 - 950, 830), 
+            fontSize: 36,
+            size: new p5.Vector(350, 150),
             fontColor: 255,
-            fillColor: "purple",
+            fillColor: purpleColor[4],
             onClick: function(){ navigateTo("Level Select"); },
         }),
         new Button({
             text: "Play",
-            pos: new p5.Vector(622, 250), 
-            fontSize: 12,
-            size: new p5.Vector(150, 50),
+            pos: new p5.Vector(1920 - 550, 830), 
+            fontSize: 36,
+            size: new p5.Vector(350, 150),
             fontColor: 255,
             fillColor: "red",
-            onClick: function(){ navigateTo("Loading Screen"); },
+            onClick: function(){ navigateTo("Loading Screen"); console.log("fads"); },
         }),
         ]
 
     images = [
         new myImage({
-            pos: new p5.Vector(0, 100), 
-            size: 844 * 0.6,
+            pos: new p5.Vector(0, 200), 
+            size: 1920 * 0.6,
             myImage: homeTrack,
         }),
         new myImage({
-            pos: new p5.Vector(450, 150), 
-            size: 300,
+            pos: new p5.Vector(815, 125), 
+            size: 1060,
+            myImage: banner,
+        }),
+        new myImage({
+            pos: new p5.Vector(970, 400), 
+            size: new p5.Vector(750, 400),
             myImage: levels[currentLevel].playImage,
         })
     ]
 
+    
+
     // display stars
     let numberOfStars = 0
     numberOfStars+=userData[currentLevel].mostStars;
-    if (userData[currentLevel].fastestTime < firstStarTime) numberOfStars++
-    if (userData[currentLevel].fastestTime < secondStarTtime) numberOfStars++
-
-    print(numberOfStars)
-
-    let x = 450;
-    let y = 25;
+    if (userData[currentLevel].fastestTime != null)
+    {
+        if (userData[currentLevel].fastestTime < firstStarTime) numberOfStars++
+        if (userData[currentLevel].fastestTime < secondStarTtime) numberOfStars++    
+    }
+    
+    let x = 1070;
+    let y = 140;
 
     for (let i = 0; i < 5; i++) 
     {
@@ -95,8 +113,8 @@ function createHomeScreen()
         {
             images.push(
                 new myImage({
-                    pos: new p5.Vector(x + (60 * i), y), 
-                    size: 50,
+                    pos: new p5.Vector(x + (110 * i), y), 
+                    size: 100,
                     myImage: icons.star,
                 })
             )
@@ -105,8 +123,8 @@ function createHomeScreen()
         {
             images.push(
                 new myImage({
-                    pos: new p5.Vector(x + (60 * i), y), 
-                    size: 50,
+                    pos: new p5.Vector(x + (110 * i), y), 
+                    size: 100,
                     myImage: icons.starEmpty,
                 })
             )
@@ -114,18 +132,29 @@ function createHomeScreen()
     }
 
     shapes.push(new Shape({
-        pos: new p5.Vector(400, 50), 
-        size: new p5.Vector(400, 270),
+        pos: new p5.Vector((gameWidth / 1.9) - 100, 50), 
+        size: new p5.Vector(gameWidth / 2.25, 1080 - 100),
         fillColor: "rgba(255, 255, 255, 0.75)",
     }))
+
+    if (gameDevMode)
+    {
+        shapes.push(
+            new Shape({
+                pos: new p5.Vector(970, 400), 
+                size: new p5.Vector(750, 400),
+                fillColor: "rgba(0, 0, 0, 0.25)",
+            })
+        )
+    }
 
     textBoxes.push(
         new TextBox({
             text: "Level " + (currentLevel + 1),
             fillColor: "rgba(0, 0, 0, 0)",
-            fontSize: 36,
-            pos: new p5.Vector(500, 25 + 50), 
-            size: new p5.Vector(200, 40),
+            fontSize: 72,
+            pos: new p5.Vector(850, 205), 
+            size: new p5.Vector(gameWidth / 2, 200),
         })
     )
 
@@ -133,9 +162,9 @@ function createHomeScreen()
         new TextBox({
             text: "High Score: " + Math.round(userData[currentLevel].highScore),
             fillColor: "rgba(0, 0, 0, 0)",
-            fontSize: 18,
-            pos: new p5.Vector(400, 25 + 90), 
-            size: new p5.Vector(400, 40),
+            fontSize: 48,
+            pos: new p5.Vector(850, 260), 
+            size: new p5.Vector(gameWidth / 2, 200),
         })
     )
 

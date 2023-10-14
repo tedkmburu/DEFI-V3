@@ -3,6 +3,7 @@ function preload()
     spaceImage = loadImage('images/background.png');
     blueprintImage = loadImage('images/blueprint.png');
     homeTrack = loadImage('images/homeTrack.png');
+    banner = loadImage('images/banner.svg')
 
     icons = {
         back: loadImage('images/icons/arrow-left-solid.svg'),
@@ -12,11 +13,13 @@ function preload()
         play: loadImage('images/icons/play-solid.svg'),
         edit: loadImage('images/icons/screwdriver-wrench-solid.svg'),
         redo: loadImage('images/icons/arrow-rotate-right-solid.svg'),
-        settings: loadImage('images/icons/gears-solid.svg'),
+        settings: loadImage('images/icons/gear-solid.svg'),
         soundOff: loadImage('images/icons/volume-xmark-solid.svg'),
         soundOn: loadImage('images/icons/volume-high-solid.svg'),
         star: loadImage('images/icons/star-solid.svg'),
         starEmpty: loadImage('images/icons/star-regular.svg'),
+        leaderboard: loadImage('images/icons/ranking-star-solid.svg'),
+        home: loadImage('images/icons/house-solid.svg'),
         };
 
     setScale()
@@ -27,7 +30,6 @@ function preload()
 
 function setup()
 {
-    currentScreen = 3;
     saveData()
     unlockLevels()
     createScreens()
@@ -37,43 +39,45 @@ function setup()
 function draw()
 {
     background(0)
-    mousePosition = new p5.Vector(mouseX, mouseY)
+    mousePosition = new p5.Vector(mouseX, mouseY).mult(scale)
     
     displayCurrentScreen()
 }
 
 function setScale()
 {
-    const maxWidth = 1;
-    const maxHeight = 0.46208530805687204;
+    // const maxWidth = 1;
+    // const maxHeight = 0.46208530805687204;
     
-    const originalWidth = innerHeight;
-    const originalHeight = innerWidth;
+    // const originalWidth = innerHeight;
+    // const originalHeight = innerWidth;
 
-    // Calculate the aspect ratio of the original image
-    const aspectRatio = originalWidth / originalHeight;
+    // // Calculate the aspect ratio of the original image
+    // const aspectRatio = originalWidth / originalHeight;
 
-    // Calculate the new dimensions while keeping the aspect ratio
-    let newWidth, newHeight;
-    if (originalWidth > maxWidth || originalHeight > maxHeight) {
-        if (originalWidth / maxWidth > originalHeight / maxHeight) {
-            newWidth = maxWidth;
-            newHeight = maxWidth / aspectRatio;
-        } else {
-            newHeight = maxHeight;
-            newWidth = maxHeight * aspectRatio;
-        }
-    } else {
-        newWidth = originalWidth;
-        newHeight = originalHeight;
-    }
-
-
-    newWidth = innerWidth / 844
-    newHeight = innerHeight / 390
+    // // Calculate the new dimensions while keeping the aspect ratio
+    // let newWidth, newHeight;
+    // if (originalWidth > maxWidth || originalHeight > maxHeight) {
+    //     if (originalWidth / maxWidth > originalHeight / maxHeight) {
+    //         newWidth = maxWidth;
+    //         newHeight = maxWidth / aspectRatio;
+    //     } else {
+    //         newHeight = maxHeight;
+    //         newWidth = maxHeight * aspectRatio;
+    //     }
+    // } else {
+    //     newWidth = originalWidth;
+    //     newHeight = originalHeight;
+    // }
 
 
-    scale = new p5.Vector(newWidth, newHeight)
+    // newWidth = innerWidth / 844
+    // newHeight = innerHeight / 390
+
+
+    // scale = new p5.Vector(newWidth, newHeight)
+
+    scale = new p5.Vector(1, 1, 1)
 }
 
 // calculate the distance from the line to the center of the circle
@@ -179,7 +183,7 @@ function getScaledImagePos(maxWidth, maxHeight, imageSize)
 {
     let myImageSize = imageSize.copy()
     let maxSize = new p5.Vector(maxWidth, maxHeight)
-    let posWithOffset = maxSize.sub(myImageSize.copy().mult(0.8)).div(2)
+    let posWithOffset = maxSize.sub(myImageSize.copy()).div(2)
     return posWithOffset
 }
 

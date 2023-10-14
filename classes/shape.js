@@ -5,8 +5,7 @@ class Shape extends Particle
         super(props)
         
         this.size = props.size || new p5.Vector(100, 50);
-        let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
-        this.size = this.size.copy().mult(myScale);
+        this.size = this.size.copy().mult(scale);
 
         this.fillColor = props.fillColor || "rgba(0, 0, 0, 0)";
         this.strokeColor = props.strokeColor || "rgba(0, 0, 0, 0)";

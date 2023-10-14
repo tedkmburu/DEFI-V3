@@ -36,8 +36,7 @@ function mouseClicked()
 
         if (currentScreen == 3 && buildMode && !chargeSelected)
         {
-            let myScale = new p5.Vector(innerWidth / 844, innerHeight / 390)
-            pos = new p5.Vector(mouseX, mouseY).div(myScale);
+            pos = new p5.Vector(mouseX, mouseY).mult(scale);
             charges.push(new PointCharge({pos: pos}))
         }
     }
@@ -50,6 +49,14 @@ function mouseClicked()
 
     // console.log(`new p5.Vector(` + mouseX + `, ` + mouseY + `)`);
     // console.log(dataToPrint);
+
+    // let working = isPointInRectangle(mousePosition, {
+    //     pos: new p5.Vector(1920 - 550, 830),
+    //     size: new p5.Vector(350, 150)
+    // }) 
+
+    // console.log(working);
+
 }
 
 

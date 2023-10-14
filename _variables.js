@@ -3,9 +3,8 @@ let gameDevMode = false;
 let screens = []
 let currentScreen = 2;
 
-let currentLevel = 0;
-
 let levels = []
+let currentLevel = 0;
 
 let scale;
 let scrollOffset = 0;
@@ -23,18 +22,18 @@ let testCharges = [];
 let fieldLines = [];
 let fieldLineArrows = [];
 const trailLength = 800;
-const chargeDiameter = 40; // diameter of a point charge
+const chargeDiameter = 150; // diameter of a point charge
 const chargeRadius = chargeDiameter / 2;
-const testChargeDiameter = 10;
+const testChargeDiameter = 30;
 const testChargeRadius = testChargeDiameter / 2;
-const positiveChargeColor = "rgb(235, 83, 83)";
-const negativeChargeColor = "rgb(24, 116, 152)";
-const neutralChargeColor = "rgba(85, 85, 85, 0.75)";
 const starOmega = 0.025
 const testChargeCharge = 0.000005; //q = 5 micro coulombs;
 const fieldLinesPerCoulomb = 4;
 
-let spaceImage, blueprintImage, homeTrack;
+const gameWidth = 1920
+const gameHeight = 1080
+
+let spaceImage, blueprintImage, homeTrack, banner;
 let trackImages;
 let icons;
 
@@ -51,3 +50,15 @@ let animations = []
 
 const firstStarTime = 30000 // 30 s
 const secondStarTtime = 10000 // 10 s
+
+
+const positiveChargeColor = "rgb(201, 72, 59)";
+const negativeChargeColor = "rgb(24, 116, 152)";
+const neutralChargeColor = "rgba(85, 85, 85, 0.75)";
+const purpleColor = [
+    "rgba(64, 39, 99 , 1)",
+    "rgba(81, 49, 127, 1)",
+    "rgba(100,64, 141, 1)",
+    "rgba(109,57, 147, 1)",
+    "rgba(122, 87, 153,1)",
+]

@@ -134,23 +134,21 @@ function millisecondsToString(milliseconds)
 {
     if (milliseconds < 0) 
     {
-        return "00:00:00.00";
+        return "00:00.00";
     }
 
     // Calculate hours, minutes, seconds, and centiseconds
     const centiseconds = Math.floor((milliseconds % 1000) / 10);
     const seconds = Math.floor((milliseconds / 1000) % 60);
     const minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
-    const hours = Math.floor(milliseconds / (1000 * 60 * 60));
 
     // Format the time components with leading zeros
-    const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(minutes).padStart(2, '0');
     const formattedSeconds = String(seconds).padStart(2, '0');
     const formattedCentiseconds = String(centiseconds).padStart(2, '0');
 
     // Construct the time string
-    const timeString = `${formattedHours}:${formattedMinutes}:${formattedSeconds}.${formattedCentiseconds}`;
+    const timeString = `${formattedMinutes}:${formattedSeconds}.${formattedCentiseconds}`;
 
     return timeString;
 }
@@ -362,3 +360,12 @@ function checkWinConditions()
         navigateTo("Level Complete")
     }
 }
+
+// :todo
+
+// track walls should light up(neon) when test charge hits them
+
+
+// credits: 
+//      font awesome
+//      <a href="https://www.freepik.com/free-vector/yellow-banner-sticker-blank-vector-simple-clipart-set_18233834.htm#query=banner&position=1&from_view=keyword&track=sph">Image by rawpixel.com</a> on Freepik

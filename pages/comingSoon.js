@@ -15,7 +15,7 @@ function createComingSoonScreen()
             fontColor: "white",
             fontSize: 48,
             pos: new p5.Vector(0, 0), 
-            size: new p5.Vector(844, 390),
+            size: new p5.Vector(1920, 1080),
         }),
     
     ]

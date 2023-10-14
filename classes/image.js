@@ -6,8 +6,11 @@ class myImage extends Particle
         
         this.myImage = props.myImage || null;
 
+        // if one number is given as an argument, it will be used as the width
         this.size = new p5.Vector(props.myImage.width, props.myImage.height);
         
+        
+
         if (props.size != null)
         {
             let width = props.size;
@@ -15,7 +18,16 @@ class myImage extends Particle
             this.size = new p5.Vector(width, height) 
         }
 
-        console.log(this.size);
+        // if a vector is given as an argument, the image will be scaled to fit inside it
+        if (props.size.y != undefined)
+        {
+            let size = scaleImageToSize(props.size.x, props.size.y, props.myImage.width, props.myImage.height)
+            this.size = size.copy()
+
+            let imagePos = getScaledImagePos(props.size.x, props.size.y, size)
+            this.pos.add(imagePos.div(2))
+        }
+
         this.size = this.size.copy().mult(scale);
         
         this.text = props.text || ""
@@ -37,14 +49,15 @@ class myImage extends Particle
         {
             push()
 
+            if (gameDevMode) 
+            {
+                stroke("rgba(0, 0, 0, 1)")
+                fill("rgba(0, 0, 0, 0.5)")
+                rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
+            }
             if (this.shape == "rect" || gameDevMode)
             {
-                if (gameDevMode) 
-                {
-                    stroke("rgba(0, 0, 0, 1)")
-                    fill("rgba(0, 0, 0, 0.25)")
-                    rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
-                }
+                
                 fill(this.fillColor)
                 noStroke()
                 rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
