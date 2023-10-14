@@ -6,34 +6,59 @@ function createLoadingScreen()
     let images = []
     let textBoxes = []
     let shapes = []
+
+    let buttonSize = new p5.Vector(150, 150)
     
     buttons = [
         new Button({
-            text: "Begin!",
+            text: "Play",
+            myImage: icons.play,
+            shape: "ellipse",
             visible: false,
-            pos: new p5.Vector(600, 314), 
-            fontSize: 24,
-            fontAlign: CENTER,
+            pos: new p5.Vector(1720, 820), 
+            fontSize: 36,
             fillColor: positiveChargeColor,
-            size: new p5.Vector(200, 50),
+            size: buttonSize.copy(),
             fontColor: 255,
             onClick: function(){ navigateTo("Game"); },
         }),
         new Button({
+            text: "Levels",
+            myImage: icons.race,
+            shape: "ellipse",
+            pos: new p5.Vector(1520, 820), 
+            fontSize: 36,
+            fillColor: purpleColor[2],
+            size: buttonSize.copy(),
+            fontColor: 255,
+            onClick: function(){ navigateTo("Level Select"); },
+        }),
+        new Button({
+            text: "Home",
+            myImage: icons.home,
+            shape: "ellipse",
+            pos: new p5.Vector(1320, 820), 
+            fontSize: 36,
+            fillColor: purpleColor[1],
+            size: buttonSize.copy(),
+            fontColor: 255,
+            onClick: function(){ navigateTo("Home"); },
+        }),
+        new Button({
             text: "Back",
+            shape: "ellipse",
             myImage: icons.back,
-            pos: new p5.Vector(10, 10), 
-            fontSize: 24,
-            textAlign: CENTER,
-            size: new p5.Vector(50, 50),
+            pos: new p5.Vector(0, 0), 
+            fontSize: 36,
+            size: new p5.Vector(150, 150),
             fontColor: 255,
             onClick: function(){ navigateTo("Level Select"); }
         })
     ]
 
     // Set the desired dimensions of the containing div
-    const maxWidth = 844 * 0.65; // Set your maximum width here
-    const maxHeight = 390 * 0.65; // Set your maximum height here
+    const maxWidth = 1920 * 0.65; // Set your maximum width here
+    const maxHeight = (1080 * 0.65) + 100; // Set your maximum height here
 
     // Get the original image dimensions
     const originalWidth = levels[currentLevel].size.x;
@@ -47,7 +72,7 @@ function createLoadingScreen()
         starPositions.push(star.pos.copy().sub(50, -30))
     })
 
-    let starSize = 20 * scale.x * 0.7;
+    let starSize = 50 * scale.x;
 
     console.log("stars: " , starPositions);
 
@@ -112,41 +137,45 @@ function createLoadingScreen()
     textBoxes = [
         new TextBox({
             text: "Goals: \n\nCollect each star \nFinish in less than 30s \nFinish in less than 10s",
-            fontSize: 16,
+            fontSize: 36,
             fontAlign: LEFT,
-            pos: new p5.Vector(630, 110), 
-            size: new p5.Vector(170, 190),
+            pos: new p5.Vector(1350, 200), 
+            size: new p5.Vector(460, 460),
         }),
         ]
 
     shapes = [
+        // behind progress bar
         new Shape({
             shape: "rect",
             fillColor: "rgba(0, 0, 0, 0.5)",
-            pos: new p5.Vector(0, 380), 
-            size: new p5.Vector(innerWidth, 10),
+            pos: new p5.Vector(0, innerHeight - 50), 
+            size: new p5.Vector(innerWidth, 50),
         }),
         new Shape({
             shape: "rect",
             fillColor: 255,
-            pos: new p5.Vector(0, 380), 
-            size: new p5.Vector(1, 10),
+            pos: new p5.Vector(0, innerHeight - 50), 
+            size: new p5.Vector(1, 50),
         }),
+        // behind track
         new Shape({
             shape: "rect",
             fillColor: "rgba(0, 0, 0, 0.5)",
-            pos: new p5.Vector(35, 110), 
+            pos: new p5.Vector(35, 200), 
             size: new p5.Vector(maxWidth, maxHeight),
         }),
+        // header
         new Shape({
             pos: new p5.Vector(0, 0), 
-            size: new p5.Vector(innerWidth, 70),
+            size: new p5.Vector(innerWidth, 170),
             fillColor: "rgba(0, 0, 0, 0.5)",
         }),
+        // behind text
         new TextBox({
             fillColor: "rgba(255, 255, 255, 0.9)",
-            pos: new p5.Vector(600, 110), 
-            size: new p5.Vector(200, 190),
+            pos: new p5.Vector(1310, 200), 
+            size: new p5.Vector(570, 600),
         }),
     ]
 

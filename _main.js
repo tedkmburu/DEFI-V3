@@ -20,6 +20,7 @@ function preload()
         starEmpty: loadImage('images/icons/star-regular.svg'),
         leaderboard: loadImage('images/icons/ranking-star-solid.svg'),
         home: loadImage('images/icons/house-solid.svg'),
+        race: loadImage('images/icons/flag-checkered-solid.svg'),
         };
 
     setScale()

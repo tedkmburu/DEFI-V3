@@ -1,4 +1,4 @@
-let gameDevMode = false;
+let gameDevMode = true;
 
 let screens = []
 let currentScreen = 2;
