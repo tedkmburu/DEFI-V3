@@ -25,13 +25,17 @@ class TextBox extends Particle
         if (this.visible)
         {
             push()
+            
+            translate(this.pos.x, this.pos.y)
+            rotate(this.angle)
+            
 
             if (this.shape == "rect")
             {
                 fill(this.fillColor)
                 stroke(this.strokeColor)
                 if (gameDevMode) stroke(0)
-                rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
+                rect(0, 0, this.size.x, this.size.y)
             }
     
             if (this.text != "")
@@ -40,7 +44,7 @@ class TextBox extends Particle
                 textSize(this.fontSize)
                 fill(this.fontColor)
                 noStroke()
-                text(this.text, this.pos.x, this.pos.y, this.size.x, this.size.y)   
+                text(this.text, 0, 0, this.size.x, this.size.y)   
             }
             pop()
         }

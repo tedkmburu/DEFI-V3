@@ -35,8 +35,8 @@ class TestCharge extends Charge
 
             push();
                 noFill();
-                stroke(255);
-                strokeWeight(3)
+                stroke("rgba(255, 255, 255, 0.5)");
+                strokeWeight(this.radius / 2)
                 point(this.startingPos.x, this.startingPos.y)
                 this.path.forEach(pos => {
                     point(pos.x, pos.y);
@@ -107,12 +107,10 @@ class TestCharge extends Charge
             currentVel.add(currentAcc);
             currentPos.add(currentVel);       
 
-
             if (i % 20 == 0)
             {
                 this.futurePos.push(currentPos.copy())
             }
-            
         }
     }
 
@@ -131,9 +129,9 @@ class TestCharge extends Charge
             push();
                 noStroke()
                 fill("rgba(255, 255, 255, " + opacity + ")");
-                let x = this.pos.x;
-                let y = this.pos.y;
-                ellipse(pos.x, pos.y, this.radius, this.radius);
+                let x = pos.x;
+                let y = pos.y;
+                ellipse(x, y, this.radius, this.radius);
             pop();
         })
     }

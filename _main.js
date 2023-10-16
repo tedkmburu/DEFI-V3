@@ -1,3 +1,5 @@
+"use strict";
+
 function preload() 
 {
     spaceImage = loadImage('images/background.png');
@@ -22,6 +24,7 @@ function preload()
         home: loadImage('images/icons/house-solid.svg'),
         race: loadImage('images/icons/flag-checkered-solid.svg'),
         pause: loadImage('images/icons/pause-solid.svg'),
+        next: loadImage('images/icons/arrow-right-solid.svg'),
         };
 
     setScale()
@@ -48,38 +51,11 @@ function draw()
 
 function setScale()
 {
-    // const maxWidth = 1;
-    // const maxHeight = 0.46208530805687204;
-    
     const originalWidth = 1920;
     const originalHeight = 1080;
 
-    // // Calculate the aspect ratio of the original image
-    // const aspectRatio = originalWidth / originalHeight;
-
-    // // Calculate the new dimensions while keeping the aspect ratio
-    // let newWidth, newHeight;
-    // if (originalWidth > maxWidth || originalHeight > maxHeight) {
-    //     if (originalWidth / maxWidth > originalHeight / maxHeight) {
-    //         newWidth = maxWidth;
-    //         newHeight = maxWidth / aspectRatio;
-    //     } else {
-    //         newHeight = maxHeight;
-    //         newWidth = maxHeight * aspectRatio;
-    //     }
-    // } else {
-    //     newWidth = originalWidth;
-    //     newHeight = originalHeight;
-    // }
-
-
-    // newWidth = innerWidth / 844
-    // newHeight = innerHeight / 390
-
-
-    // scale = new p5.Vector(newWidth, newHeight)
-
-    scale = scaleImageToSize(innerWidth, innerHeight, 1920, 1080).div(new p5.Vector(1920, 1080))
+    scale = scaleImageToSize(innerWidth, innerHeight, originalWidth, originalHeight)
+    scale.div(new p5.Vector(originalWidth, originalHeight))
 }
 
 // calculate the distance from the line to the center of the circle
@@ -351,4 +327,17 @@ function netForceAtPoint(position) // given a vector, it will return the net for
   });
 
   return finalVector;
+}
+
+
+function getRandomStarPhrase()
+{
+    let index = round(random(0, starPhrases.length - 1))
+    return starPhrases[index]
+}
+
+function getRandomTimePhrase()
+{
+    let index = round(random(0, timePhrases.length - 1))
+    return timePhrases[index]
 }

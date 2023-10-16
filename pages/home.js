@@ -58,7 +58,7 @@ function createHomeScreen()
         new Button({
             text: "More Levels",
             pos: new p5.Vector(1920 - 950, 830), 
-            fontSize: 36,
+            fontSize: 48,
             size: new p5.Vector(350, 150),
             fontColor: 255,
             fillColor: purpleColor[4],
@@ -67,7 +67,7 @@ function createHomeScreen()
         new Button({
             text: "Play",
             pos: new p5.Vector(1920 - 550, 830), 
-            fontSize: 36,
+            fontSize: 48,
             size: new p5.Vector(350, 150),
             fontColor: 255,
             fillColor: "red",
@@ -101,7 +101,7 @@ function createHomeScreen()
     if (userData[currentLevel].fastestTime != null)
     {
         if (userData[currentLevel].fastestTime < firstStarTime) numberOfStars++
-        if (userData[currentLevel].fastestTime < secondStarTtime) numberOfStars++    
+        if (userData[currentLevel].fastestTime < secondStarTime) numberOfStars++    
     }
     
     let x = 1070;

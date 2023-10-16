@@ -4,6 +4,7 @@ class Particle
     {
         this.pos = props.pos || new p5.Vector(mouseX, mouseY);
         this.pos = this.pos.copy().mult(scale)
+        this.startingPos = this.pos.copy()
         this.vel = props.vel || new p5.Vector(0, 0);
         this.acc = props.acc || new p5.Vector(0, 0);
 

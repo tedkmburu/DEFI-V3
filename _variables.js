@@ -1,7 +1,7 @@
 let gameDevMode = false;
 
 let screens = []
-let currentScreen = 1;
+let currentScreen = 4;
 
 let levels = []
 let currentLevel = 0;
@@ -14,13 +14,14 @@ let buildMode = true;
 let helpMode = false;
 let elapsedTime = 0;
 
-const k = 89900; // k = 8.99 * Math.pow(10, -9) adjusted because all charges are in micro coulombs;
+const k = 899000; // k = 8.99 * Math.pow(10, -9) adjusted because all charges are in micro coulombs;
 
 let charges = []; // all charges on screen are stored here
 let equiLines = []
 let testCharges = [];
 let fieldLines = [];
 let fieldLineArrows = [];
+let noPositiveCharges = true;
 const trailLength = 800;
 const chargeDiameter = 150; // diameter of a point charge
 const chargeRadius = chargeDiameter / 2;
@@ -50,11 +51,11 @@ let levelCompleteData = {score: 0, starsCollected: 0, timeToComplete: 9999999999
 let animations = []
 
 const firstStarTime = 60000 // 30 s
-const secondStarTtime = 30000 // 10 s
+const secondStarTime = 30000 // 10 s
 
 
-const positiveChargeColor = "rgb(201, 72, 59)";
-const negativeChargeColor = "rgb(24, 116, 152)";
+const positiveChargeColor = "rgb(237, 32, 36)";
+const negativeChargeColor = "rgb(46, 76, 160)";
 const neutralChargeColor = "rgba(85, 85, 85, 0.75)";
 const purpleColor = [
     "rgba(64, 39, 99 , 1)",
@@ -62,4 +63,63 @@ const purpleColor = [
     "rgba(100,64, 141, 1)",
     "rgba(109,57, 147, 1)",
     "rgba(122, 87, 153,1)",
+]
+
+const starPhrases = [
+    "celestial roll!",
+    "star-tling heights!",
+    "earned your stars & stripes!",
+    "star-spangled victory!",
+    "there's a twinkle in your eye!",
+    "a star constellation!",
+    "shining bright!",
+    "starry-eyed puzzle master!",
+    "i'm Starstruck!",
+    "star-quality performance!",
+    "a shining example!",
+    "star-Lord?!?",
+    "star-studded sensation!",
+    "a superstar!",
+    "star-rific!",
+    "no star unturned!",
+    "dazzling performance!",
+    "a place among the stars!",
+    "north Star of perfection!",
+    "you're the star now!",
+    "star-studded victory!",
+    "star power!",
+    "star-stacked success!",
+    "the zenith of star-dom!",
+    "rewriting the star charts!",
+    "pro astronomer?!?",
+    "physicist?!?",
+    "rocket science?!?",
+    "Stars of victory!",
+    "a constellation of achievements!",
+    "star player!",
+]
+
+const timePhrases = [
+    "speedster!",
+    "barry allen?",
+    "wally west?",
+    "jay garrick?",
+    "sonic the who?",
+    "record time!",
+    "in the blink of an eye!",
+    "left this level in the dust!",
+    "lightning-quick!",
+    "clock's ticking, but not for you!",
+    "quick thinking and swift action!",
+    "cleared in a flash!",
+    "fast and furious!",
+    "you're the hare",
+    "breaking (sound) barriers!",
+    "time flies when you're solving puzzles",
+    "gold in the puzzle olympics",
+    "zooooooooooooooooom!",
+    "the need for speed!",
+    "where is the tortoise?",
+    "you're a runner… a track star",
+    "warp speed!" 
 ]

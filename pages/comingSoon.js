@@ -13,7 +13,7 @@ function createComingSoonScreen()
             text: "Coming Soon",
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
-            fontSize: 48,
+            fontSize: 72,
             pos: new p5.Vector(0, 0), 
             size: new p5.Vector(1920, 1080),
         }),
@@ -23,12 +23,13 @@ function createComingSoonScreen()
     buttons = [
         new Button({
             text: "Back",
+            shape: "ellipse",
             myImage: icons.back,
-            pos: new p5.Vector(10, 10), 
-            fontSize: 18,
-            fontAlign: LEFT,
-            size: new p5.Vector(50, 50),
+            pos: new p5.Vector(25, 25), 
+            size: new p5.Vector(150, 150),
+            fontSize: 36,
             fontColor: 255,
+            fillColor: purpleColor[0],
             onClick: function(){ navigateTo("Home"); },
         }),
     ]

@@ -1,12 +1,14 @@
 
 function createAnimations()
 {
-    let maxOpacity = 0.2
+    let maxOpacity = 0.12
     let shapes = []
-    let chargeColors = ["rgba(235, 83, 83, 0.2)", "rgba(24, 116, 152, 0.2)"]
+    let chargeColors = ["rgba(237, 32, 36, " + maxOpacity + ")", "rgba(46, 76, 160, " + maxOpacity + ")"]
 
-    let randX = random(0, innerWidth / 4)
-    let randY = random(innerHeight / 4, 3 * innerHeight / 4)
+    let randX = random(0, innerWidth / 2)
+    let randY = random(0, innerHeight)
+
+    
 
     shapes.push(new Shape({
         shape: "ellipse",
@@ -17,8 +19,8 @@ function createAnimations()
         countFrames: true
     }))
         
-    randX = random(3 * innerWidth / 4, innerWidth)
-    randY = random(innerHeight / 4, 3 * innerHeight / 4)
+    randX = random(innerWidth / 2, 1920)
+    randY = random(0, innerHeight)
     
     shapes.push(new Shape({
         shape: "ellipse",
@@ -32,25 +34,26 @@ function createAnimations()
 
     
     let pos = new p5.Vector(random(0, innerWidth), random(0, innerHeight))
-    let color = "rgba(255, 0, 0, " + maxOpacity + ")" 
+    let color = "rgba(237, 32, 36, " + maxOpacity + ")" 
     let size = new p5.Vector(testChargeDiameter, testChargeDiameter)
-    let velMag = 0.5
+    let velMag = 0
 
-    
-    
-
-    for (let i = 0; i < 50; i++) 
-    {
-        // size = new p5.Vector(random(0, 10), random(0, 10))
+    createNewTestCharge = () => {
         shapes.push(new Shape({
             shape: "ellipse",
-            pos: new p5.Vector(random(innerHeight / 6, innerWidth / 4), random(1 * innerHeight / 4, 3 * innerHeight / 4)),
+            pos: new p5.Vector(random(0, 1920), random(0, 1080)),
             vel: new p5.Vector(random(-velMag, velMag), random(-velMag, velMag)),
             size: size,
             fillColor: color,
-            frameCount: random(0, 500),
+            frameCount: random(0, 2000 * maxOpacity),
             countFrames: true
         }))
+    }
+    
+
+    for (let i = 0; i < 20; i++) 
+    {
+        createNewTestCharge()
     }
 
     functions = () => {
@@ -69,7 +72,7 @@ function createAnimations()
         animations[0].shapes.forEach(shape => {
             if (shape.size.x == size.x)
             {
-                let opacity = maxOpacity - (shape.frameCount / 500)
+                let opacity = maxOpacity - (shape.frameCount / 2000)
 
                 let distanceToCharges = []
 
@@ -95,7 +98,7 @@ function createAnimations()
 
                 if (opacity > 0) 
                 {
-                    shape.fillColor = "rgba(255, 0, 0, " + opacity + ")" 
+                    shape.fillColor = "rgba(201, 72, 59, " + opacity + ")" 
 
                     let force = netForceAtPointFromCharges(shape.pos.copy(), groupOfCharges);
 
@@ -106,8 +109,9 @@ function createAnimations()
                 }
                 else
                 {
+
                     shape.acc = new p5.Vector(0, 0)
-                    shape.pos = new p5.Vector(random(0, innerWidth), random(0, innerHeight))
+                    shape.pos = new p5.Vector(random(0, 1920), random(0, 1080)),
                     shape.vel =  new p5.Vector(random(-velMag, velMag), random(-velMag, velMag))
                     shape.fillColor = color
                     shape.frameCount = 0

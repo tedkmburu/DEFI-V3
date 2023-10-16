@@ -49,7 +49,7 @@ function createLoadingScreen()
             shape: "ellipse",
             myImage: icons.back,
             fillColor: purpleColor[0],
-            pos: new p5.Vector(0, 0), 
+            pos: new p5.Vector(25, 0), 
             fontSize: 36,
             size: new p5.Vector(150, 150),
             fontColor: 255,
@@ -72,8 +72,8 @@ function createLoadingScreen()
     levels[currentLevel].stars.forEach(star => {
         let starPosition = star.pos.copy().mult(scale)
         starPosition.mult(0.7)
-        starPosition.add(imagePos.copy().div(1))
-        // starPosition.add(new p5.Vector(-150, 50))
+        starPosition.add(imagePos.copy().div(2))
+        starPosition.add(new p5.Vector(-150, 50))
         // starPosition.add(new p5.Vector(-60, 50))
         starPositions.push(starPosition)
     })
@@ -110,17 +110,15 @@ function createLoadingScreen()
 
     // display stars
     let numberOfStars = 0
-    numberOfStars+=userData[currentLevel].mostStars;
+    numberOfStars += userData[currentLevel].mostStars;
     if (userData[currentLevel].fastestTime != null)
     {
         if (userData[currentLevel].fastestTime < firstStarTime) numberOfStars++
-        if (userData[currentLevel].fastestTime < secondStarTtime) numberOfStars++
+        if (userData[currentLevel].fastestTime < secondStarTime) numberOfStars++
     }
-    
 
-    // print(numberOfStars)
 
-    let x = 1300;
+    let x = 1320;
     let y = 235;
 
     for (let i = 0; i < 5; i++) 
@@ -130,7 +128,7 @@ function createLoadingScreen()
             images.push(
                 new myImage({
                     pos: new p5.Vector(x + (100 * i), y), 
-                    size: 75,
+                    size: 70,
                     myImage: icons.star,
                 })
             )
@@ -140,7 +138,7 @@ function createLoadingScreen()
             images.push(
                 new myImage({
                     pos: new p5.Vector(x + (100 * i), y), 
-                    size: 75,
+                    size: 70,
                     myImage: icons.starEmpty,
                 })
             )

@@ -134,27 +134,23 @@ function updateTrackImage()
     screens[3].images[0].myImage = trackImage
 }
 
+// Convert milliseconds to seconds and round to the hundredths place
 function millisecondsToString(milliseconds)
-{
-    if (milliseconds < 0) 
+{    
+    if (milliseconds == 1e+34)
     {
-        return "00:00.00";
+        return "12.34";
     }
-
-    // Calculate hours, minutes, seconds, and centiseconds
-    const centiseconds = Math.floor((milliseconds % 1000) / 10);
-    const seconds = Math.floor((milliseconds / 1000) % 60);
-    const minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
-
-    // Format the time components with leading zeros
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(seconds).padStart(2, '0');
-    const formattedCentiseconds = String(centiseconds).padStart(2, '0');
-
-    // Construct the time string
-    const timeString = `${formattedMinutes}:${formattedSeconds}.${formattedCentiseconds}`;
-
-    return timeString;
+    else if (milliseconds != null)
+    {
+        
+        const seconds = (milliseconds / 1000).toFixed(2);
+        return seconds.toString() + " s";
+    }
+    else 
+    {
+        return "0.00";
+    }
 }
 
 function drawEquiPotentialLines()

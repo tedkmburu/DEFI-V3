@@ -7,29 +7,29 @@ function createLevelSelect()
     let textBoxes = []
     let shapes = []
     
-    let buttonSize = new p5.Vector(1080 * 0.08, 1080 * 0.08);
+    let buttonSize = new p5.Vector(150, 150);
 
     buttons.push(new Button({
         text: "Back",
         shape: "ellipse",
         myImage: icons.back,
-        pos: new p5.Vector(0, 0), 
+        pos: new p5.Vector(25, 25), 
         fontSize: 36,
         size: buttonSize,
         fontColor: 255,
-        fillColor: "rgba(255, 255, 255, 0.25)",
+        fillColor: purpleColor[0],
         onClick: function(){ navigateTo("Home"); }
     }))
 
     shapes.push(new Shape({
         pos: new p5.Vector(0, 0), 
-        size: new p5.Vector(1920, 1080 * 0.1),
+        size: new p5.Vector(1920, 200),
         fillColor: "rgba(0, 0, 0, 0.5)",
     }))
 
-    let rowHeight =  (1080 / 3) + 200
-    let xPos = (1920 / 3) / 4;
-    let yPos = 150
+    let rowHeight =  560
+    let xPos = 160
+    let yPos = 200
     let shapeColor = purpleColor[0];
     let shapeSize = new p5.Vector(720, (1080 / 3) + 150);
     
@@ -59,8 +59,8 @@ function createLevelSelect()
         yPos += rowHeight
     }
     
-    xPos = ((1920 / 3) / 3) + 40;
-    yPos = 250
+    xPos = ((1920 / 3) / 3) + 20;
+    yPos = 300
     
 
     for (let i = 0; i < levels.length - 1; i+=2) 
@@ -80,6 +80,11 @@ function createLevelSelect()
             {
 
                 let numberOfStars = userData[index].mostStars;
+                if (userData[index].fastestTime != null)
+                {
+                    if (userData[index].fastestTime < firstStarTime) numberOfStars++
+                    if (userData[index].fastestTime < secondStarTime) numberOfStars++
+                }
 
                 // Set the desired dimensions of the containing div
                 const maxWidth = 1920 * 0.25; // Set your maximum width here
@@ -117,7 +122,7 @@ function createLevelSelect()
                 for (let a = 0; a < numberOfStars; a++) 
                 {
                     images.push(new myImage({
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * starSize) + 50, yPos + 10), 
+                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * (starSize + 10)) + 50, yPos + 10), 
                         size: starSize,
                         myImage: icons.star,
                     }))
@@ -125,7 +130,7 @@ function createLevelSelect()
                 for (let a = numberOfStars; a < 5; a++) 
                 {
                     images.push(new myImage({
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * starSize) + 50, yPos + 10), 
+                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * (starSize + 10)) + 50, yPos + 10), 
                         size: starSize,
                         myImage: icons.starEmpty,
                     }))
@@ -135,7 +140,7 @@ function createLevelSelect()
         yPos += rowHeight
     }
 
-    yPos = 75 - 30
+    yPos = 75 - 30 + 50
 
 
     for (let i = 0; i < levels.length - 1; i+=2) 
@@ -220,25 +225,25 @@ function createLevelSelect()
                         shape: "ellipse", 
                         text: "Leaderboard",
                         myImage: icons.leaderboard,
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + 290, yPos + 530), 
+                        pos: new p5.Vector(((1920 / 2) * j) + xPos + 360, yPos + 530), 
                         fontSize: 24,
                         textAlign: CENTER,
                         size: new p5.Vector(100, 100),
                         fillColor: purpleColor[2],
                         fontColor: 255,
-                        onClick: function(){ if (!levels[i].locked) { navigateTo("Leaderboard"); currentLevel = i; } }
+                        onClick: function(){ if (!levels[index].locked) { navigateTo("Leaderboard"); currentLevel = index; } }
                     }))
                     buttons.push(new Button({
                         shape: "ellipse", 
                         text: "Retry",
                         myImage: icons.redo,
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + 410, yPos + 530), 
+                        pos: new p5.Vector(((1920 / 2) * j) + xPos + 490, yPos + 530), 
                         fontSize: 24,
                         textAlign: CENTER,
                         size: new p5.Vector(100, 100),
                         fillColor: positiveChargeColor,
                         fontColor: 255,
-                        onClick: function(){ if (!levels[i].locked) { navigateTo("Loading Screen"); currentLevel = i; } }
+                        onClick: function(){ if (!levels[index].locked) { navigateTo("Loading Screen"); currentLevel = index; } }
                     }))
                 }
                 else
@@ -253,7 +258,7 @@ function createLevelSelect()
                         size: new p5.Vector(200, 200),
                         fillColor: positiveChargeColor,
                         fontColor: 255,
-                        onClick: function(){ if (!levels[i].locked) { navigateTo("Loading Screen"); currentLevel = index; } }
+                        onClick: function(){ if (!levels[index].locked) { navigateTo("Loading Screen"); currentLevel = index; } }
                     }))
                 }
             }

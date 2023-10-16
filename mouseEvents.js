@@ -125,16 +125,36 @@ function mouseWheel(event)
 {
     if (currentScreen == 1)
     {
-        if (true)
+        
+        if (scrollOffset <= 0)
         {
             scrollOffset -= event.delta
-            screens[1].buttons[0].pos.y += event.delta
-            screens[1].shapes[0].pos.y += event.delta
             screens[1].buttons.forEach(button => { button.pos.y -= event.delta })
             screens[1].images.forEach(image => { image.pos.y -= event.delta })
             screens[1].textBoxes.forEach(textBox => { textBox.pos.y -= event.delta })
             screens[1].shapes.forEach(shape => { shape.pos.y -= event.delta })
         } 
+
+        if (scrollOffset > 0)
+        {
+            scrollOffset = 0
+            screens[1].buttons.forEach(button => { button.pos.y = button.startingPos.y })
+            screens[1].images.forEach(image => { image.pos.y = image.startingPos.y })
+            screens[1].textBoxes.forEach(textBox => { textBox.pos.y = textBox.startingPos.y })
+            screens[1].shapes.forEach(shape => { shape.pos.y = shape.startingPos.y })
+        }
+
+        let rowHeight = -1 * (160 * (levels.length / 2) + 2080)
+        if (scrollOffset < rowHeight)
+        {
+            scrollOffset = rowHeight
+
+            screens[1].buttons.forEach(button => { button.pos.y = button.startingPos.y + rowHeight })
+            screens[1].images.forEach(image => { image.pos.y = image.startingPos.y + rowHeight })
+            screens[1].textBoxes.forEach(textBox => { textBox.pos.y = textBox.startingPos.y + rowHeight })
+            screens[1].shapes.forEach(shape => { shape.pos.y = shape.startingPos.y + rowHeight })
+        }
+
     }
 
     trueScrollOffset -= event.delta
