@@ -12,6 +12,7 @@ class PointCharge extends Charge
 
         this.slider = createSlider(-5, 5, this.charge, 1);
         this.slider.style("zIndex", "999");
+        this.slider.style("width", "200px");
         this.showSlider();
         this.slider.input( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen
         this.slider.changed( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen
@@ -45,6 +46,7 @@ class PointCharge extends Charge
         }
 
         push();
+            strokeWeight(5 * scale.x)
             if (pointCharge.selected) // if the charge has been selected, create a white stroke around it and display its slider
             {
                 stroke(255);
@@ -52,7 +54,7 @@ class PointCharge extends Charge
             }
             else
             {
-                stroke(0);
+                noStroke()
                 // pointCharge.slider.style("visibility", "hidden");
             }
 
@@ -67,7 +69,7 @@ class PointCharge extends Charge
             ellipse(pointCharge.pos.x, pointCharge.pos.y, this.diameter, this.diameter);
 
             // write down the charge of the point charge ontop of it
-            textSize(16 * scale.x);
+            textSize(72 * scale.x);
             // textFont(buttonFont);
             fill("white");
             noStroke();
@@ -77,8 +79,8 @@ class PointCharge extends Charge
             if (pointCharge.charge > 0) { chargeToShow = "+"; chargeStringLength++ }
             chargeToShow = chargeToShow + pointCharge.charge.toString(); 
 
-            let textPosX = pointCharge.pos.x - (chargeStringLength * (4 * scale.x));
-            let textPosY = pointCharge.pos.y + (7 * scale.x);
+            let textPosX = pointCharge.pos.x - (chargeStringLength * (17 * scale.x));
+            let textPosY = pointCharge.pos.y + ((72 * scale.x) / 3);
             
             text(chargeToShow, textPosX, textPosY);
         pop();  

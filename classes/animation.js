@@ -5,8 +5,8 @@ function createAnimations()
     let shapes = []
     let chargeColors = ["rgba(235, 83, 83, 0.2)", "rgba(24, 116, 152, 0.2)"]
 
-    let randX = random(0, gameWidth / 4)
-    let randY = random(gameHeight / 4, 3 * gameHeight / 4)
+    let randX = random(0, innerWidth / 4)
+    let randY = random(innerHeight / 4, 3 * innerHeight / 4)
 
     shapes.push(new Shape({
         shape: "ellipse",

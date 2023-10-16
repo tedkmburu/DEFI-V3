@@ -1,7 +1,7 @@
-let gameDevMode = true;
+let gameDevMode = false;
 
 let screens = []
-let currentScreen = 2;
+let currentScreen = 1;
 
 let levels = []
 let currentLevel = 0;
@@ -27,6 +27,7 @@ const chargeRadius = chargeDiameter / 2;
 const testChargeDiameter = 30;
 const testChargeRadius = testChargeDiameter / 2;
 const starOmega = 0.025
+const starRadius = 20;
 const testChargeCharge = 0.000005; //q = 5 micro coulombs;
 const fieldLinesPerCoulomb = 4;
 
@@ -48,8 +49,8 @@ let levelCompleteData = {score: 0, starsCollected: 0, timeToComplete: 9999999999
 
 let animations = []
 
-const firstStarTime = 30000 // 30 s
-const secondStarTtime = 10000 // 10 s
+const firstStarTime = 60000 // 30 s
+const secondStarTtime = 30000 // 10 s
 
 
 const positiveChargeColor = "rgb(201, 72, 59)";

@@ -23,90 +23,83 @@ function createLevels()
     let levelData = [
         {   // lv 1
             stars: [
-                new Star({pos: new p5.Vector(190, 190)}), 
-                new Star({pos: new p5.Vector(350, 160)}), 
-                new Star({pos: new p5.Vector(500, 200)}), 
+                new Star({pos: new p5.Vector(600, 500)}), 
+                new Star({pos: new p5.Vector(900, 463)}), 
+                new Star({pos: new p5.Vector(1200, 500)}), 
             ],
             testCharges: [
-                new TestCharge({pos: new p5.Vector(150, 190)})
+                new TestCharge({pos: new p5.Vector(500, 530)})
             ],
             finishLine: {
-                pos: new p5.Vector(560, 100),
-                size: new p5.Vector(100, 200)
+                pos: new p5.Vector(1314, 394),
+                size: new p5.Vector(200, 300)
             },
             border: [
-                new p5.Vector(112, 141),
-                new p5.Vector(615, 142),
-                new p5.Vector(615, 247),
-                new p5.Vector(110, 248)
+                new p5.Vector(400, 427),
+                new p5.Vector(1424, 427),
+                new p5.Vector(1424, 643),
+                new p5.Vector(400, 643)
             ]
         },
         {   // lv 2
             stars: [
-                new Star({pos: new p5.Vector(370, 150)}), 
-                new Star({pos: new p5.Vector(370, 200)}), 
-                new Star({pos: new p5.Vector(340, 230)}), 
+                new Star({pos: new p5.Vector(1050, 400)}), 
+                new Star({pos: new p5.Vector(1030, 530)}), 
+                new Star({pos: new p5.Vector(930, 600)}), 
             ],
             testCharges: [
-                new TestCharge({pos: new p5.Vector(370, 150)})
+                new TestCharge({pos: new p5.Vector(885, 332)})
             ],
             finishLine: {
-                pos: new p5.Vector(250, 210),
-                size: new p5.Vector(78, 110)
+                pos: new p5.Vector(713, 501),
+                size: new p5.Vector(185, 350)
             },
             border: [
-                new p5.Vector(278, 80),
-                new p5.Vector(344, 81),
-                new p5.Vector(383, 89),
-                new p5.Vector(405, 104),
-                new p5.Vector(424, 123),
-                new p5.Vector(439, 147),
-                new p5.Vector(447, 172),
-                new p5.Vector(449, 195),
-                new p5.Vector(446, 221),
-                new p5.Vector(435, 251),
-                new p5.Vector(419, 270),
-                new p5.Vector(397, 290),
-                new p5.Vector(364, 304),
-                new p5.Vector(336, 308),
-                new p5.Vector(277, 310),
-                new p5.Vector(278, 219),
-                new p5.Vector(336, 217),
-                new p5.Vector(348, 211),
-                new p5.Vector(355, 196),
-                new p5.Vector(349, 182),
-                new p5.Vector(335, 172),
-                new p5.Vector(279, 170),
-                new p5.Vector(279, 80)
+                new p5.Vector(777, 202),
+                new p5.Vector(949, 199),
+                new p5.Vector(1072, 241),
+                new p5.Vector(1157, 315),
+                new p5.Vector(1200, 436),
+                new p5.Vector(1200, 546),
+                new p5.Vector(1131, 678),
+                new p5.Vector(1057, 740),
+                new p5.Vector(963, 780),
+                new p5.Vector(770, 777),
+                new p5.Vector(773, 543),
+                new p5.Vector(897, 541),
+                new p5.Vector(939, 525),
+                new p5.Vector(963, 481),
+                new p5.Vector(912, 441),
+                new p5.Vector(777, 430),
+                new p5.Vector(777, 198)
             ]
         },
         {   // lv 3
             stars: [
-                new Star({pos: new p5.Vector(250, 130)}), 
-                new Star({pos: new p5.Vector(530, 190)}), 
-                new Star({pos: new p5.Vector(530, 240)}), 
+                new Star({pos: new p5.Vector(1014, 383)}), 
+                new Star({pos: new p5.Vector(1250, 453)}), 
+                new Star({pos: new p5.Vector(1315, 605)}), 
             ],
             testCharges: [
-                new TestCharge({pos: new p5.Vector(250, 130)})
+                new TestCharge({pos: new p5.Vector(500, 350)})
             ],
             finishLine: {
-                pos: new p5.Vector(500, 263),
-                size: new p5.Vector(110, 60)
+                pos: new p5.Vector(1200, 640),
+                size: new p5.Vector(250, 150)
             },
             border: [
-                new p5.Vector(123, 79),
-                new p5.Vector(516, 78),
-                new p5.Vector(558, 87),
-                new p5.Vector(583, 107),
-                new p5.Vector(598, 141),
-                new p5.Vector(602, 158),
-                new p5.Vector(604, 310),
-                new p5.Vector(510, 309),
-                new p5.Vector(512, 180),
-                new p5.Vector(506, 174),
-                new p5.Vector(494, 173),
-                new p5.Vector(123, 170),
-                new p5.Vector(123, 79),
+                new p5.Vector(406, 257),
+                new p5.Vector(1248, 257),
+                new p5.Vector(1290, 264),
+                new p5.Vector(1354, 299),
+                new p5.Vector(1404, 349),
+                new p5.Vector(1427, 440),
+                new p5.Vector(1427, 744),
+                new p5.Vector(1226, 741),
+                new p5.Vector(1225, 472),
+                new p5.Vector(1205, 456),
+                new p5.Vector(400, 447),
+                new p5.Vector(407, 263)
             ]
         },
         {   // lv 4

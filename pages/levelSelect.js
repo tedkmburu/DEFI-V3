@@ -40,8 +40,6 @@ function createLevelSelect()
             
             let index = i + j;
 
-            console.log(i, j, index);
-
             let x = (j * 1920 / 2) + xPos;
             let y = yPos + 60;
             let shapePos = new p5.Vector(x, y)
@@ -58,31 +56,7 @@ function createLevelSelect()
                 fillColor: shapeColor,
             }))
         }
-
         yPos += rowHeight
-        // shapes.push(new Shape({
-        //     // text: "Track " + (i + 1),
-        //     pos: new p5.Vector(xPos, yPos + 60), 
-        //     fontSize: 24,
-        //     textAlign: CENTER,
-        //     size: shapeSize,
-        //     fillColor: shapeColor,
-        //     fontColor: 255,
-        //     onClick: function(){ if (!levels[i].locked) { navigateTo("Loading Screen"); currentLevel = i; } }
-        // }))
-
-        // shapes.push(new Shape({
-        //     // text: "Track " + (i + 2),
-        //     pos: new p5.Vector((1920 / 2) + xPos, yPos + 60), 
-        //     fontSize: 24,
-        //     textAlign: CENTER,
-        //     size: shapeSize,
-        //     fillColor: shapeColor,
-        //     fontColor: 255,
-        //     onClick: function(){ if (!levels[i + 1].locked) { navigateTo("Loading Screen"); currentLevel = i + 1; } }
-        // }))
-
-        
     }
     
     xPos = ((1920 / 3) / 3) + 40;
@@ -143,7 +117,7 @@ function createLevelSelect()
                 for (let a = 0; a < numberOfStars; a++) 
                 {
                     images.push(new myImage({
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * starSize), yPos + 10), 
+                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * starSize) + 50, yPos + 10), 
                         size: starSize,
                         myImage: icons.star,
                     }))
@@ -151,7 +125,7 @@ function createLevelSelect()
                 for (let a = numberOfStars; a < 5; a++) 
                 {
                     images.push(new myImage({
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * starSize), yPos + 10), 
+                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * starSize) + 50, yPos + 10), 
                         size: starSize,
                         myImage: icons.starEmpty,
                     }))
@@ -218,7 +192,7 @@ function createLevelSelect()
                     }))
                 }
                 
-                
+
                 if (highScore != null)
                 {
                     textBoxes.push(new TextBox({
@@ -230,9 +204,6 @@ function createLevelSelect()
                         pos: new p5.Vector(((1920 / 2) * j) + 570, yPos + 400), 
                         size: new p5.Vector(300, 100),
                     }))
-
-                    
-
                     textBoxes.push(new TextBox({
                         text: round(highScore),
                         fillColor: "rgba(0, 0, 0, 0)",
@@ -243,30 +214,31 @@ function createLevelSelect()
                         size: new p5.Vector(300, 100),
                     }))
 
+
+
                     buttons.push(new Button({
                         shape: "ellipse", 
                         text: "Leaderboard",
                         myImage: icons.leaderboard,
-                        pos: new p5.Vector(xPos + 290, yPos + 530), 
+                        pos: new p5.Vector(((1920 / 2) * j) + xPos + 290, yPos + 530), 
                         fontSize: 24,
                         textAlign: CENTER,
                         size: new p5.Vector(100, 100),
                         fillColor: purpleColor[2],
                         fontColor: 255,
-                        onClick: function(){ if (!levels[i].locked) { navigateTo("Loading Screen"); currentLevel = i; } }
+                        onClick: function(){ if (!levels[i].locked) { navigateTo("Leaderboard"); currentLevel = i; } }
                     }))
-
                     buttons.push(new Button({
                         shape: "ellipse", 
                         text: "Retry",
                         myImage: icons.redo,
-                        pos: new p5.Vector(xPos + 410, yPos + 530), 
+                        pos: new p5.Vector(((1920 / 2) * j) + xPos + 410, yPos + 530), 
                         fontSize: 24,
                         textAlign: CENTER,
                         size: new p5.Vector(100, 100),
                         fillColor: positiveChargeColor,
                         fontColor: 255,
-                        onClick: function(){ if (!levels[i].locked) { navigateTo("Leaderboard"); currentLevel = i; } }
+                        onClick: function(){ if (!levels[i].locked) { navigateTo("Loading Screen"); currentLevel = i; } }
                     }))
                 }
                 else

@@ -16,7 +16,17 @@ class Screen
     {
         let screen = this;
 
-        image(this.backgroundImage, 0, 0, innerWidth, innerHeight)
+        // Set the desired dimensions of the containing div
+        const maxWidth = 1920; // Set your maximum width here
+        const maxHeight = 1080; // Set your maximum height here
+
+        // Get the original image dimensions
+        const originalWidth = this.backgroundImage.width;
+        const originalHeight = this.backgroundImage.height;
+
+        let imageSize = scaleImageToSize(1920, 1080, originalWidth, originalHeight) 
+
+        image(this.backgroundImage, 0, 0, imageSize.x, imageSize.y)
 
         if(this.backgroundAnimation)
         {

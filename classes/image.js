@@ -6,11 +6,17 @@ class myImage extends Particle
         
         this.myImage = props.myImage || null;
 
-        // if one number is given as an argument, it will be used as the width
-        this.size = new p5.Vector(props.myImage.width, props.myImage.height);
-        
+        if (this.myImage == null)
+        {
+            console.log(props);
+        }
+
         
 
+
+        // if one number is given as an argument, it will be used as the width
+        
+        if (props.size.y == null) this.size = new p5.Vector(props.myImage.width, props.myImage.height);
         if (props.size != null)
         {
             let width = props.size;
@@ -39,6 +45,8 @@ class myImage extends Particle
         this.shape = props.shape || "rect";
         this.font = props.font;
         this.visible = props.visible || true;
+
+        
     }
 
     display()

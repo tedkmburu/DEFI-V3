@@ -34,14 +34,14 @@ function displayCurrentScreen()
 
 function createScreens()
 {
-    screens = []
+    // screens = []
 
-    screens.push(createHomeScreen())
-    screens.push(createLevelSelect())
-    screens.push(createLoadingScreen())
-    screens.push(createGameScreen())
-    screens.push(createLevelCompleteScreen())
-    screens.push(createComingSoonScreen())
+    screens[0] = (createHomeScreen())
+    screens[1] = (createLevelSelect())
+    screens[2] = (createLoadingScreen())
+    screens[3] = (createGameScreen())
+    screens[4] = (createLevelCompleteScreen())
+    screens[5] = (createComingSoonScreen())
 }
 
 // function setScreenName

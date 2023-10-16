@@ -21,6 +21,7 @@ function preload()
         leaderboard: loadImage('images/icons/ranking-star-solid.svg'),
         home: loadImage('images/icons/house-solid.svg'),
         race: loadImage('images/icons/flag-checkered-solid.svg'),
+        pause: loadImage('images/icons/pause-solid.svg'),
         };
 
     setScale()
@@ -40,7 +41,7 @@ function setup()
 function draw()
 {
     background(0)
-    mousePosition = new p5.Vector(mouseX, mouseY).mult(scale)
+    mousePosition = new p5.Vector(mouseX, mouseY)
     
     displayCurrentScreen()
 }
@@ -50,8 +51,8 @@ function setScale()
     // const maxWidth = 1;
     // const maxHeight = 0.46208530805687204;
     
-    // const originalWidth = innerHeight;
-    // const originalHeight = innerWidth;
+    const originalWidth = 1920;
+    const originalHeight = 1080;
 
     // // Calculate the aspect ratio of the original image
     // const aspectRatio = originalWidth / originalHeight;
@@ -78,7 +79,7 @@ function setScale()
 
     // scale = new p5.Vector(newWidth, newHeight)
 
-    scale = new p5.Vector(1, 1, 1)
+    scale = scaleImageToSize(innerWidth, innerHeight, 1920, 1080).div(new p5.Vector(1920, 1080))
 }
 
 // calculate the distance from the line to the center of the circle

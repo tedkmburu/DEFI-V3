@@ -48,14 +48,14 @@ function mouseClicked()
     }
 
     // console.log(`new p5.Vector(` + mouseX + `, ` + mouseY + `)`);
-    // console.log(dataToPrint);
+    console.log(dataToPrint);
 
-    let working = isPointInRectangle(mousePosition, {
-        pos: new p5.Vector(1920 - 550, 830),
-        size: new p5.Vector(350, 150)
-    }) 
+    // let working = isPointInRectangle(mousePosition, {
+    //     pos: new p5.Vector(1920 - 550, 830),
+    //     size: new p5.Vector(350, 150)
+    // }) 
 
-    console.log(mousePosition);
+    // console.log(`new p5.Vector(` + mouseX + `, ` + mouseY + `)`);
 
 }
 

@@ -9,41 +9,43 @@ function createGameScreen()
 
     shapes.push(new Shape({
         pos: new p5.Vector(0, 0), 
-        size: new p5.Vector(innerWidth, 70),
+        size: new p5.Vector(1920, 200),
         fillColor: "rgba(0, 0, 0, 0.5)",
     }))
 
-
+    let buttonSize = new p5.Vector(150, 150)
+    
     buttons = [
         new Button({
             text: "Pause",
-            myImage: icons.back,
-            pos: new p5.Vector(10, 10), 
-            fontSize: 18,
-            fontAlign: LEFT,
-            size: new p5.Vector(50, 50),
+            shape: "ellipse",
+            myImage: icons.pause,
+            pos: new p5.Vector(25, 25), 
+            fontSize: 36,
+            size: buttonSize,
+            fillColor: purpleColor[0],
             fontColor: 255,
             onClick: function(){ navigateTo("Level Select"); },
         }),
         new Button({
             text: "Build",
+            shape: "ellipse",
+            fillColor: positiveChargeColor,
             myImage: (buildMode) ? icons.play : icons.edit,
-            pos: new p5.Vector(844 - 60, 390 - 60), 
-            fontSize: 18,
-            fontAlign: LEFT,
-            size: new p5.Vector(50, 50),
+            pos: new p5.Vector(1920 - 225, 1080 - 225), 
+            fontSize: 36,
+            size: buttonSize,
             fontColor: 255,
-            onClick: function()
-            { 
-                toggleBuildMode()
-            },
-        }),]
+            onClick: function() { toggleBuildMode(); },
+        })]
 
     
 
-    // Set the desired dimensions of the containing div
-    const maxWidth = 208.6 * 3; // Set your maximum width here
-    const maxHeight = 96.2 * 3; // Set your maximum height here
+    
+
+    // Set the desired dimensions of the rectangle containing the track image
+    const maxWidth = 2 * 1920 / 3; // Set your maximum width here
+    const maxHeight = 2 * 1080 / 3; // Set your maximum height here
 
     // Get the original image dimensions
     const originalWidth = levels[currentLevel].size.x;
@@ -51,12 +53,14 @@ function createGameScreen()
 
     let imageSize = scaleImageToSize(maxWidth, maxHeight, originalWidth, originalHeight) 
     let imagePos = getScaledImagePos(maxWidth, maxHeight, imageSize)
+    let trackImageToShow = (buildMode) ? levels[currentLevel].buildImage : levels[currentLevel].playImage
 
+    console.log(buildMode);
     images = [
         new myImage({
-            pos: new p5.Vector(50, 50).add(imagePos), 
+            pos: new p5.Vector(400, 200).add(imagePos), 
             size: imageSize.x * 0.8,
-            myImage: (buildMode) ? levels[currentLevel].buildImage : levels[currentLevel].trackImage ,
+            myImage: trackImageToShow,
         })]
 
     let personalBest = userData[currentLevel].fastestTime
@@ -66,11 +70,10 @@ function createGameScreen()
             text: millisecondsToString(elapsedTime),
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
-            fontSize: 24,
-            pos: new p5.Vector(322, 10), 
-            size: new p5.Vector(200, 50),
+            fontSize: 72,
+            pos: new p5.Vector(0, 50), 
+            size: new p5.Vector(1920, 80),
         }),
-        
     ]
 
     if (personalBest != null)
@@ -79,10 +82,10 @@ function createGameScreen()
             new TextBox({
                 text: "Personal Best: " + millisecondsToString(personalBest),
                 fillColor: "rgba(0, 0, 0, 0)",
-                fontColor: "rgba(255, 255, 255, 0.5)",
-                fontSize: 12,
-                pos: new p5.Vector(322, 50), 
-                size: new p5.Vector(200, 50),
+                fontColor: "rgba(255, 255, 255, 0.75)",
+                fontSize: 24,
+                pos: new p5.Vector(0, 120), 
+                size: new p5.Vector(1920, 80),
             })
         )
     }
@@ -94,7 +97,6 @@ function createGameScreen()
         displayStars()
         createFieldLines()
         displayCharges()
-        updatePlayButton()
         if (!buildMode)
         {
             checkStarsCollisions();
@@ -105,7 +107,9 @@ function createGameScreen()
             displayTrackBorder()
         }
         checkWinConditions()
+        updatePlayButton()
     }
+
 
     return new Screen({
         name: screenName,
@@ -194,11 +198,13 @@ function toggleHelp()
 
 function toggleBuildMode()
 {
-    buildMode =! buildMode;
+    
+    buildMode = !buildMode;
     
     resetCharges()
     resetStars()
     resetTestCharges()
+
 }
 
 function resetCharges()
@@ -286,11 +292,9 @@ function checkBorderCollisions()
     })
 }
 
-// used to see the actual borders
+// used to see the actual borders when (gameDevMode == true)
 function displayTrackBorder()
 {
-
-
     push()
         stroke("red")
         fill("rgba(255, 0, 0, 0.4)")
