@@ -1,4 +1,4 @@
-class myImage extends Particle
+class MyImage extends Particle
 {
     constructor(props)
     {

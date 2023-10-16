@@ -16,7 +16,7 @@ function createLevelCompleteScreen()
     shapes.push(new Shape({
         pos: new p5.Vector(1920 / 2, 100), 
         size: new p5.Vector((1920 / 2) - 100, 1080 - 400),
-        fillColor: "rgba(255, 255, 255, 0.75)",
+        fillColor: "rgba(0, 0, 0, 0.5)",
     }))
 
     buttons = [
@@ -66,7 +66,7 @@ function createLevelCompleteScreen()
         }),]
 
     // images = [
-    //     new myImage({
+    //     new MyImage({
     //         pos: new p5.Vector(50, 50), 
     //         size: 208.6 * 3,
     //         myImage: homeTrack,
@@ -81,37 +81,39 @@ function createLevelCompleteScreen()
     let y = 500;
     let bannerWidth = 950;
     // banners
-    images.push(new myImage({
+    images.push(new MyImage({
         pos: new p5.Vector(x, y), 
         size: bannerWidth,
         myImage: banner,
     }))
-    images.push(new myImage({
+    images.push(new MyImage({
         pos: new p5.Vector(x, y + 200),
         size: bannerWidth,
         myImage: banner,
     }))
+    
 
 
     
-    x = 544;
-    y = 50;
+    x = 160;
+    y = 175;
+    let starSize = 120
 
     // yellow stars
     for (let i = 0; i < numberOfStarsCollected; i++) 
     {
-        images.push(new myImage({
-            pos: new p5.Vector((50 * i) + x, 50 + y), 
-            size: 50,
+        images.push(new MyImage({
+            pos: new p5.Vector(((starSize + 10) * i) + x, 50 + y), 
+            size: starSize,
             myImage: icons.star,
         }))
     }
     // empty stars
     for (let i = numberOfStarsCollected; i < 5; i++) 
     {
-        images.push(new myImage({
-            pos: new p5.Vector((50 * i) + x, 50 + y), 
-            size: 50,
+        images.push(new MyImage({
+            pos: new p5.Vector(((starSize + 10) * i) + x, 50 + y), 
+            size: starSize,
             myImage: icons.starEmpty,
         }))
     }
@@ -119,55 +121,23 @@ function createLevelCompleteScreen()
 
     textBoxes = [
         new TextBox({
-            text: "Personal Best",
+            text: "complete the level in under 60 seconds +1 star \n complete the level in under 30 seconds +1 star \n\n each star ×10 score!",
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
-            fontSize: 24,
-            pos: new p5.Vector(100, 100), 
-            size: new p5.Vector(350, 50),
+            fontSize: 36,
+            pos: new p5.Vector(1000, 140), 
+            size: new p5.Vector(780, 300),
         }),
+        // new TextBox({
+        //     text: "Excellent",
+        //     fillColor: "rgba(0, 0, 0, 0)",
+        //     fontColor: "white",
+        //     fontSize: 16,
+        //     pos: new p5.Vector(540, 50), 
+        //     size: new p5.Vector(200, 25),
+        // }),
         new TextBox({
-            text: "Highest Score",
-            fillColor: "rgba(0, 0, 0, 0)",
-            fontColor: "white",
-            fontSize: 16,
-            pos: new p5.Vector(100, 150), 
-            size: new p5.Vector(350, 25),
-        }),
-        new TextBox({
-            text: round(userData[currentLevel].highScore),
-            fillColor: "rgba(0, 0, 0, 0)",
-            fontColor: "white",
-            fontSize: 16,
-            pos: new p5.Vector(100, 175), 
-            size: new p5.Vector(350, 25),
-        }),
-        new TextBox({
-            text: "Fastest Time",
-            fillColor: "rgba(0, 0, 0, 0)",
-            fontColor: "white",
-            fontSize: 16,
-            pos: new p5.Vector(100, 200), 
-            size: new p5.Vector(350, 25),
-        }),
-        new TextBox({
-            text: millisecondsToString(userData[currentLevel].fastestTime),
-            fillColor: "rgba(0, 0, 0, 0)",
-            fontColor: "white",
-            fontSize: 16,
-            pos: new p5.Vector(100, 225), 
-            size: new p5.Vector(350, 25),
-        }),
-        new TextBox({
-            text: "Excellent",
-            fillColor: "rgba(0, 0, 0, 0)",
-            fontColor: "white",
-            fontSize: 16,
-            pos: new p5.Vector(540, 50), 
-            size: new p5.Vector(200, 25),
-        }),
-        new TextBox({
-            text: "Time:",
+            text: "Time",
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 36,
@@ -175,7 +145,7 @@ function createLevelCompleteScreen()
             size: new p5.Vector(700, 100),
         }),
         new TextBox({
-            text: "Score:",
+            text: "Score",
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 36,
@@ -183,7 +153,7 @@ function createLevelCompleteScreen()
             size: new p5.Vector(700, 100),
         }),
         new TextBox({
-            text: millisecondsToString(levelCompleteData.timeToComplete) + " s",
+            text: millisecondsToString(levelCompleteData.timeToComplete),
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 72,
@@ -197,29 +167,57 @@ function createLevelCompleteScreen()
             fontSize: 72,
             pos: new p5.Vector(130, 705), 
             size: new p5.Vector(700, 100),
-        }),
-        new TextBox({
-            text: getRandomStarPhrase(),
-            fillColor: "rgba(0, 0, 0, 0)",
-            fontColor: "white",
-            fontSize: 24,
-            pos: new p5.Vector(130, 605), 
-            size: new p5.Vector(700, 100),
-        }),
+        })
     ]
 
     if (levelCompleteData.timeToComplete < secondStarTime || levelCompleteData.timeToComplete == 1e+34)
     {
         textBoxes.push(new TextBox({
             text: getRandomTimePhrase(),
-            fillColor: "rgba(0, 0, 0, 0.5)",
-            fontColor: "white",
-            fontSize: 24,
+            fillColor: "rgba(0, 0, 0, 0)",
+            fontColor: 0,
+            fontSize: 30,
             pos: new p5.Vector(100, 555), 
             size: new p5.Vector(200, 200),
             angle: -0.785398,
         }))
+
+        // stamp
+        images.push(new MyImage({
+            pos: new p5.Vector(140, 455),
+            size: 200,
+            myImage: stamp,
+        }))
     }
+
+
+    if (levelCompleteData.score > userData[currentLevel].highScore || levelCompleteData.score == 0)
+    {
+        textBoxes.push(new TextBox({
+            text: "New High Score!",
+            fillColor: "rgba(0, 0, 0, 0)",
+            fontColor: 0,
+            fontSize: 40,
+            pos: new p5.Vector(600, 755), 
+            size: new p5.Vector(200, 200),
+            angle: -0.785398,
+        }))
+
+        // stamp
+        images.push(new MyImage({
+            pos: new p5.Vector(615, 630),
+            size: 250,
+            myImage: stamp,
+        }))
+    }
+
+    images.push(
+        new MyImage({
+            pos: new p5.Vector(1115, 470),
+            size: 550,
+            myImage: levelCompleteImage,
+        })
+    ) 
 
     return new Screen({
         name: screenName,

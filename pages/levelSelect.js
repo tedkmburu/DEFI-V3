@@ -33,6 +33,8 @@ function createLevelSelect()
     let shapeColor = purpleColor[0];
     let shapeSize = new p5.Vector(720, (1080 / 3) + 150);
     
+
+    // shapes that hold everything
     for (let i = 0; i < levels.length - 1; i+=2) 
     {
         for (let j = 0; j < 2; j++) 
@@ -47,12 +49,6 @@ function createLevelSelect()
             shapes.push(new Shape({
                 pos: shapePos.copy(), 
                 size: shapeSize,
-                fillColor: shapeColor,
-            }))
-
-            shapes.push(new Shape({
-                pos: shapePos.copy(), 
-                size: shapeSize.copy().div(2),
                 fillColor: shapeColor,
             }))
         }
@@ -70,8 +66,8 @@ function createLevelSelect()
             let index = i + j;
             if (levels[index].locked)
             {
-                images.push(new myImage({
-                    pos: new p5.Vector((((1920 / 2)) * j) + xPos + 140, yPos + 125), 
+                images.push(new MyImage({
+                    pos: new p5.Vector((((1920 / 2)) * j) + xPos + 220, yPos + 125), 
                     size: 150,
                     myImage: icons.lock,
                 }))
@@ -101,8 +97,8 @@ function createLevelSelect()
                 {
                     // banner
                     images.push(
-                        new myImage({
-                            pos: new p5.Vector(((1920 / 2) * j) + xPos - 180, yPos), 
+                        new MyImage({
+                            pos: new p5.Vector(((1920 / 2) * j) + xPos - 160, yPos), 
                             size: 900,
                             myImage: banner,
                         })
@@ -111,7 +107,7 @@ function createLevelSelect()
                 
 
                 // track build image
-                images.push(new myImage({
+                images.push(new MyImage({
                     pos: new p5.Vector(((1920 / 2) * j) + xPos - 50, yPos + 210).add(imagePos), 
                     size: imageSize.x * 0.6,
                     myImage: levels[index].buildImage,
@@ -121,7 +117,7 @@ function createLevelSelect()
 
                 for (let a = 0; a < numberOfStars; a++) 
                 {
-                    images.push(new myImage({
+                    images.push(new MyImage({
                         pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * (starSize + 10)) + 50, yPos + 10), 
                         size: starSize,
                         myImage: icons.star,
@@ -129,7 +125,7 @@ function createLevelSelect()
                 }
                 for (let a = numberOfStars; a < 5; a++) 
                 {
-                    images.push(new myImage({
+                    images.push(new MyImage({
                         pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * (starSize + 10)) + 50, yPos + 10), 
                         size: starSize,
                         myImage: icons.starEmpty,
@@ -151,13 +147,20 @@ function createLevelSelect()
             if (levels[index].locked)
             {
                 textBoxes.push(new TextBox({
-                    text: "Locked",
+                    text: "locked",
                     fillColor: "rgba(0, 0, 0, 0)",
                     fontColor: "white",
                     fontSize: 48,
                     fontAlign: CENTER,
-                    pos: new p5.Vector(((1900 / 2) * j) + (420), yPos + 500), 
+                    pos: new p5.Vector(((1900 / 2) * j) + (480), yPos + 500), 
                     size: new p5.Vector(100, 100),
+                }))
+
+                shapes.push(new Shape({
+                    shape: "ellipse",
+                    pos: new p5.Vector(((1900 / 2) * j) + (535), yPos + 450),  
+                    size: new p5.Vector(300, 300),
+                    fillColor: purpleColor[1],
                 }))
             }
             else
@@ -174,7 +177,7 @@ function createLevelSelect()
                     size: new p5.Vector(300, 80),
                 }))
 
-                if (timeToComplete != "00:00.00")
+                if (timeToComplete != "0.00 s")
                 {
                     textBoxes.push(new TextBox({
                         text: "Best Time",

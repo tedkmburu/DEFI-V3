@@ -76,17 +76,17 @@ function createHomeScreen()
         ]
 
     images = [
-        new myImage({
+        new MyImage({
             pos: new p5.Vector(0, 200), 
             size: 1920 * 0.6,
             myImage: homeTrack,
         }),
-        new myImage({
+        new MyImage({
             pos: new p5.Vector(815, 125), 
             size: 1060,
             myImage: banner,
         }),
-        new myImage({
+        new MyImage({
             pos: new p5.Vector(970, 400), 
             size: new p5.Vector(750, 400),
             myImage: levels[currentLevel].playImage,
@@ -112,7 +112,7 @@ function createHomeScreen()
         if (i < numberOfStars)
         {
             images.push(
-                new myImage({
+                new MyImage({
                     pos: new p5.Vector(x + (110 * i), y), 
                     size: 100,
                     myImage: icons.star,
@@ -122,7 +122,7 @@ function createHomeScreen()
         else
         {
             images.push(
-                new myImage({
+                new MyImage({
                     pos: new p5.Vector(x + (110 * i), y), 
                     size: 100,
                     myImage: icons.starEmpty,
@@ -163,7 +163,7 @@ function createHomeScreen()
             text: "High Score: " + Math.round(userData[currentLevel].highScore),
             fillColor: "rgba(0, 0, 0, 0)",
             fontSize: 48,
-            pos: new p5.Vector(850, 260), 
+            pos: new p5.Vector(850, 270),
             size: new p5.Vector(gameWidth / 2, 200),
         })
     )

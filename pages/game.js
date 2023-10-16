@@ -57,7 +57,7 @@ function createGameScreen()
 
     console.log(buildMode);
     images = [
-        new myImage({
+        new MyImage({
             pos: new p5.Vector(400, 200).add(imagePos), 
             size: imageSize.x * 0.8,
             myImage: trackImageToShow,
@@ -139,7 +139,7 @@ function millisecondsToString(milliseconds)
 {    
     if (milliseconds == 1e+34)
     {
-        return "12.34";
+        return "12.34 s";
     }
     else if (milliseconds != null)
     {
@@ -149,7 +149,7 @@ function millisecondsToString(milliseconds)
     }
     else 
     {
-        return "0.00";
+        return "0.00 s";
     }
 }
 
@@ -268,8 +268,8 @@ function displayTestCharges()
 // updates the image on the play button
 function updatePlayButton()
 {
-    screens[currentScreen].buttons[1].myImage = (buildMode) ? icons.play : icons.edit
-    screens[currentScreen].buttons[1].text = (buildMode) ? "Play" : "Build";
+    screens[3].buttons[1].myImage = (buildMode) ? icons.play : icons.edit
+    screens[3].buttons[1].text = (buildMode) ? "Play" : "Build";
 }
 
 // checks to see if any test charge collides with a star

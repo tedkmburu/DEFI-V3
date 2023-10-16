@@ -81,27 +81,27 @@ function createLoadingScreen()
     let starSize = 40 * scale.x;
 
     images = [
-        new myImage({
+        new MyImage({
             pos: new p5.Vector(0, 200).add(imagePos), 
             size: imageSize.copy(),
             myImage: levels[currentLevel].buildImage,
         }),
-        new myImage({
+        new MyImage({
             pos: starPositions[0], 
             size: starSize,
             myImage: icons.star,
         }),
-        new myImage({
+        new MyImage({
             pos: starPositions[1], 
             size: starSize,
             myImage: icons.star,
         }),
-        new myImage({
+        new MyImage({
             pos: starPositions[2], 
             size: starSize,
             myImage: icons.star,
         }),
-        new myImage({
+        new MyImage({
             pos: new p5.Vector(1200, 230), 
             size: 700,
             myImage: banner,
@@ -126,7 +126,7 @@ function createLoadingScreen()
         if (i < numberOfStars)
         {
             images.push(
-                new myImage({
+                new MyImage({
                     pos: new p5.Vector(x + (100 * i), y), 
                     size: 70,
                     myImage: icons.star,
@@ -136,7 +136,7 @@ function createLoadingScreen()
         else
         {
             images.push(
-                new myImage({
+                new MyImage({
                     pos: new p5.Vector(x + (100 * i), y), 
                     size: 70,
                     myImage: icons.starEmpty,

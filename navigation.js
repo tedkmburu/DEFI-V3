@@ -46,12 +46,13 @@ function createScreens()
 {
     // screens = []
 
-    screens[0] = (createHomeScreen())
-    screens[1] = (createLevelSelect())
-    screens[2] = (createLoadingScreen())
-    screens[3] = (createGameScreen())
-    screens[4] = (createLevelCompleteScreen())
-    screens[5] = (createComingSoonScreen())
+    screens[0] = createHomeScreen()
+    screens[1] = createLevelSelect()
+    screens[2] = createLoadingScreen()
+    screens[3] = createGameScreen()
+    screens[4] = createLevelCompleteScreen()
+    screens[5] = createComingSoonScreen()
+    screens[6] = createSettingsScreen()
 }
 
 // function setScreenName

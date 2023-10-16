@@ -1,7 +1,7 @@
 let gameDevMode = false;
 
 let screens = []
-let currentScreen = 4;
+let currentScreen = 0;
 
 let levels = []
 let currentLevel = 0;
@@ -35,9 +35,11 @@ const fieldLinesPerCoulomb = 4;
 const gameWidth = 1920
 const gameHeight = 1080
 
-let spaceImage, blueprintImage, homeTrack, banner;
+let spaceImage, blueprintImage, homeTrack, banner, stamp;
 let trackImages;
 let icons;
+
+let levelCompleteImage;
 
 let mousePosition;
 
@@ -110,16 +112,29 @@ const timePhrases = [
     "left this level in the dust!",
     "lightning-quick!",
     "clock's ticking, but not for you!",
-    "quick thinking and swift action!",
+    "quick thinking!",
+    "swift action!",
     "cleared in a flash!",
     "fast and furious!",
     "you're the hare",
     "breaking (sound) barriers!",
-    "time flies when you're solving puzzles",
+    "time flies when you're...",
     "gold in the puzzle olympics",
     "zooooooooooooooooom!",
     "the need for speed!",
     "where is the tortoise?",
     "you're a runner… a track star",
-    "warp speed!" 
+    "warp speed!",
+    "that was quick!",
+    "zooming past!",
+    "lightning-fast!",
+    "speedster strikes again!",
+    "rapid success!",
+    "turbo mode!",
+    "zero to hero!",
+    "turbocharged?",
+    "ace of pace!",
+    "warp speed!",
+    "",
+    "",
 ]

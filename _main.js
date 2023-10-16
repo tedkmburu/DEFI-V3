@@ -6,6 +6,8 @@ function preload()
     blueprintImage = loadImage('images/blueprint.png');
     homeTrack = loadImage('images/homeTrack.png');
     banner = loadImage('images/banner.svg')
+    stamp = loadImage('images/stamp.svg')
+    levelCompleteImage = loadImage('images/levelComplete.svg')
 
     icons = {
         back: loadImage('images/icons/arrow-left-solid.svg'),
