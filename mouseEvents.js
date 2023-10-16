@@ -36,7 +36,7 @@ function mouseClicked()
 
         if (currentScreen == 3 && buildMode && !chargeSelected)
         {
-            pos = new p5.Vector(mouseX, mouseY).mult(scale);
+            pos = new p5.Vector(mouseX, mouseY).div(scale);
             charges.push(new PointCharge({pos: pos}))
         }
     }
