@@ -27,6 +27,7 @@ function preload()
         race: loadImage('images/icons/flag-checkered-solid.svg'),
         pause: loadImage('images/icons/pause-solid.svg'),
         next: loadImage('images/icons/arrow-right-solid.svg'),
+        trash: loadImage('images/icons/trash-can-solid.svg'),
         };
 
     setScale()

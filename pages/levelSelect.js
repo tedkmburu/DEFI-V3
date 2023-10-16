@@ -23,7 +23,7 @@ function createLevelSelect()
 
     shapes.push(new Shape({
         pos: new p5.Vector(0, 0), 
-        size: new p5.Vector(1920, 200),
+        size: new p5.Vector(innerWidth * 3, 200),
         fillColor: "rgba(0, 0, 0, 0.5)",
     }))
 

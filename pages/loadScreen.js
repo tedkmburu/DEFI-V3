@@ -70,10 +70,10 @@ function createLoadingScreen()
 
     let starPositions = []
     levels[currentLevel].stars.forEach(star => {
-        let starPosition = star.pos.copy().mult(scale)
-        starPosition.mult(0.7)
-        starPosition.add(imagePos.copy().div(2))
-        starPosition.add(new p5.Vector(-150, 50))
+        let starPosition = star.pos.copy()
+        starPosition.mult(1.3)
+        // starPosition.add(imagePos.copy())
+        starPosition.add(new p5.Vector(-200, 115))
         // starPosition.add(new p5.Vector(-60, 50))
         starPositions.push(starPosition)
     })
@@ -162,7 +162,7 @@ function createLoadingScreen()
             shape: "rect",
             fillColor: "rgba(0, 0, 0, 0.5)",
             pos: new p5.Vector(0, 1080 - 50), 
-            size: new p5.Vector(1920, 50),
+            size: new p5.Vector(innerWidth * 3, 50),
         }),
         // progress bar
         new Shape({
@@ -181,7 +181,7 @@ function createLoadingScreen()
         // header
         new Shape({
             pos: new p5.Vector(0, 0), 
-            size: new p5.Vector(1920, 170),
+            size: new p5.Vector(innerWidth  * 3, 170),
             fillColor: "rgba(0, 0, 0, 0.5)",
         }),
         // behind text

@@ -1,5 +1,6 @@
 function mouseClicked()
 {
+    console.log("clicked");
     let buttonWasClicked = false; 
 
     screens[currentScreen].buttons.forEach(button => {
@@ -10,6 +11,8 @@ function mouseClicked()
         }
     });
 
+    let selectedCharge;
+
     if (!buttonWasClicked && buildMode)
     {
         charges.forEach(charge => {charge.dragging = false; charge.selected = false;} )
@@ -19,12 +22,19 @@ function mouseClicked()
         for (let i = 0; i < charges.length; i++) 
         {
             let distanceToCharge = charges[i].pos.dist(mousePosition)
+
+            if (charges[i].selected)
+            {
+                selectedCharge = charges[i]; 
+                print(selectedCharge)
+            }
             
             if (charges[i].radius > distanceToCharge)
             {
                 charges[i].selected = true;
-                chargeSelected = true; 
+                
                 charges[i].slider.style("visibility", "visible");
+                selectedCharge = charges[i]
             }
             else
             {
@@ -34,7 +44,17 @@ function mouseClicked()
             
         }
 
-        if (currentScreen == 3 && buildMode && !chargeSelected)
+        let mouseOverCharge = charges.some(charge => {
+            let distanceToCharge = mousePosition.copy().dist(charge.pos)
+            if (distanceToCharge < charge.diameter * 1.5)
+            {
+                return true;
+            }
+        })
+
+        console.log(mouseOverCharge);
+
+        if (currentScreen == 3 && buildMode && !chargeSelected && !mouseOverCharge)
         {
             pos = new p5.Vector(mouseX, mouseY).div(scale);
             charges.push(new PointCharge({pos: pos}))

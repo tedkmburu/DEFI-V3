@@ -12,7 +12,7 @@ class PointCharge extends Charge
 
         this.slider = createSlider(-5, 5, this.charge, 1);
         this.slider.style("zIndex", "999");
-        this.slider.style("width", "200px");
+        // this.slider.style("width", "200px");
         this.showSlider();
         this.slider.input( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen
         this.slider.changed( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen

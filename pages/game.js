@@ -9,7 +9,7 @@ function createGameScreen()
 
     shapes.push(new Shape({
         pos: new p5.Vector(0, 0), 
-        size: new p5.Vector(1920, 200),
+        size: new p5.Vector(innerWidth * 3, 200),
         fillColor: "rgba(0, 0, 0, 0.5)",
     }))
 
@@ -37,7 +37,19 @@ function createGameScreen()
             size: buttonSize,
             fontColor: 255,
             onClick: function() { toggleBuildMode(); },
-        })]
+        }),
+        new Button({
+            text: "Trash",
+            shape: "ellipse",
+            fillColor: purpleColor[0],
+            myImage: icons.trash,
+            pos: new p5.Vector(25, 1080 - 225), 
+            fontSize: 36,
+            size: buttonSize,
+            fontColor: 255,
+            onClick: function() {  },
+        })
+    ]
 
     
 
