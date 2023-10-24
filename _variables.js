@@ -17,6 +17,8 @@ let elapsedTime = 0;
 const k = 899000; // k = 8.99 * Math.pow(10, -9) adjusted because all charges are in micro coulombs;
 
 let charges = []; // all charges on screen are stored here
+
+let voltage = []
 let equiLines = []
 let testCharges = [];
 let fieldLines = [];
@@ -27,10 +29,12 @@ const chargeDiameter = 150; // diameter of a point charge
 const chargeRadius = chargeDiameter / 2;
 const testChargeDiameter = 30;
 const testChargeRadius = testChargeDiameter / 2;
-const starOmega = 0.025
-const starRadius = 20;
+const coinOmega = 0.025
+const coinRadius = 20;
 const testChargeCharge = 0.000005; //q = 5 micro coulombs;
 const fieldLinesPerCoulomb = 4;
+const voltageDefinition = 50
+const commonButtonRadius = 150
 
 const gameWidth = 1920
 const gameHeight = 1080
@@ -38,6 +42,7 @@ const gameHeight = 1080
 let spaceImage, blueprintImage, homeTrack, banner, stamp;
 let trackImages;
 let icons;
+let coinImages;
 
 let levelCompleteImage;
 
@@ -45,15 +50,18 @@ let mousePosition;
 
 let dataToPrint = ""
 
-const GAME_DATA_KEY = 'gameData';
+const GAME_DATA_KEY = '10/23';
 let userData;
 
-let levelCompleteData = {score: 0, starsCollected: 0, timeToComplete: 9999999999999999999999999999999999}
+let levelCompleteData = {score: 0, coinsCollected: [0, 0, 0], timeToComplete: 9999999999999999999999999999999999}
 
 let animations = []
 
-const firstStarTime = 60000 // 30 s
-const secondStarTime = 30000 // 10 s
+const silverCoinTime = 5000 // 10 s
+const bronzeCoinTime = 10000 // 30 s
+const goldValue = 1000;
+const silverValue = 100;
+const bronzeValue = 10;
 
 
 const positiveChargeColor = "rgb(237, 32, 36)";

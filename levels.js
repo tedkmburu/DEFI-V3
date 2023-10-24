@@ -22,10 +22,10 @@ function createLevels()
 
     let levelData = [
         {   // lv 1
-            stars: [
-                new Star({pos: new p5.Vector(600, 500)}), 
-                new Star({pos: new p5.Vector(900, 463)}), 
-                new Star({pos: new p5.Vector(1200, 500)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(600, 500)}), 
+                new Coin({pos: new p5.Vector(900, 463)}), 
+                new Coin({pos: new p5.Vector(1200, 500)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(500, 530)})
@@ -42,10 +42,10 @@ function createLevels()
             ]
         },
         {   // lv 2
-            stars: [
-                new Star({pos: new p5.Vector(1050, 400)}), 
-                new Star({pos: new p5.Vector(1030, 530)}), 
-                new Star({pos: new p5.Vector(930, 600)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(1050, 400)}), 
+                new Coin({pos: new p5.Vector(1030, 530)}), 
+                new Coin({pos: new p5.Vector(930, 600)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(885, 332)})
@@ -75,10 +75,10 @@ function createLevels()
             ]
         },
         {   // lv 3
-            stars: [
-                new Star({pos: new p5.Vector(1014, 383)}), 
-                new Star({pos: new p5.Vector(1250, 453)}), 
-                new Star({pos: new p5.Vector(1315, 605)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(1014, 383)}), 
+                new Coin({pos: new p5.Vector(1250, 453)}), 
+                new Coin({pos: new p5.Vector(1315, 605)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(500, 350)})
@@ -103,10 +103,10 @@ function createLevels()
             ]
         },
         {   // lv 4
-            stars: [
-                new Star({pos: new p5.Vector(500, 120)}), 
-                new Star({pos: new p5.Vector(450, 290)}), 
-                new Star({pos: new p5.Vector(200, 260)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(500, 120)}), 
+                new Coin({pos: new p5.Vector(450, 290)}), 
+                new Coin({pos: new p5.Vector(200, 260)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(500, 120)})
@@ -138,10 +138,10 @@ function createLevels()
             ]
         },
         {   // lv 5
-            stars: [
-                new Star({pos: new p5.Vector(150, 150)}), 
-                new Star({pos: new p5.Vector(300, 150)}), 
-                new Star({pos: new p5.Vector(400, 150)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(150, 150)}), 
+                new Coin({pos: new p5.Vector(300, 150)}), 
+                new Coin({pos: new p5.Vector(400, 150)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(150, 150)})
@@ -158,10 +158,10 @@ function createLevels()
             ]
         },
         {   // lv 6
-            stars: [
-                new Star({pos: new p5.Vector(125, 145)}), 
-                new Star({pos: new p5.Vector(250, 250)}), 
-                new Star({pos: new p5.Vector(440, 140)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(125, 145)}), 
+                new Coin({pos: new p5.Vector(250, 250)}), 
+                new Coin({pos: new p5.Vector(440, 140)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(125, 145)})
@@ -186,10 +186,10 @@ function createLevels()
             ]
         },
         {   // lv 7
-            stars: [
-                new Star({pos: new p5.Vector(200, 50)}), 
-                new Star({pos: new p5.Vector(279, 120)}), 
-                new Star({pos: new p5.Vector(420, 150)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(200, 50)}), 
+                new Coin({pos: new p5.Vector(279, 120)}), 
+                new Coin({pos: new p5.Vector(420, 150)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(200, 50)})
@@ -206,10 +206,10 @@ function createLevels()
             ]
         },
         {   // lv 8
-            stars: [
-                new Star({pos: new p5.Vector(580, 21)}), 
-                new Star({pos: new p5.Vector(660, 50)}), 
-                new Star({pos: new p5.Vector(70, 50)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(580, 21)}), 
+                new Coin({pos: new p5.Vector(660, 50)}), 
+                new Coin({pos: new p5.Vector(70, 50)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(580, 21)})
@@ -226,10 +226,10 @@ function createLevels()
             ]
         },
         {   // lv 9
-            stars: [
-                new Star({pos: new p5.Vector(417, 13)}), 
-                new Star({pos: new p5.Vector(480, 70)}), 
-                new Star({pos: new p5.Vector(65, 180)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(417, 13)}), 
+                new Coin({pos: new p5.Vector(480, 70)}), 
+                new Coin({pos: new p5.Vector(65, 180)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(417, 13)})
@@ -246,10 +246,10 @@ function createLevels()
             ]
         },
         {   // lv 10
-            stars: [
-                new Star({pos: new p5.Vector(417, 13)}), 
-                new Star({pos: new p5.Vector(480, 70)}), 
-                new Star({pos: new p5.Vector(65, 180)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(417, 13)}), 
+                new Coin({pos: new p5.Vector(480, 70)}), 
+                new Coin({pos: new p5.Vector(65, 180)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(417, 13)})
@@ -266,10 +266,10 @@ function createLevels()
             ]
         },
         {   // lv 11
-            stars: [
-                new Star({pos: new p5.Vector(250, 55)}), 
-                new Star({pos: new p5.Vector(350, 56)}), 
-                new Star({pos: new p5.Vector(450, 125)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(250, 55)}), 
+                new Coin({pos: new p5.Vector(350, 56)}), 
+                new Coin({pos: new p5.Vector(450, 125)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(250, 55)})
@@ -286,10 +286,10 @@ function createLevels()
             ]
         },
         {   // lv 12
-            stars: [
-                new Star({pos: new p5.Vector(200, 50)}), 
-                new Star({pos: new p5.Vector(300, 50)}), 
-                new Star({pos: new p5.Vector(400, 50)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(200, 50)}), 
+                new Coin({pos: new p5.Vector(300, 50)}), 
+                new Coin({pos: new p5.Vector(400, 50)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(200, 50)})
@@ -306,10 +306,10 @@ function createLevels()
             ]
         },
         {   // lv 13
-            stars: [
-                new Star({pos: new p5.Vector(151, 151)}), 
-                new Star({pos: new p5.Vector(253, 68)}), 
-                new Star({pos: new p5.Vector(346, 152)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(151, 151)}), 
+                new Coin({pos: new p5.Vector(253, 68)}), 
+                new Coin({pos: new p5.Vector(346, 152)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(151, 151)})
@@ -326,10 +326,10 @@ function createLevels()
             ]
         },
         {   // lv 14
-            stars: [
-                new Star({pos: new p5.Vector(167, 92)}), 
-                new Star({pos: new p5.Vector(95, 27)}), 
-                new Star({pos: new p5.Vector(27, 98)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(167, 92)}), 
+                new Coin({pos: new p5.Vector(95, 27)}), 
+                new Coin({pos: new p5.Vector(27, 98)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(167, 92)})
@@ -346,10 +346,10 @@ function createLevels()
             ]
         },
         {   // lv 15
-            stars: [
-                new Star({pos: new p5.Vector(167, 92)}), 
-                new Star({pos: new p5.Vector(95, 27)}), 
-                new Star({pos: new p5.Vector(27, 98)}), 
+            coins: [
+                new Coin({pos: new p5.Vector(167, 92)}), 
+                new Coin({pos: new p5.Vector(95, 27)}), 
+                new Coin({pos: new p5.Vector(27, 98)}), 
             ],
             testCharges: [
                 new TestCharge({pos: new p5.Vector(167, 92)})
@@ -372,7 +372,7 @@ function createLevels()
         levels.push(new Level({
             playImage: trackImage.play,
             buildImage: trackImage.build,
-            stars: levelData[i].stars,
+            coins: levelData[i].coins,
             testCharges: levelData[i].testCharges,
             border: levelData[i].border,
             finishLine: levelData[i].finishLine
@@ -398,11 +398,19 @@ function unlockLevels()
         let height = level.buildImage.height
         level.size = new p5.Vector(width, height)
 
+        if (userData[i].highScore != null)
+        {
+            levels[i].highScore = userData[i].highScore
+            // levels[i].coins = 
+        }
         if (userData[i].highScore != null && i < levels.length - 1)
         {
             levels[i + 1].locked = false
-            // currentLevel = i + 1;
+            currentLevel = i + 1;
         }
+        
+
+        console.log(level.coins);
         
     })
 }

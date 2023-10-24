@@ -2,12 +2,19 @@
 
 function preload() 
 {
-    spaceImage = loadImage('images/background.png');
-    blueprintImage = loadImage('images/blueprint.png');
+    spaceImage = loadImage('images/light.png');
+    blueprintImage = loadImage('images/dark.png');
     homeTrack = loadImage('images/homeTrack.png');
-    banner = loadImage('images/banner.svg')
+    banner = loadImage('images/banner.png')
     stamp = loadImage('images/stamp.svg')
     levelCompleteImage = loadImage('images/levelComplete.svg')
+
+    coinImages = {
+        gold: loadImage('images/coin1.png'),
+        silver: loadImage('images/coin2.png'),
+        bronze: loadImage('images/coin3.png'),
+        missing: loadImage('images/coin4.png'),
+    }
 
     icons = {
         back: loadImage('images/icons/arrow-left-solid.svg'),
@@ -28,6 +35,7 @@ function preload()
         pause: loadImage('images/icons/pause-solid.svg'),
         next: loadImage('images/icons/arrow-right-solid.svg'),
         trash: loadImage('images/icons/trash-can-solid.svg'),
+        classroom: loadImage('images/icons/chalkboard-user-solid.svg'),
         };
 
     setScale()
@@ -332,6 +340,27 @@ function netForceAtPoint(position) // given a vector, it will return the net for
   return finalVector;
 }
 
+function voltageAtPoint(position) // given a vector, it will return the voltage at that point
+{
+  let finalVoltage = 0;
+
+  // these are all the pointcharges
+  charges.forEach(charge => {
+      
+    //F = KQ / (r^2)
+    let kq = charge.charge  * k;
+    let r = p5.Vector.dist(position, charge.pos) / 10;
+
+    if (r < 0.5) r = 0.5
+    
+    let voltage = kq / r;
+
+    finalVoltage += voltage;
+  });
+
+  return finalVoltage;
+}
+
 
 function getRandomStarPhrase()
 {
@@ -343,4 +372,39 @@ function getRandomTimePhrase()
 {
     let index = round(random(0, timePhrases.length - 1))
     return timePhrases[index]
+}
+
+function createVoltageGradient()
+{
+    let voltage = []
+
+
+    for (let x = 0; x < 10; x++) 
+    {
+        voltage[x] = []
+        for (let y = 0; y < 10; y++) 
+        {
+            voltage[x][y] = voltageAtPoint(new p5.Vector(x * voltageDefinition, y * voltageDefinition))
+        }   
+    }
+
+    
+    // console.log(voltage);
+
+
+
+
+}
+
+function displayVoltageGradient()
+{
+    createVoltageGradient()
+    
+    for (let x = 0; x < 10; x++) 
+    {
+        for (let y = 0; y < 10; y++) 
+        {
+            
+        }   
+    }
 }

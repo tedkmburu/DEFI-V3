@@ -136,13 +136,13 @@ class TestCharge extends Charge
         })
     }
 
-    checkStarCollisions()
+    checkCoinCollisions()
     {
         for (let i = 0; i < 3; i++) 
         {
-            if (circleOverlapsCirlce(this, levels[currentLevel].stars[i]))
+            if (circleOverlapsCirlce(this, levels[currentLevel].coins[i]))
             {
-                levels[currentLevel].stars[i].visible = false; 
+                levels[currentLevel].coins[i].visible = false; 
             }
         }
     }

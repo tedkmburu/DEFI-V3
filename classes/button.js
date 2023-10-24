@@ -5,17 +5,17 @@ class Button extends Particle
         super(props)
         
         this.myImage = props.myImage || null
-        this.size = props.size || new p5.Vector(100, 50);
+        this.size = props.size || new p5.Vector(commonButtonRadius, commonButtonRadius);
         this.size = this.size.copy().mult(scale);
 
         this.text = props.text || ""
         this.fontAlign = props.fontAlign || CENTER;
-        this.fontSize = props.fontSize * scale.x || 72 * scale.x;
-        this.fillColor = props.fillColor || "rgba(0, 0, 0, 0)";
+        this.fontSize = props.fontSize * scale.x || 36 * scale.x;
+        this.fillColor = props.fillColor || purpleColor[1];
         this.strokeColor = props.strokeColor || "rgba(0, 0, 0, 0)";
-        this.fontColor = props.fontColor || "black";
+        this.fontColor = props.fontColor || "white";
         this.onClick = props.onClick;
-        this.shape = props.shape || "rect";
+        this.shape = props.shape || "ellipse";
         this.font = props.font;
         this.visible = props.visible;
         if (this.visible == null) this.visible = true;

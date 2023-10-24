@@ -106,12 +106,12 @@ function createGameScreen()
         
         updateTrackImage()
         updateTimer()
-        displayStars()
+        displayCoins()
         createFieldLines()
         displayCharges()
         if (!buildMode)
         {
-            checkStarsCollisions();
+            checkCoinsCollisions();
             checkBorderCollisions();
         }
         if (gameDevMode)
@@ -170,12 +170,12 @@ function drawEquiPotentialLines()
     console.log("draw <3");
 }
 
-function displayStars()
+function displayCoins()
 {
-    levels[currentLevel].stars.forEach(star => {
-        if (star.visible)
+    levels[currentLevel].coins.forEach(coin => {
+        if (coin.visible)
         {
-            star.display()
+            coin.display()
         }
     })
 }
@@ -191,12 +191,12 @@ function resetGame()
     charges = []
     elapsedTime = 0
 
-    levels[currentLevel].stars.forEach(star => {
+    levels[currentLevel].coin.forEach(star => {
         star.angle = 0;
     })
 
     resetTestCharges()
-    resetStars()
+    resetCoins()
 }
 
 function toggleHelp()
@@ -210,7 +210,7 @@ function toggleBuildMode()
     buildMode = !buildMode;
     
     resetCharges()
-    resetStars()
+    resetCoins()
     resetTestCharges()
 
 }
@@ -224,10 +224,10 @@ function resetCharges()
     }) 
 }
 
-function resetStars()
+function resetCoins()
 {
-    levels[currentLevel].stars.forEach(star => {
-        star.visible = true;
+    levels[currentLevel].coin.forEach(star => {
+        coin.visible = true;
     })
 }
 
@@ -285,10 +285,10 @@ function updatePlayButton()
 }
 
 // checks to see if any test charge collides with a star
-function checkStarsCollisions()
+function checkCoinsCollisions()
 {
     levels[currentLevel].testCharges.forEach(testCharge => {
-        testCharge.checkStarCollisions()
+        testCharge.checkCoinCollisions()
     })
 }
 
@@ -347,21 +347,19 @@ function checkWinConditions()
     // if win condition is true
     if (testChargeInFinishArea.every(isInFinishLine => isInFinishLine === true))
     {
-        // count how many stars are collected
-        let starsCollected = 0;
-        levels[currentLevel].stars.forEach(star => {
-            if (!star.visible)
+        // count how many coins are collected
+        let coinsCollected = 0;
+        levels[currentLevel].coins.forEach(coin => {
+            if (!coin.visible)
             {
-                starsCollected++;
+                coinsCollected++;
             }
         })
 
-        // calculate score
-        let score = 10000 / ((0.0001 * elapsedTime) + 0.1);
-        if (starsCollected > 1) score *= (starsCollected * 10)
+        
 
         // check if it's a highscore
-        updateLevelData(currentLevel, score, elapsedTime, starsCollected) 
+        updateLevelData(currentLevel, score, elapsedTime, levels[currentLevel].coins) 
         
 
         // unlock next level
@@ -371,6 +369,20 @@ function checkWinConditions()
         screens[4] = createLevelCompleteScreen()
         navigateTo("Level Complete")
     }
+}
+
+function calculateScore(elapsedTime, coins)
+{
+    // calculate score
+    let score = 10000 / ((0.0001 * elapsedTime) + 0.1);
+
+    coins.forEach(coin => {
+        if (coin.value != 0)
+        {
+            score *= coin.value
+        }
+    })
+    return score
 }
 
 // :todo

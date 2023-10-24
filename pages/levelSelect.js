@@ -2,272 +2,275 @@ function createLevelSelect()
 {
     let screenName = "Level Select"
 
-    let buttons = []
+    let buttons = [] 
     let images = []
     let textBoxes = []
     let shapes = []
     
     let buttonSize = new p5.Vector(150, 150);
 
+    let x = 200;
+    let y = 225;
+    let shapeWidth = 700
+
+    levels.forEach((level, i) => {
+
+        shapes.push(new Shape({
+            pos: new p5.Vector(x, y), 
+            size: new p5.Vector(shapeWidth, 800),
+            fillColor: purpleColor[0],
+        }))
+        shapes.push(new Shape({
+            pos: new p5.Vector(x + 25, y + 25), 
+            size: new p5.Vector(shapeWidth - 50, 600 - 25),
+            fillColor: "rgba(0, 0, 0, 0.5)",
+        }))
+    
+    
+    
+        
+    
+    
+    
+        if (level.highscore != null)
+        {
+            buttons.push(new Button({
+                text: "leaderboard",
+                myImage: icons.leaderboard,
+                pos: new p5.Vector(x + 200, y + 625), 
+                onClick: function(){ currentLevel = i; navigateTo("Leaderboard");  }
+            }))
+            buttons.push(new Button({
+                text: "retry", 
+                myImage: icons.redo,
+                pos: new p5.Vector(x + 375, y + 625),
+                fillColor: positiveChargeColor, 
+                onClick: function(){ currentLevel = i; navigateTo("Loading Screen"); }
+            }))
+
+
+
+            images.push(new MyImage({
+                pos: new p5.Vector(x + 50, y + 325), 
+                size: shapeWidth - 100,
+                myImage: levels[i].buildImage,
+            }))
+            images.push(new MyImage({
+                pos: new p5.Vector(x - 100, y + 50), 
+                size: shapeWidth + 200,
+                myImage: banner,
+            }))
+
+
+
+            images.push(new MyImage({
+                pos: new p5.Vector(x + 125, y + 75), 
+                size: 125,
+                myImage: coinImages.missing,
+            }))
+            images.push(new MyImage({
+                pos: new p5.Vector(x + 275, y + 75), 
+                size: 125,
+                myImage: coinImages.missing,
+            }))
+            images.push(new MyImage({
+                pos: new p5.Vector(x + 425, y + 75), 
+                size: 125,
+                myImage: coinImages.missing,
+            }))
+
+
+        
+            textBoxes.push(new TextBox({
+                text: "Level " + (i + 1),
+                pos: new p5.Vector(x, y + 230),
+                size: new p5.Vector(shapeWidth / 2, 100),
+                fontAlign: RIGHT,
+                fontSize: 90,
+            }))
+            textBoxes.push(new TextBox({
+                text: "high score",
+                pos: new p5.Vector((shapeWidth / 2) + x + 20, y + 225),
+                size: new p5.Vector(shapeWidth / 2, 50),
+                fontAlign: LEFT,
+                fontSize: 24,
+            }))
+            textBoxes.push(new TextBox({
+                text: "1234567890",
+                pos: new p5.Vector((shapeWidth / 2) + x + 20, y + 265),
+                size: new p5.Vector(shapeWidth / 2, 50),
+                fontAlign: LEFT,
+                fontSize: 48,
+            }))
+        }
+
+
+
+
+
+
+
+
+
+
+
+        else if (!level.locked)
+        {
+            buttons.push(new Button({
+                text: "play", 
+                myImage: icons.play,
+                pos: new p5.Vector(x + 275, y + 625),
+                fillColor: positiveChargeColor, 
+                onClick: function(){ currentLevel = i; navigateTo("Loading Screen"); }
+            }))
+
+
+
+            images.push(new MyImage({
+                pos: new p5.Vector(x + 50, y + 325), 
+                size: shapeWidth - 100,
+                myImage: levels[i].buildImage,
+            }))
+            images.push(new MyImage({
+                pos: new p5.Vector(x - 100, y + 50), 
+                size: shapeWidth + 200,
+                myImage: banner,
+            }))
+
+
+
+            // display coins
+            let coins = userData[i].coins;
+            coins.forEach((coin, coinIndex) => {
+                if (coin == 0) 
+                {
+                    images.push(
+                        new MyImage({
+                            pos: new p5.Vector(x + (110 * coinIndex),  y + 75), 
+                            size: 125,
+                            myImage: coinImages.missing,
+                        })
+                    )
+                }
+                if (coin == 1) 
+                {
+                    images.push(
+                        new MyImage({
+                            pos: new p5.Vector(x + (150 * coinIndex),  y + 75), 
+                            size: 125,
+                            myImage: coinImages.bronze,
+                        })
+                    )
+                }
+                if (coin == 2) 
+                {
+                    images.push(
+                        new MyImage({
+                            pos: new p5.Vector(x + (150 * coinIndex),  y + 75), 
+                            size: 125,
+                            myImage: coinImages.silver,
+                        })
+                    )
+                }
+                if (coin == 3) 
+                {
+                    images.push(
+                        new MyImage({
+                            pos: new p5.Vector(x + (150 * coinIndex),  y + 75), 
+                            size: 125,
+                            myImage: coinImages.gold,
+                        })
+                    )
+                }
+            });
+
+
+
+
+
+            // images.push(new MyImage({
+            //     pos: new p5.Vector(x + 125, y + 75), 
+            //     size: 125,
+            //     myImage: coinImages.missing,
+            // }))
+            // images.push(new MyImage({
+            //     pos: new p5.Vector(x + 275, y + 75), 
+            //     size: 125,
+            //     myImage: coinImages.missing,
+            // }))
+            // images.push(new MyImage({
+            //     pos: new p5.Vector(x + 425, y + 75), 
+            //     size: 125,
+            //     myImage: coinImages.missing,
+            // }))
+
+
+        
+            textBoxes.push(new TextBox({
+                text: "Level " + (i + 1),
+                pos: new p5.Vector(x, y + 230),
+                size: new p5.Vector(shapeWidth, 100),
+                fontAlign: CENTER,
+                fontSize: 90,
+            }))
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        else
+        {
+            images.push(new MyImage({
+                pos: new p5.Vector(x + 200, y + 100), 
+                size: 300,
+                myImage: icons.lock,
+            }))
+            textBoxes.push(new TextBox({
+                text: "Locked",
+                pos: new p5.Vector(x, y + 450),
+                size: new p5.Vector(shapeWidth, 100),
+                fontSize: 90,
+            }))
+        }
+        
+    
+    
+    
+        
+
+        x += (shapeWidth) + 250
+    })
+
+    
+
+
+
+
+
+
+
+
     buttons.push(new Button({
         text: "Back",
-        shape: "ellipse",
         myImage: icons.back,
         pos: new p5.Vector(25, 25), 
-        fontSize: 36,
-        size: buttonSize,
-        fontColor: 255,
-        fillColor: purpleColor[0],
         onClick: function(){ navigateTo("Home"); }
     }))
-
     shapes.push(new Shape({
         pos: new p5.Vector(0, 0), 
         size: new p5.Vector(innerWidth * 3, 200),
         fillColor: "rgba(0, 0, 0, 0.5)",
     }))
-
-    let rowHeight =  560
-    let xPos = 160
-    let yPos = 200
-    let shapeColor = purpleColor[0];
-    let shapeSize = new p5.Vector(720, (1080 / 3) + 150);
-    
-
-    // shapes that hold everything
-    for (let i = 0; i < levels.length - 1; i+=2) 
-    {
-        for (let j = 0; j < 2; j++) 
-        {
-            
-            let index = i + j;
-
-            let x = (j * 1920 / 2) + xPos;
-            let y = yPos + 60;
-            let shapePos = new p5.Vector(x, y)
-
-            shapes.push(new Shape({
-                pos: shapePos.copy(), 
-                size: shapeSize,
-                fillColor: shapeColor,
-            }))
-        }
-        yPos += rowHeight
-    }
-    
-    xPos = ((1920 / 3) / 3) + 20;
-    yPos = 300
-    
-
-    for (let i = 0; i < levels.length - 1; i+=2) 
-    {
-        for (let j = 0; j < 2; j++) 
-        {
-            let index = i + j;
-            if (levels[index].locked)
-            {
-                images.push(new MyImage({
-                    pos: new p5.Vector((((1920 / 2)) * j) + xPos + 220, yPos + 125), 
-                    size: 150,
-                    myImage: icons.lock,
-                }))
-            }
-            else
-            {
-
-                let numberOfStars = userData[index].mostStars;
-                if (userData[index].fastestTime != null)
-                {
-                    if (userData[index].fastestTime < firstStarTime) numberOfStars++
-                    if (userData[index].fastestTime < secondStarTime) numberOfStars++
-                }
-
-                // Set the desired dimensions of the containing div
-                const maxWidth = 1920 * 0.25; // Set your maximum width here
-                const maxHeight = 1080 * 0.25; // Set your maximum height here
-
-                // Get the original image dimensions
-                const originalWidth = levels[index].size.x;
-                const originalHeight = levels[index].size.y;
-
-                let imageSize = scaleImageToSize(maxWidth, maxHeight, originalWidth, originalHeight) 
-                let imagePos = getScaledImagePos(maxWidth, maxHeight, imageSize)
-
-                if (numberOfStars != 0)
-                {
-                    // banner
-                    images.push(
-                        new MyImage({
-                            pos: new p5.Vector(((1920 / 2) * j) + xPos - 160, yPos), 
-                            size: 900,
-                            myImage: banner,
-                        })
-                    )
-                }
-                
-
-                // track build image
-                images.push(new MyImage({
-                    pos: new p5.Vector(((1920 / 2) * j) + xPos - 50, yPos + 210).add(imagePos), 
-                    size: imageSize.x * 0.6,
-                    myImage: levels[index].buildImage,
-                }))
-
-                let starSize = 90;
-
-                for (let a = 0; a < numberOfStars; a++) 
-                {
-                    images.push(new MyImage({
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * (starSize + 10)) + 50, yPos + 10), 
-                        size: starSize,
-                        myImage: icons.star,
-                    }))
-                }
-                for (let a = numberOfStars; a < 5; a++) 
-                {
-                    images.push(new MyImage({
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + (a * (starSize + 10)) + 50, yPos + 10), 
-                        size: starSize,
-                        myImage: icons.starEmpty,
-                    }))
-                }
-            }
-        }
-        yPos += rowHeight
-    }
-
-    yPos = 75 - 30 + 50
-
-
-    for (let i = 0; i < levels.length - 1; i+=2) 
-    {
-        for (let j = 0; j < 2; j++) 
-        {
-            let index = i + j;
-            if (levels[index].locked)
-            {
-                textBoxes.push(new TextBox({
-                    text: "locked",
-                    fillColor: "rgba(0, 0, 0, 0)",
-                    fontColor: "white",
-                    fontSize: 48,
-                    fontAlign: CENTER,
-                    pos: new p5.Vector(((1900 / 2) * j) + (480), yPos + 500), 
-                    size: new p5.Vector(100, 100),
-                }))
-
-                shapes.push(new Shape({
-                    shape: "ellipse",
-                    pos: new p5.Vector(((1900 / 2) * j) + (535), yPos + 450),  
-                    size: new p5.Vector(300, 300),
-                    fillColor: purpleColor[1],
-                }))
-            }
-            else
-            {
-                let timeToComplete = millisecondsToString(userData[index].fastestTime)
-                let highScore = userData[index].highScore
-
-                textBoxes.push(new TextBox({
-                    text: "Level " + (index + 1),
-                    fillColor: "rgba(0, 0, 0, 0)",
-                    fontColor: "white",
-                    fontSize: 60,
-                    pos: new p5.Vector(((1920 / 2) * j) + 240, yPos + 330), 
-                    size: new p5.Vector(300, 80),
-                }))
-
-                if (timeToComplete != "0.00 s")
-                {
-                    textBoxes.push(new TextBox({
-                        text: "Best Time",
-                        fillColor: "rgba(0, 0, 0, 0)",
-                        fontColor: "white",
-                        fontSize: 24,
-                        fontAlign: LEFT,
-                        pos: new p5.Vector(((1920 / 2) * j)+ 570, yPos + 300), 
-                        size: new p5.Vector(300, 100),
-                    }))
-
-                    textBoxes.push(new TextBox({
-                        text: timeToComplete,
-                        fillColor: "rgba(0, 0, 0, 0)",
-                        fontColor: "white",
-                        fontSize: 48,
-                        fontAlign: LEFT,
-                        pos: new p5.Vector(((1920 / 2) * j)+ 570, yPos + 336), 
-                        size: new p5.Vector(300, 100),
-                    }))
-                }
-                
-
-                if (highScore != null)
-                {
-                    textBoxes.push(new TextBox({
-                        text: "High Score",
-                        fillColor: "rgba(0, 0, 0, 0)",
-                        fontColor: "white",
-                        fontSize: 24,
-                        fontAlign: LEFT,
-                        pos: new p5.Vector(((1920 / 2) * j) + 570, yPos + 400), 
-                        size: new p5.Vector(300, 100),
-                    }))
-                    textBoxes.push(new TextBox({
-                        text: round(highScore),
-                        fillColor: "rgba(0, 0, 0, 0)",
-                        fontColor: "white",
-                        fontSize: 48,
-                        fontAlign: LEFT,
-                        pos: new p5.Vector(((1920 / 2) * j) + 570, yPos + 436), 
-                        size: new p5.Vector(300, 100),
-                    }))
-
-
-
-                    buttons.push(new Button({
-                        shape: "ellipse", 
-                        text: "Leaderboard",
-                        myImage: icons.leaderboard,
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + 360, yPos + 530), 
-                        fontSize: 24,
-                        textAlign: CENTER,
-                        size: new p5.Vector(100, 100),
-                        fillColor: purpleColor[2],
-                        fontColor: 255,
-                        onClick: function(){ if (!levels[index].locked) { navigateTo("Leaderboard"); currentLevel = index; } }
-                    }))
-                    buttons.push(new Button({
-                        shape: "ellipse", 
-                        text: "Retry",
-                        myImage: icons.redo,
-                        pos: new p5.Vector(((1920 / 2) * j) + xPos + 490, yPos + 530), 
-                        fontSize: 24,
-                        textAlign: CENTER,
-                        size: new p5.Vector(100, 100),
-                        fillColor: positiveChargeColor,
-                        fontColor: 255,
-                        onClick: function(){ if (!levels[index].locked) { navigateTo("Loading Screen"); currentLevel = index; } }
-                    }))
-                }
-                else
-                {
-                    buttons.push(new Button({
-                        shape: "ellipse", 
-                        text: "Play",
-                        myImage: icons.play,
-                        pos: new p5.Vector((j * (1920 / 2)) + xPos + 350, yPos + 400), 
-                        fontSize: 48,
-                        textAlign: CENTER,
-                        size: new p5.Vector(200, 200),
-                        fillColor: positiveChargeColor,
-                        fontColor: 255,
-                        onClick: function(){ if (!levels[index].locked) { navigateTo("Loading Screen"); currentLevel = index; } }
-                    }))
-                }
-            }
-        }
-        yPos += rowHeight
-    }
 
     return new Screen({
         name: screenName,

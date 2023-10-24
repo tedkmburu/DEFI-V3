@@ -6,7 +6,7 @@ function saveData()
         gameProgress.push({
             highScore: null,
             fastestTime: null,
-            mostStars: 0,
+            coins: [0, 0, 0],
             charges: []
         })
     })
@@ -26,22 +26,24 @@ function reloadSavedData()
     userData = JSON.parse(localStorage.getItem(GAME_DATA_KEY));
 }
 
-function updateLevelData(level, score, timeToComplete, starsCollected) 
+function updateLevelData(level, score, timeToComplete, coinsCollected) 
 {
-    levelCompleteData = {level: level, score: score, starsCollected: starsCollected, timeToComplete: elapsedTime}
     
     let userData = JSON.parse(localStorage.getItem(GAME_DATA_KEY));
 
-    if (userData[level].highScore == null) userData[level].highScore = score;
-    if (userData[level].fastestTime ==  null) userData[level].fastestTime = timeToComplete;
-    if (userData[level].mostStars == 0) userData[level].mostStars = starsCollected;
-
-    if (userData[level].highScore < score) userData[level].highScore = score;
-    if (userData[level].fastestTime > timeToComplete) userData[level].fastestTime = timeToComplete;
-    if (userData[level].mostStars < starsCollected) userData[level].mostStars = starsCollected;
+    if (userData[level].highScore == null) 
+    {
+        userData[level].highScore = 0;
+        userData[level].timeToComplete = null;
+        userData[level].coins = [0, 0, 0]
+    }
+    else if(userData[level].highScore < score)
+    {
+        userData[level].highScore = score;
+        userData[level].timeToComplete = timeToComplete;
+        userData[level].coins = coinsCollected
+    }
 
     // Save the updated user data to LocalStorage
     localStorage.setItem(GAME_DATA_KEY, JSON.stringify(userData));
-
-    
 }

@@ -95,42 +95,11 @@ function createSettingsScreen()
 
     
 
-    // display stars
-    let numberOfStars = 0
-    numberOfStars+=userData[currentLevel].mostStars;
-    if (userData[currentLevel].fastestTime != null)
-    {
-        if (userData[currentLevel].fastestTime < firstStarTime) numberOfStars++
-        if (userData[currentLevel].fastestTime < secondStarTime) numberOfStars++    
-    }
     
     let x = 1070;
     let y = 140;
 
-    for (let i = 0; i < 5; i++) 
-    {
-        if (i < numberOfStars)
-        {
-            images.push(
-                new MyImage({
-                    pos: new p5.Vector(x + (110 * i), y), 
-                    size: 100,
-                    myImage: icons.star,
-                })
-            )
-        }  
-        else
-        {
-            images.push(
-                new MyImage({
-                    pos: new p5.Vector(x + (110 * i), y), 
-                    size: 100,
-                    myImage: icons.starEmpty,
-                })
-            )
-        }  
-    }
-
+   
     shapes.push(new Shape({
         pos: new p5.Vector((gameWidth / 1.9) - 100, 50), 
         size: new p5.Vector(gameWidth / 2.25, 1080 - 100),

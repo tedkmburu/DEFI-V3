@@ -8,7 +8,7 @@ class Level
         this.playImage = props.playImage
         this.buildImage = props.buildImage
 
-        this.stars = props.stars || [];
+        this.coins = props.coins || [0, 0, 0];
         this.testCharges = props.testCharges || [];
         this.border = props.border || [];
 

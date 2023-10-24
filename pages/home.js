@@ -13,65 +13,54 @@ function createHomeScreen()
 
     buttons = [
         new Button({
-            text: "Home",
-            shape: "ellipse",
-            pos: new p5.Vector(xPos, yPos), 
-            fontSize: 36,
-            size: size,
-            fontColor: 255,
+            text: "classroom?",
+            pos: new p5.Vector((3 * gameWidth / 9) + xPos, yPos), 
             fillColor: purpleColor[0],
-            myImage: icons.home, 
+            myImage: icons.classroom, 
             onClick: function(){ navigateTo("Home"); },
         }),
         new Button({
-            text: "Leaderboard",
-            shape: "ellipse",
-            pos: new p5.Vector((1 * gameWidth / 9) + xPos, yPos), 
-            fontSize: 36,
-            size: size,
-            fontColor: 255,
+            text: "leaderboard",
+            pos: new p5.Vector((0 * gameWidth / 9) + xPos, yPos), 
             fillColor: purpleColor[1],
             myImage: icons.leaderboard, 
             onClick: function(){ navigateTo("Leaderboard"); },
         }),
         new Button({
-            text: "Help",
-            shape: "ellipse",
-            pos: new p5.Vector((2 * gameWidth / 9) + xPos,  yPos), 
-            fontSize: 36,
-            size: size,
-            fontColor: 255,
+            text: "help",
+            pos: new p5.Vector((1 * gameWidth / 9) + xPos,  yPos), 
             fillColor: purpleColor[2],
             myImage: icons.help, 
             onClick: function(){ navigateTo("Help"); },
-        }),        new Button({
-            text: "Settings",
-            shape: "ellipse",
-            pos: new p5.Vector((3 * gameWidth / 9) + xPos,  yPos), 
-            fontSize: 36,
-            size: size,
-            fontColor: 255,
+        }),        
+        new Button({
+            text: "settings",
+            pos: new p5.Vector((2 * gameWidth / 9) + xPos,  yPos), 
             fillColor: purpleColor[3],
             myImage: icons.settings, 
             onClick: function(){ navigateTo("Settings"); },
         }),
+
+
+
+
         new Button({
-            text: "More Levels",
+            text: "more levels",
+            shape: "rect",
             pos: new p5.Vector(1920 - 950, 830), 
             fontSize: 48,
             size: new p5.Vector(350, 150),
-            fontColor: 255,
             fillColor: purpleColor[4],
             onClick: function(){ navigateTo("Level Select"); },
         }),
         new Button({
-            text: "Play",
+            text: "play",
+            shape: "rect",
             pos: new p5.Vector(1920 - 550, 830), 
             fontSize: 48,
             size: new p5.Vector(350, 150),
-            fontColor: 255,
             fillColor: "red",
-            onClick: function(){ navigateTo("Loading Screen"); console.log("fads"); },
+            onClick: function(){ navigateTo("Loading Screen");},
         }),
         ]
 
@@ -93,42 +82,70 @@ function createHomeScreen()
         })
     ]
 
-    
 
-    // display stars
-    let numberOfStars = 0
-    numberOfStars+=userData[currentLevel].mostStars;
-    if (userData[currentLevel].fastestTime != null)
-    {
-        if (userData[currentLevel].fastestTime < firstStarTime) numberOfStars++
-        if (userData[currentLevel].fastestTime < secondStarTime) numberOfStars++    
-    }
-    
-    let x = 1070;
-    let y = 140;
 
-    for (let i = 0; i < 5; i++) 
-    {
-        if (i < numberOfStars)
+    let x = 1150;
+    let y = 135;
+
+
+
+    // display coins
+    let coins = userData[currentLevel].coins;
+    coins.forEach((coin, i) => {
+        if (coin == 0) 
         {
             images.push(
                 new MyImage({
                     pos: new p5.Vector(x + (110 * i), y), 
                     size: 100,
-                    myImage: icons.star,
+                    myImage: coinImages.missing,
                 })
             )
-        }  
-        else
+        }
+        if (coin == 1) 
         {
             images.push(
                 new MyImage({
                     pos: new p5.Vector(x + (110 * i), y), 
                     size: 100,
-                    myImage: icons.starEmpty,
+                    myImage: coinImages.bronze,
                 })
             )
-        }  
+        }
+        if (coin == 2) 
+        {
+            images.push(
+                new MyImage({
+                    pos: new p5.Vector(x + (110 * i), y), 
+                    size: 100,
+                    myImage: coinImages.silver,
+                })
+            )
+        }
+        if (coin == 3) 
+        {
+            images.push(
+                new MyImage({
+                    pos: new p5.Vector(x + (110 * i), y), 
+                    size: 100,
+                    myImage: coinImages.gold,
+                })
+            )
+        }
+    });
+    
+    
+
+    for (let i = 0; i < 3; i++) 
+    {
+        images.push(
+            new MyImage({
+                pos: new p5.Vector(x + (110 * i), y), 
+                size: 100,
+                myImage: coinImages.missing,
+            })
+        )
+        
     }
 
     shapes.push(new Shape({
@@ -150,23 +167,14 @@ function createHomeScreen()
 
     textBoxes.push(
         new TextBox({
-            text: "Level " + (currentLevel + 1),
+            text: "level " + (currentLevel + 1),
             fillColor: "rgba(0, 0, 0, 0)",
             fontSize: 72,
-            pos: new p5.Vector(850, 205), 
+            pos: new p5.Vector(850, 225), 
             size: new p5.Vector(gameWidth / 2, 200),
         })
     )
 
-    textBoxes.push(
-        new TextBox({
-            text: "High Score: " + Math.round(userData[currentLevel].highScore),
-            fillColor: "rgba(0, 0, 0, 0)",
-            fontSize: 48,
-            pos: new p5.Vector(850, 270),
-            size: new p5.Vector(gameWidth / 2, 200),
-        })
-    )
 
     return new Screen({
         name: screenName,

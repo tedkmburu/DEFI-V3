@@ -10,9 +10,9 @@ class TextBox extends Particle
         this.text = props.text || ""
         this.fontAlign = props.fontAlign || CENTER;
         this.fontSize = props.fontSize * scale.x || 12 * scale.x;
-        this.fillColor = props.fillColor || "white";
+        this.fillColor = props.fillColor || "rgba(0, 0, 0 , 0)";
         this.strokeColor = props.strokeColor || "rgba(0, 0, 0, 0)";
-        this.fontColor = props.fontColor || "black";
+        this.fontColor = props.fontColor || "white";
         this.font = props.font;
         this.visible = props.visible || true;
         this.shape = props.shape || "rect"
@@ -28,6 +28,7 @@ class TextBox extends Particle
             
             translate(this.pos.x, this.pos.y)
             rotate(this.angle)
+            strokeWeight(5)
             
 
             if (this.shape == "rect")
