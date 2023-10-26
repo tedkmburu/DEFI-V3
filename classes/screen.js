@@ -38,16 +38,5 @@ class Screen
         this.images.forEach(image => { image.display() });
         this.textBoxes.forEach(textBox => { textBox.display() });
         if (screen.functions != null) {  screen.functions();  }
-
-        if (gameDevMode)
-        {
-            push()
-                // let fps = frameCount / (performance.now() / 1000)
-                textSize(24)
-                text(Math.round(frameRate()), 10, innerHeight - 30)
-            pop()
-
-            
-        }
     }
 }

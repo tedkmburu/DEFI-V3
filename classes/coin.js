@@ -47,8 +47,10 @@ class Coin extends Particle
             {
                 this.value = bronzeValue
             }
+
+            if (this.countFrames) { this.frameCount++ }
         }
 
-        if (this.countFrames) { this.frameCount++ }
+        
     }
 }

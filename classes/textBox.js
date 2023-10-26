@@ -9,7 +9,7 @@ class TextBox extends Particle
 
         this.text = props.text || ""
         this.fontAlign = props.fontAlign || CENTER;
-        this.fontSize = props.fontSize * scale.x || 12 * scale.x;
+        this.fontSize = props.fontSize * scale.x || 36 * scale.x;
         this.fillColor = props.fillColor || "rgba(0, 0, 0 , 0)";
         this.strokeColor = props.strokeColor || "rgba(0, 0, 0, 0)";
         this.fontColor = props.fontColor || "white";

@@ -7,7 +7,7 @@ function navigateTo(nextScreen)
     if (nextScreen == "Home")
     {
         userData.forEach((level, i) => {
-            if (level.highScore != null && i < levels.length - 2)
+            if (level.highScore != 0 && i < levels.length - 2)
             {
                 currentLevel = i + 1
             }
@@ -37,22 +37,50 @@ function navigateBack()
     scrollOffset = 0;
 }
 
+function goToNextLevel()
+{
+    if (currentLevel < levels.length - 1)
+    {
+        currentLevel++;
+        navigateTo("Game")
+    }
+    else
+    {
+        navigateTo("Home")
+    }
+    
+}
+
 function displayCurrentScreen()
 {
     screens[currentScreen].display()
 }
 
+function displayCurrentPopUp()
+{
+    if (popUpVisible)
+    {
+        popUps[currentPopUp].display()
+    }
+}
+
 function createScreens()
 {
-    // screens = []
-
     screens[0] = createHomeScreen()
     screens[1] = createLevelSelect()
     screens[2] = createLoadingScreen()
     screens[3] = createGameScreen()
-    screens[4] = createLevelCompleteScreen()
+    // screens[4] = createLevelCompleteScreen()
     screens[5] = createComingSoonScreen()
     screens[6] = createSettingsScreen()
+}
+
+function createPopUps()
+{
+    popUps[0] = createLevelCompletePopUp()
+    popUps[1] = createTutorial1PopUp()
+    popUps[2] = createTutorial2PopUp()
+    popUps[3] = createTutorial3PopUp()
 }
 
 // function setScreenName

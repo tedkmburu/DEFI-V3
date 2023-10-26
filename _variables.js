@@ -1,7 +1,11 @@
-let gameDevMode = false;
+let gameDevMode = true;
+let currentFPS = 0;
 
 let screens = []
-let currentScreen = 2;
+let popUps = []
+let currentScreen = 3;
+let currentPopUp = 1;
+let popUpVisible = true;
 
 let levels = []
 let currentLevel = 0;
@@ -11,7 +15,6 @@ let scrollOffset = 0;
 let trueScrollOffset = 0;
 
 let buildMode = true;
-let helpMode = false;
 let elapsedTime = 0;
 
 const k = 899000; // k = 8.99 * Math.pow(10, -9) adjusted because all charges are in micro coulombs;
@@ -34,15 +37,17 @@ const coinRadius = 20;
 const testChargeCharge = 0.000005; //q = 5 micro coulombs;
 const fieldLinesPerCoulomb = 4;
 const voltageDefinition = 50
-const commonButtonRadius = 150
+const commonButtonSize = 150
+const commonButtonSpace = 200
 
 const gameWidth = 1920
 const gameHeight = 1080
 
-let spaceImage, blueprintImage, homeTrack, banner, stamp;
+let spaceImage, blueprintImage, homeTrack, banner, stamp, ribbon;
 let trackImages;
 let icons;
 let coinImages;
+let tutorialImages;
 
 let levelCompleteImage;
 
@@ -53,15 +58,15 @@ let dataToPrint = ""
 const GAME_DATA_KEY = '10/23';
 let userData;
 
-let levelCompleteData = {score: 0, coinsCollected: [0, 0, 0], timeToComplete: 9999999999999999999999999999999999}
+let levelCompleteData = {coinsCollected: [], timeToComplete: 9999999999999999999999999999999999}
 
 let animations = []
 
-const silverCoinTime = 5000 // 10 s
-const bronzeCoinTime = 10000 // 30 s
-const goldValue = 1000;
-const silverValue = 100;
-const bronzeValue = 10;
+const silverCoinTime = 1000000 // 10 s
+const bronzeCoinTime = 2000000 // 30 s
+const goldValue = 3;
+const silverValue = 2;
+const bronzeValue = 1;
 
 
 const positiveChargeColor = "rgb(237, 32, 36)";

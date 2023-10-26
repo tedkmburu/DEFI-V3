@@ -30,10 +30,12 @@ class MyImage extends Particle
             let size = scaleImageToSize(props.size.x, props.size.y, props.myImage.width, props.myImage.height)
             this.size = size.copy()
 
-            let imagePos = getScaledImagePos(props.size.x, props.size.y, size)
-            this.pos.add(imagePos.div(2))
-        }
+            let imagePos = getScaledImagePos(props.size.x, props.size.y, size.copy())
+            this.pos.add(imagePos.div(1))
 
+            this.startingPos = this.pos.copy()
+        }
+        
         this.size = this.size.copy().mult(scale);
         
         this.text = props.text || ""

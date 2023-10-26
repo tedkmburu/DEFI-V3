@@ -14,28 +14,28 @@ function createHomeScreen()
     buttons = [
         new Button({
             text: "classroom?",
-            pos: new p5.Vector((3 * gameWidth / 9) + xPos, yPos), 
+            pos: new p5.Vector((3 * commonButtonSpace) + xPos, yPos), 
             fillColor: purpleColor[0],
             myImage: icons.classroom, 
             onClick: function(){ navigateTo("Home"); },
         }),
         new Button({
             text: "leaderboard",
-            pos: new p5.Vector((0 * gameWidth / 9) + xPos, yPos), 
+            pos: new p5.Vector((0 * commonButtonSpace) + xPos, yPos), 
             fillColor: purpleColor[1],
             myImage: icons.leaderboard, 
             onClick: function(){ navigateTo("Leaderboard"); },
         }),
         new Button({
             text: "help",
-            pos: new p5.Vector((1 * gameWidth / 9) + xPos,  yPos), 
+            pos: new p5.Vector((1 * commonButtonSpace) + xPos,  yPos), 
             fillColor: purpleColor[2],
             myImage: icons.help, 
             onClick: function(){ navigateTo("Help"); },
         }),        
         new Button({
             text: "settings",
-            pos: new p5.Vector((2 * gameWidth / 9) + xPos,  yPos), 
+            pos: new p5.Vector((2 * commonButtonSpace) + xPos,  yPos), 
             fillColor: purpleColor[3],
             myImage: icons.settings, 
             onClick: function(){ navigateTo("Settings"); },
@@ -71,7 +71,7 @@ function createHomeScreen()
             myImage: homeTrack,
         }),
         new MyImage({
-            pos: new p5.Vector(815, 125), 
+            pos: new p5.Vector(815, 100), 
             size: 1060,
             myImage: banner,
         }),
@@ -84,8 +84,8 @@ function createHomeScreen()
 
 
 
-    let x = 1150;
-    let y = 135;
+    let x = 1100;
+    let y = 120;
 
 
 
@@ -96,8 +96,8 @@ function createHomeScreen()
         {
             images.push(
                 new MyImage({
-                    pos: new p5.Vector(x + (110 * i), y), 
-                    size: 100,
+                    pos: new p5.Vector(x + ((commonButtonSize + 20) * i), y), 
+                    size: commonButtonSize,
                     myImage: coinImages.missing,
                 })
             )
@@ -106,8 +106,8 @@ function createHomeScreen()
         {
             images.push(
                 new MyImage({
-                    pos: new p5.Vector(x + (110 * i), y), 
-                    size: 100,
+                    pos: new p5.Vector(x + ((commonButtonSize + 20) * i), y), 
+                    size: commonButtonSize,
                     myImage: coinImages.bronze,
                 })
             )
@@ -116,8 +116,8 @@ function createHomeScreen()
         {
             images.push(
                 new MyImage({
-                    pos: new p5.Vector(x + (110 * i), y), 
-                    size: 100,
+                    pos: new p5.Vector(x + ((commonButtonSize + 20) * i), y), 
+                    size: commonButtonSize,
                     myImage: coinImages.silver,
                 })
             )
@@ -126,27 +126,15 @@ function createHomeScreen()
         {
             images.push(
                 new MyImage({
-                    pos: new p5.Vector(x + (110 * i), y), 
-                    size: 100,
+                    pos: new p5.Vector(x + ((commonButtonSize + 20) * i), y), 
+                    size: commonButtonSize,
                     myImage: coinImages.gold,
                 })
             )
         }
     });
     
-    
 
-    for (let i = 0; i < 3; i++) 
-    {
-        images.push(
-            new MyImage({
-                pos: new p5.Vector(x + (110 * i), y), 
-                size: 100,
-                myImage: coinImages.missing,
-            })
-        )
-        
-    }
 
     shapes.push(new Shape({
         pos: new p5.Vector((gameWidth / 1.9) - 100, 50), 
@@ -167,10 +155,11 @@ function createHomeScreen()
 
     textBoxes.push(
         new TextBox({
-            text: "level " + (currentLevel + 1),
+            text: getLevelName(currentLevel),
             fillColor: "rgba(0, 0, 0, 0)",
             fontSize: 72,
-            pos: new p5.Vector(850, 225), 
+            fontColor: "black",
+            pos: new p5.Vector(850, 250), 
             size: new p5.Vector(gameWidth / 2, 200),
         })
     )

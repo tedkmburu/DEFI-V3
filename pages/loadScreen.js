@@ -12,7 +12,7 @@ function createLoadingScreen()
     // load bar
     shapes.push(new Shape({
         pos: new p5.Vector(0, 1090 - 50), 
-        size: new p5.Vector(1920, 50),
+        size: new p5.Vector(1920, 50), 
         fillColor: "rgba(0, 0, 0, 0.5)",
     }))
     shapes.push(new Shape({
@@ -39,8 +39,8 @@ function createLoadingScreen()
     }))
 
     images.push(new MyImage({
-        pos: new p5.Vector(x + 100, y + 200), 
-        size: new p5.Vector(1000, 1080 - 400),
+        pos: new p5.Vector(x + 100, y + 300), 
+        size: new p5.Vector(1000, 1080 - 600),
         myImage: levels[currentLevel].buildImage,
     }))
     images.push(new MyImage({
@@ -61,7 +61,7 @@ function createLoadingScreen()
     }
 
     textBoxes.push(new TextBox({
-        text: "Level " + (currentLevel + 1),
+        text: getLevelName(currentLevel),
         pos: new p5.Vector(x + 1250, y + 250),
         size: new p5.Vector(sideWidth, 100),
         fontColor: "black",

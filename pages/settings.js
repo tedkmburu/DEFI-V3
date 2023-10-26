@@ -19,14 +19,14 @@ function createSettingsScreen()
             fontSize: 36,
             size: size,
             fontColor: 255,
-            fillColor: purpleColor[0],
+            fillColor: purpleColor[1],
             myImage: icons.home, 
             onClick: function(){ navigateTo("Home"); },
         }),
         new Button({
             text: "Leaderboard",
             shape: "ellipse",
-            pos: new p5.Vector((1 * gameWidth / 9) + xPos, yPos), 
+            pos: new p5.Vector((1 * commonButtonSpace) + xPos, yPos), 
             fontSize: 36,
             size: size,
             fontColor: 255,
@@ -37,7 +37,7 @@ function createSettingsScreen()
         new Button({
             text: "Help",
             shape: "ellipse",
-            pos: new p5.Vector((2 * gameWidth / 9) + xPos,  yPos), 
+            pos: new p5.Vector((2 * commonButtonSpace) + xPos,  yPos), 
             fontSize: 36,
             size: size,
             fontColor: 255,
@@ -47,7 +47,7 @@ function createSettingsScreen()
         }),        new Button({
             text: "Settings",
             shape: "ellipse",
-            pos: new p5.Vector((3 * gameWidth / 9) + xPos,  yPos), 
+            pos: new p5.Vector((3 * commonButtonSpace) + xPos,  yPos), 
             fontSize: 36,
             size: size,
             fontColor: 255,
@@ -119,7 +119,7 @@ function createSettingsScreen()
 
     textBoxes.push(
         new TextBox({
-            text: "Level " + (currentLevel + 1),
+            text: getLevelName(currentLevel),
             fillColor: "rgba(0, 0, 0, 0)",
             fontSize: 72,
             pos: new p5.Vector(850, 205), 

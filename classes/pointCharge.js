@@ -27,11 +27,13 @@ class PointCharge extends Charge
         {
             this.showSlider();
             
+            
             this.charge = this.slider.value();
         }
         else if (this.dragging)
         {
             this.hideSlider();
+            createFieldLines()
         }
         else
         {

@@ -1,7 +1,14 @@
 function createLevels()
 {
+    levels = []
+
     let trackImages = [ 
+        // tutorial
         {play: loadImage('images/tracks/lv1.png'), build: loadImage('images/tracks/lv1build.png')},
+        {play: loadImage('images/tracks/lv1.png'), build: loadImage('images/tracks/lv1build.png')},
+        {play: loadImage('images/tracks/lv3.png'), build: loadImage('images/tracks/lv3build.png')},
+
+        // normal levels
         {play: loadImage('images/tracks/lv2.png'), build: loadImage('images/tracks/lv2build.png')},
         {play: loadImage('images/tracks/lv3.png'), build: loadImage('images/tracks/lv3build.png')},
         {play: loadImage('images/tracks/lv4.png'), build: loadImage('images/tracks/lv4build.png')},
@@ -17,10 +24,71 @@ function createLevels()
         {play: loadImage('images/tracks/lv3.png'),  build: loadImage('images/tracks/lv3build.png')},
         {play: loadImage('images/tracks/lv13.png'), build: loadImage('images/tracks/lv13build.png')},
         {play: loadImage('images/tracks/lv14.png'), build: loadImage('images/tracks/lv14build.png')},
+        {play: loadImage('images/tracks/lv15.png'), build: loadImage('images/tracks/lv15build.png')},
         {play: loadImage('images/tracks/lv15.png'), build: loadImage('images/tracks/lv15build.png')}
     ]
 
     let levelData = [
+        {   // Tutorial 1
+            coins: [
+                new Coin({pos: new p5.Vector(600, 530)}), 
+                new Coin({pos: new p5.Vector(900, 530)}), 
+                new Coin({pos: new p5.Vector(1200, 530)}), 
+            ],
+            testCharges: [
+                new TestCharge({pos: new p5.Vector(500, 530)})
+            ],
+            finishLine: {
+                pos: new p5.Vector(1314, 394),
+                size: new p5.Vector(200, 300)
+            },
+            border: [
+                new p5.Vector(400, 427),
+                new p5.Vector(1424, 427),
+                new p5.Vector(1424, 643),
+                new p5.Vector(400, 643)
+            ]
+        },
+        {   // Tutorial 2
+            coins: [
+                new Coin({pos: new p5.Vector(600, 500)}), 
+                new Coin({pos: new p5.Vector(900, 463)}), 
+                new Coin({pos: new p5.Vector(1200, 500)}), 
+            ],
+            testCharges: [
+                new TestCharge({pos: new p5.Vector(500, 530)})
+            ],
+            finishLine: {
+                pos: new p5.Vector(1314, 394),
+                size: new p5.Vector(200, 300)
+            },
+            border: [
+                new p5.Vector(400, 427),
+                new p5.Vector(1424, 427),
+                new p5.Vector(1424, 643),
+                new p5.Vector(400, 643)
+            ]
+        },
+        {   // Tutorial 3
+            coins: [
+                new Coin({pos: new p5.Vector(600, 500)}), 
+                new Coin({pos: new p5.Vector(900, 463)}), 
+                new Coin({pos: new p5.Vector(1200, 500)}), 
+            ],
+            testCharges: [
+                new TestCharge({pos: new p5.Vector(500, 530)})
+            ],
+            finishLine: {
+                pos: new p5.Vector(1314, 394),
+                size: new p5.Vector(200, 300)
+            },
+            border: [
+                new p5.Vector(400, 427),
+                new p5.Vector(1424, 427),
+                new p5.Vector(1424, 643),
+                new p5.Vector(400, 643)
+            ]
+        },
         {   // lv 1
             coins: [
                 new Coin({pos: new p5.Vector(600, 500)}), 
@@ -365,7 +433,7 @@ function createLevels()
                 new p5.Vector(100, 100)
             ]
         },
-    ]
+    ]    
 
     trackImages.forEach((trackImage, i) => {
 
@@ -384,33 +452,50 @@ function createLevels()
 function unlockLevels()
 {
     levels[0].locked = false; 
-    // levels[1].locked = false; 
-    // levels[2].locked = false; 
-    // levels[3].locked = false; 
-    // levels[4].locked = false; 
+    levels[1].locked = false; 
+    levels[2].locked = false; 
+    levels[3].locked = false; 
+    levels[4].locked = false; 
     // levels[5].locked = false; 
     // levels[6].locked = false; 
     // levels[7].locked = false; 
     // levels[8].locked = false; 
 
     levels.forEach((level, i) => {
+        // save the size of the image of the track
         let width = level.buildImage.width
         let height = level.buildImage.height
         level.size = new p5.Vector(width, height)
 
-        if (userData[i].highScore != null)
+        // load their high scores to the variable
+        if (userData[i].highScore != 0)
         {
             levels[i].highScore = userData[i].highScore
-            // levels[i].coins = 
         }
-        if (userData[i].highScore != null && i < levels.length - 1)
+        else
+        {
+            levels[i].highScore = 0
+        }
+
+        // load their collectedCoins to the variable
+        levels[i].collectedCoins = userData[i].coins
+
+
+
+
+
+        // unlock levels and assign current level
+        if (userData[i].highScore != 0 && i < levels.length - 1)
         {
             levels[i + 1].locked = false
             currentLevel = i + 1;
         }
-        
 
-        console.log(level.coins);
+        if (userData[i].highScore != 0 && i < levels.length - 1)
+        {
+            levels[i + 1].locked = false
+            currentLevel = i + 1;
+        }
         
     })
 }

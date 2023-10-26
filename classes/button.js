@@ -5,7 +5,7 @@ class Button extends Particle
         super(props)
         
         this.myImage = props.myImage || null
-        this.size = props.size || new p5.Vector(commonButtonRadius, commonButtonRadius);
+        this.size = props.size || new p5.Vector(commonButtonSize, commonButtonSize);
         this.size = this.size.copy().mult(scale);
 
         this.text = props.text || ""
@@ -99,6 +99,7 @@ class Button extends Particle
         {
             this.onClick();
             createScreens()
+            createPopUps()
         }
     }
 }

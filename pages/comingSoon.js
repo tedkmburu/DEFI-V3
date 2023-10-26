@@ -29,7 +29,7 @@ function createComingSoonScreen()
             size: new p5.Vector(150, 150),
             fontSize: 36,
             fontColor: 255,
-            fillColor: purpleColor[0],
+            fillColor: purpleColor[1],
             onClick: function(){ navigateTo("Home"); },
         }),
     ]

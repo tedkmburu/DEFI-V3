@@ -7,6 +7,24 @@ function createGameScreen()
     let textBoxes = []
     let shapes = []
 
+
+
+
+    levels[currentLevel].coins.forEach(coin => {
+        coin.visible = true;
+        coin.value = goldValue;
+    })
+
+    createFieldLines()
+
+    levelCompleteData = {coinsCollected: [], timeToComplete: 9999999999999999999999999999999999}
+
+    
+
+
+
+
+
     shapes.push(new Shape({
         pos: new p5.Vector(0, 0), 
         size: new p5.Vector(innerWidth * 3, 200),
@@ -17,7 +35,7 @@ function createGameScreen()
     
     buttons = [
         new Button({
-            text: "Pause",
+            text: "pause",
             shape: "ellipse",
             myImage: icons.pause,
             pos: new p5.Vector(25, 25), 
@@ -28,7 +46,7 @@ function createGameScreen()
             onClick: function(){ navigateTo("Level Select"); },
         }),
         new Button({
-            text: "Build",
+            text: (buildMode) ? "test" : "edit",
             shape: "ellipse",
             fillColor: positiveChargeColor,
             myImage: (buildMode) ? icons.play : icons.edit,
@@ -39,7 +57,7 @@ function createGameScreen()
             onClick: function() { toggleBuildMode(); },
         }),
         new Button({
-            text: "Trash",
+            text: "trash",
             shape: "ellipse",
             fillColor: purpleColor[0],
             myImage: icons.trash,
@@ -47,7 +65,7 @@ function createGameScreen()
             fontSize: 36,
             size: buttonSize,
             fontColor: 255,
-            onClick: function() {  },
+            onClick: function() { },
         })
     ]
 
@@ -56,8 +74,8 @@ function createGameScreen()
     
 
     // Set the desired dimensions of the rectangle containing the track image
-    const maxWidth = 2 * 1920 / 3; // Set your maximum width here
-    const maxHeight = 2 * 1080 / 3; // Set your maximum height here
+    const maxWidth = 1025; // Set your maximum width here
+    const maxHeight = 620; // Set your maximum height here
 
     // Get the original image dimensions
     const originalWidth = levels[currentLevel].size.x;
@@ -67,47 +85,42 @@ function createGameScreen()
     let imagePos = getScaledImagePos(maxWidth, maxHeight, imageSize)
     let trackImageToShow = (buildMode) ? levels[currentLevel].buildImage : levels[currentLevel].playImage
 
-    console.log(buildMode);
+    // console.log(buildMode);
     images = [
         new MyImage({
-            pos: new p5.Vector(400, 200).add(imagePos), 
-            size: imageSize.x * 0.8,
+            pos: new p5.Vector(400, 220), 
+            size: new p5.Vector(maxWidth, maxHeight),
             myImage: trackImageToShow,
+        }),
+        new MyImage({
+            pos: new p5.Vector(1920 - (commonButtonSize + 40), 0), 
+            size: commonButtonSize + 20,
+            myImage: ribbon,
+        }),
+        new MyImage({
+            pos: new p5.Vector(1920 - 180, 25), 
+            size: commonButtonSize,
+            myImage: coinImages.gold,
         })]
 
-    let personalBest = userData[currentLevel].fastestTime
 
     textBoxes = [
         new TextBox({
-            text: millisecondsToString(elapsedTime),
+            text: millisecondsToString(silverCoinTime),
             fillColor: "rgba(0, 0, 0, 0)",
-            fontColor: "white",
-            fontSize: 72,
-            pos: new p5.Vector(0, 50), 
-            size: new p5.Vector(1920, 80),
+            fontColor: "black",
+            fontSize: 60,
+            pos: new p5.Vector(1920 - 200, 70), 
+            size: new p5.Vector(200, 73),
         }),
+        
     ]
-
-    if (personalBest != null)
-    {
-        textBoxes.push(
-            new TextBox({
-                text: "Personal Best: " + millisecondsToString(personalBest),
-                fillColor: "rgba(0, 0, 0, 0)",
-                fontColor: "rgba(255, 255, 255, 0.75)",
-                fontSize: 24,
-                pos: new p5.Vector(0, 120), 
-                size: new p5.Vector(1920, 80),
-            })
-        )
-    }
 
     let functions = () => {
         
         updateTrackImage()
         updateTimer()
         displayCoins()
-        createFieldLines()
         displayCharges()
         if (!buildMode)
         {
@@ -136,8 +149,32 @@ function createGameScreen()
 
 function updateTimer()
 {
-    screens[3].textBoxes[0].text = millisecondsToString(elapsedTime)
-    elapsedTime +=  deltaTime
+    
+    let textToShow = ""
+    let coinToShow = coinImages.gold
+    if (elapsedTime < silverCoinTime) 
+    {
+        textToShow = millisecondsToString(silverCoinTime - elapsedTime)
+        coinToShow = coinImages.gold
+        
+    }
+    else if (elapsedTime > silverCoinTime && elapsedTime < bronzeCoinTime) 
+    {
+        textToShow = millisecondsToString(bronzeCoinTime - elapsedTime)
+        coinToShow = coinImages.silver
+    }
+    else if (elapsedTime > bronzeCoinTime) 
+    {
+        coinToShow = coinImages.bronze
+        textToShow = ""
+    }
+    screens[3].textBoxes[0].text = textToShow
+    screens[3].images[2].myImage = coinToShow
+
+    if (!popUpVisible)
+    {
+        elapsedTime += deltaTime
+    }
 }
 
 function updateTrackImage()
@@ -155,8 +192,7 @@ function millisecondsToString(milliseconds)
     }
     else if (milliseconds != null)
     {
-        
-        const seconds = (milliseconds / 1000).toFixed(2);
+        const seconds = (milliseconds / 1000).toFixed(1);
         return seconds.toString() + " s";
     }
     else 
@@ -191,10 +227,6 @@ function resetGame()
     charges = []
     elapsedTime = 0
 
-    levels[currentLevel].coin.forEach(star => {
-        star.angle = 0;
-    })
-
     resetTestCharges()
     resetCoins()
 }
@@ -226,7 +258,7 @@ function resetCharges()
 
 function resetCoins()
 {
-    levels[currentLevel].coin.forEach(star => {
+    levels[currentLevel].coins.forEach(coin => {
         coin.visible = true;
     })
 }
@@ -281,7 +313,7 @@ function displayTestCharges()
 function updatePlayButton()
 {
     screens[3].buttons[1].myImage = (buildMode) ? icons.play : icons.edit
-    screens[3].buttons[1].text = (buildMode) ? "Play" : "Build";
+    screens[3].buttons[1].text = (buildMode) ? "test" : "edit";
 }
 
 // checks to see if any test charge collides with a star
@@ -347,27 +379,40 @@ function checkWinConditions()
     // if win condition is true
     if (testChargeInFinishArea.every(isInFinishLine => isInFinishLine === true))
     {
-        // count how many coins are collected
-        let coinsCollected = 0;
-        levels[currentLevel].coins.forEach(coin => {
-            if (!coin.visible)
+        if (!popUpVisible)
+        {
+            levelCompleteData.timeToComplete = elapsedTime
+            coinsCollected = []
+
+            for (let i = 0; i < 3; i++) 
             {
-                coinsCollected++;
+                let coin = levels[currentLevel].coins[i]
+                if (coin.visible)
+                {
+                    coinsCollected.push(0)
+                }
+                else
+                {
+                    coinsCollected.push(coin.value)
+                }
+                
+                
             }
-        })
 
+            console.log("coinsCollected: ", coinsCollected);
+                    
+            // unlock next level
+            levels[currentLevel + 1].locked = false;
+
+            // go to the next screen
+            popUps[0] = createLevelCompletePopUp()
+            
+            openPopUp("Level Complete")
+
+            // check if it's a highscore
+            updateLevelData(currentLevel, elapsedTime, coinsCollected) 
+        }
         
-
-        // check if it's a highscore
-        updateLevelData(currentLevel, score, elapsedTime, levels[currentLevel].coins) 
-        
-
-        // unlock next level
-        levels[currentLevel + 1].locked = false;
-
-        // go to the next screen
-        screens[4] = createLevelCompleteScreen()
-        navigateTo("Level Complete")
     }
 }
 
@@ -377,13 +422,15 @@ function calculateScore(elapsedTime, coins)
     let score = 10000 / ((0.0001 * elapsedTime) + 0.1);
 
     coins.forEach(coin => {
-        if (coin.value != 0)
+        if (coin != 0)
         {
-            score *= coin.value
+            score *= coin
         }
     })
     return score
 }
+
+
 
 // :todo
 

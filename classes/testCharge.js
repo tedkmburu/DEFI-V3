@@ -140,8 +140,14 @@ class TestCharge extends Charge
     {
         for (let i = 0; i < 3; i++) 
         {
-            if (circleOverlapsCirlce(this, levels[currentLevel].coins[i]))
+            let coin = levels[currentLevel].coins[i]
+            if (circleOverlapsCirlce(this, coin))
             {
+                if (coin.visible)
+                {
+                    levelCompleteData.coinsCollected.push(coin.value)
+                }
+
                 levels[currentLevel].coins[i].visible = false; 
             }
         }

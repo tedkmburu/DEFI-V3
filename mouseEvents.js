@@ -2,69 +2,88 @@ function mouseClicked()
 {
     let buttonWasClicked = false; 
 
-    screens[currentScreen].buttons.forEach(button => {
-        if (isPointInRectangle(mousePosition, button))
-        {
-            buttonWasClicked = true;
-            button.clicked()
-        }
-    });
-
-    let selectedCharge;
-
-    if (!buttonWasClicked && buildMode)
+    if (popUpVisible)
     {
-        charges.forEach(charge => {charge.dragging = false; charge.selected = false;} )
+        popUps[currentPopUp].buttons.forEach(button => {
+            if (isPointInRectangle(mousePosition, button))
+            {
+                buttonWasClicked = true;
+                button.clicked()
+                popUpVisible =  false;
+            }
+        });
         
-        let chargeSelected = false; 
-
-        for (let i = 0; i < charges.length; i++) 
-        {
-            let distanceToCharge = charges[i].pos.dist(mousePosition)
-
-            if (charges[i].selected)
-            {
-                selectedCharge = charges[i]; 
-                print(selectedCharge)
-            }
-            
-            if (charges[i].radius > distanceToCharge)
-            {
-                charges[i].selected = true;
-                
-                charges[i].slider.style("visibility", "visible");
-                selectedCharge = charges[i]
-            }
-            else
-            {
-                charges[i].slider.style("visibility", "hidden");
-                charges[i].selected = false;
-            }
-            
-        }
-
-        let mouseOverCharge = charges.some(charge => {
-            let distanceToCharge = mousePosition.copy().dist(charge.pos)
-            if (distanceToCharge < charge.diameter * 1.5)
-            {
-                return true;
-            }
-        })
-
-        console.log(mouseOverCharge);
-
-        if (currentScreen == 3 && buildMode && !chargeSelected && !mouseOverCharge)
-        {
-            pos = new p5.Vector(mouseX, mouseY).div(scale);
-            charges.push(new PointCharge({pos: pos}))
-        }
     }
-
-    if (!buildMode)
+    else 
     {
-        dataToPrint += `new p5.Vector(` + mouseX + `, ` + mouseY + `),
-`;
+        screens[currentScreen].buttons.forEach(button => {
+            if (isPointInRectangle(mousePosition, button))
+            {
+                buttonWasClicked = true;
+                button.clicked()
+            }
+        });
+
+        let selectedCharge;
+
+        if (!buttonWasClicked && buildMode)
+        {
+            charges.forEach(charge => {charge.dragging = false; charge.selected = false;} )
+            
+            let chargeSelected = false; 
+
+            for (let i = 0; i < charges.length; i++) 
+            {
+                let distanceToCharge = charges[i].pos.dist(mousePosition)
+
+                if (charges[i].selected)
+                {
+                    selectedCharge = charges[i]; 
+                    print(":todo")
+                }
+                
+                if (charges[i].radius > distanceToCharge)
+                {
+                    charges[i].selected = true;
+                    createFieldLines()
+                    
+                    charges[i].slider.style("visibility", "visible");
+                    selectedCharge = charges[i]
+                }
+                else
+                {
+                    charges[i].slider.style("visibility", "hidden");
+                    charges[i].selected = false;
+                }
+                
+            }
+
+            let mouseOverCharge = charges.some(charge => {
+                let distanceToCharge = mousePosition.copy().dist(charge.pos)
+                if (distanceToCharge < charge.diameter * 1.5)
+                {
+                    return true;
+                }
+            })
+
+            if (currentScreen == 3 && buildMode && !chargeSelected && !mouseOverCharge)
+            {
+                pos = new p5.Vector(mouseX, mouseY).div(scale);
+                charges.push(new PointCharge({pos: pos}))
+            }
+        }
+
+        if (!buildMode)
+        {
+            dataToPrint += `new p5.Vector(` + mouseX + `, ` + mouseY + `),
+    `;
+        }
     }
+    
+
+    
+
+    
 
     // console.log(`new p5.Vector(` + mouseX + `, ` + mouseY + `)`);
     // console.log(dataToPrint);
@@ -148,30 +167,30 @@ function mouseWheel(event)
         if (scrollOffset <= 0)
         {
             scrollOffset -= event.delta
-            screens[1].buttons.forEach(button => { button.pos.y -= event.delta })
-            screens[1].images.forEach(image => { image.pos.y -= event.delta })
-            screens[1].textBoxes.forEach(textBox => { textBox.pos.y -= event.delta })
-            screens[1].shapes.forEach(shape => { shape.pos.y -= event.delta })
+            screens[1].buttons.forEach(button => { button.pos.x -= event.delta })
+            screens[1].images.forEach(image => { image.pos.x -= event.delta })
+            screens[1].textBoxes.forEach(textBox => { textBox.pos.x -= event.delta })
+            screens[1].shapes.forEach(shape => { shape.pos.x -= event.delta })
         } 
 
         if (scrollOffset > 0)
         {
             scrollOffset = 0
-            screens[1].buttons.forEach(button => { button.pos.y = button.startingPos.y })
-            screens[1].images.forEach(image => { image.pos.y = image.startingPos.y })
-            screens[1].textBoxes.forEach(textBox => { textBox.pos.y = textBox.startingPos.y })
-            screens[1].shapes.forEach(shape => { shape.pos.y = shape.startingPos.y })
+            screens[1].buttons.forEach(button => { button.pos.x = button.startingPos.x })
+            screens[1].images.forEach(image => { image.pos.x = image.startingPos.x })
+            screens[1].textBoxes.forEach(textBox => { textBox.pos.x = textBox.startingPos.x })
+            screens[1].shapes.forEach(shape => { shape.pos.x = shape.startingPos.x })
         }
 
-        let rowHeight = -1 * (160 * (levels.length / 2) + 2080)
+        let rowHeight = -1 * (160 * (levels.length / 2) + 10080)
         if (scrollOffset < rowHeight)
         {
             scrollOffset = rowHeight
 
-            screens[1].buttons.forEach(button => { button.pos.y = button.startingPos.y + rowHeight })
-            screens[1].images.forEach(image => { image.pos.y = image.startingPos.y + rowHeight })
-            screens[1].textBoxes.forEach(textBox => { textBox.pos.y = textBox.startingPos.y + rowHeight })
-            screens[1].shapes.forEach(shape => { shape.pos.y = shape.startingPos.y + rowHeight })
+            screens[1].buttons.forEach(button => { button.pos.x = button.startingPos.x + rowHeight })
+            screens[1].images.forEach(image => { image.pos.x = image.startingPos.x + rowHeight })
+            screens[1].textBoxes.forEach(textBox => { textBox.pos.x = textBox.startingPos.x + rowHeight })
+            screens[1].shapes.forEach(shape => { shape.pos.x = shape.startingPos.x + rowHeight })
         }
 
     }

@@ -6,15 +6,23 @@ function preload()
     blueprintImage = loadImage('images/dark.png');
     homeTrack = loadImage('images/homeTrack.png');
     banner = loadImage('images/banner.png')
+    ribbon = loadImage('images/ribbon.png')
     stamp = loadImage('images/stamp.svg')
     levelCompleteImage = loadImage('images/levelComplete.svg')
 
     coinImages = {
-        gold: loadImage('images/coin1.png'),
-        silver: loadImage('images/coin2.png'),
-        bronze: loadImage('images/coin3.png'),
-        missing: loadImage('images/coin4.png'),
+        gold: loadImage('images/coin (1).png'),
+        silver: loadImage('images/coin (2).png'),
+        bronze: loadImage('images/coin (3).png'),
+        missing: loadImage('images/coin (4).png'),
     }
+
+    tutorialImages = [
+        loadImage('images/tutorial/tutorial (1).png'),
+        loadImage('images/tutorial/tutorial (2).png'),
+        loadImage('images/tutorial/tutorial (3).png'),
+        loadImage('images/tutorial/tutorial (4).png'),
+    ]
 
     icons = {
         back: loadImage('images/icons/arrow-left-solid.svg'),
@@ -39,25 +47,42 @@ function preload()
         };
 
     setScale()
+    
 
     createLevels()
+
+    saveData()
+    unlockLevels()
+
     createAnimations()
 }
 
 function setup()
 {
-    saveData()
-    unlockLevels()
     createScreens()
+    createPopUps()
     createCanvas(innerWidth, innerHeight)
 }
 
 function draw()
 {
-    background(0)
+    background(purpleColor[0])
     mousePosition = new p5.Vector(mouseX, mouseY)
     
     displayCurrentScreen()
+    displayCurrentPopUp()
+    
+
+    
+    if (frameCount % 30 == 0)
+    {
+        currentFPS = Math.round(frameRate())
+    }
+    push()
+        textSize(24)
+        fill(255)
+        text("fps: " + currentFPS, 0,  24)
+    pop()
 }
 
 function setScale()
@@ -399,12 +424,24 @@ function createVoltageGradient()
 function displayVoltageGradient()
 {
     createVoltageGradient()
-    
+
     for (let x = 0; x < 10; x++) 
     {
         for (let y = 0; y < 10; y++) 
         {
             
         }   
+    }
+}
+
+function getLevelName(levelIndex)
+{
+    if (levelIndex < 3)
+    {
+        return "tutorial #" + (levelIndex + 1)
+    }
+    else
+    {
+        return "level " + (levelIndex - 2)
     }
 }
