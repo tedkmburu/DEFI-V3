@@ -1,3 +1,5 @@
+"use strict";
+
 class MyImage extends Particle
 {
     constructor(props)

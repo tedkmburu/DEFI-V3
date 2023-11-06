@@ -1,3 +1,4 @@
+"use strict";
 
 function createAnimations()
 {
@@ -38,7 +39,7 @@ function createAnimations()
     let size = new p5.Vector(testChargeDiameter, testChargeDiameter)
     let velMag = 0
 
-    createNewTestCharge = () => {
+    let createNewTestCharge = () => {
         shapes.push(new Shape({
             shape: "ellipse",
             pos: new p5.Vector(random(0, 1920), random(0, 1080)),
@@ -56,7 +57,7 @@ function createAnimations()
         createNewTestCharge()
     }
 
-    functions = () => {
+    let myFunctions = () => {
         let groupOfCharges = [
             {
                 charge: 5,
@@ -69,8 +70,8 @@ function createAnimations()
         ]
 
 
-        animations[0].shapes.forEach(shape => {
-            if (shape.size.x == size.x)
+        animations[0].shapes.forEach((shape, i) => {
+            if (i > 1)
             {
                 let opacity = maxOpacity - (shape.frameCount / 2000)
 
@@ -128,9 +129,19 @@ function createAnimations()
         textBoxes: [],
         images: [],
         shapes: shapes,
-        functions: functions,
+        functions: myFunctions,
         loop: true,
     })
+
+
+    // animations[1] = new Animation({
+    //     name: "retry",
+    //     textBoxes: [],
+    //     images: [],
+    //     shapes: shapes,
+    //     functions: functions,
+    //     loop: false,
+    // })
 }
 
 
@@ -145,7 +156,7 @@ class Animation extends Particle
         this.textBoxes = props.textBoxes || []
         this.images = props.images || []
         this.shapes = props.shapes || []
-        this.functions = props.functions
+        this.functions = props.functions || null
         this.loop = props.loop || false;
     }
 
@@ -169,7 +180,7 @@ class Animation extends Particle
             }
             if (this.loop)
             {
-                this.functions();  
+                this.functions();
             }
         }
 

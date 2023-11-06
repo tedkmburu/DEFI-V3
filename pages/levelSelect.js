@@ -1,3 +1,5 @@
+"use strict";
+
 function createLevelSelect()
 {
     let screenName = "Level Select"

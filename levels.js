@@ -1,3 +1,5 @@
+"use strict";
+
 function createLevels()
 {
     levels = []
@@ -5,7 +7,7 @@ function createLevels()
     let trackImages = [ 
         // tutorial
         {play: loadImage('images/tracks/lv1.png'), build: loadImage('images/tracks/lv1build.png')},
-        {play: loadImage('images/tracks/lv1.png'), build: loadImage('images/tracks/lv1build.png')},
+        {play: loadImage('images/tracks/lv2.png'), build: loadImage('images/tracks/lv2build.png')},
         {play: loadImage('images/tracks/lv3.png'), build: loadImage('images/tracks/lv3build.png')},
 
         // normal levels
@@ -51,42 +53,52 @@ function createLevels()
         },
         {   // Tutorial 2
             coins: [
-                new Coin({pos: new p5.Vector(600, 500)}), 
-                new Coin({pos: new p5.Vector(900, 463)}), 
-                new Coin({pos: new p5.Vector(1200, 500)}), 
+                new Coin({pos: new p5.Vector(897, 312)}), 
+                new Coin({pos: new p5.Vector(1222, 413)}), 
+                new Coin({pos: new p5.Vector(1375, 662)}), 
             ],
             testCharges: [
-                new TestCharge({pos: new p5.Vector(500, 530)})
+                new TestCharge({pos: new p5.Vector(482, 317)})
             ],
             finishLine: {
-                pos: new p5.Vector(1314, 394),
-                size: new p5.Vector(200, 300)
+                pos: new p5.Vector(350, 705),
+                size: new p5.Vector(1250, 150)
             },
             border: [
-                new p5.Vector(400, 427),
-                new p5.Vector(1424, 427),
-                new p5.Vector(1424, 643),
-                new p5.Vector(400, 643)
+                new p5.Vector(402, 237),
+                new p5.Vector(1513, 237),
+                new p5.Vector(1518, 817),
+                new p5.Vector(397, 818),
             ]
         },
         {   // Tutorial 3
             coins: [
-                new Coin({pos: new p5.Vector(600, 500)}), 
-                new Coin({pos: new p5.Vector(900, 463)}), 
-                new Coin({pos: new p5.Vector(1200, 500)}), 
+                new Coin({pos: new p5.Vector(897, 312)}), 
+                new Coin({pos: new p5.Vector(1122, 413)}), 
+                new Coin({pos: new p5.Vector(1100, 662)}), 
             ],
             testCharges: [
-                new TestCharge({pos: new p5.Vector(500, 530)})
+                new TestCharge({pos: new p5.Vector(700, 310)})
             ],
             finishLine: {
-                pos: new p5.Vector(1314, 394),
-                size: new p5.Vector(200, 300)
+                pos: new p5.Vector(965, 747),
+                size: new p5.Vector(400, 150)
             },
             border: [
-                new p5.Vector(400, 427),
-                new p5.Vector(1424, 427),
-                new p5.Vector(1424, 643),
-                new p5.Vector(400, 643)
+                new p5.Vector(630, 200),
+                new p5.Vector(918, 188),
+                new p5.Vector(1065, 202),
+                new p5.Vector(1187, 273),
+                new p5.Vector(1268, 387),
+                new p5.Vector(1302, 543),
+                new p5.Vector(1288, 857),
+                new p5.Vector(1068, 862),
+                new p5.Vector(1070, 500),
+                new p5.Vector(1045, 462),
+                new p5.Vector(1015, 440),
+                new p5.Vector(975, 422),
+                new p5.Vector(628, 417),
+                new p5.Vector(630, 198),
             ]
         },
         {   // lv 1

@@ -1,3 +1,5 @@
+"use strict";
+
 function createLevelCompletePopUp()
 {
     let screenName = "Level Complete";
@@ -156,10 +158,10 @@ function createLevelCompletePopUp()
         }),
     )
 
-    functions = () => {
+    let myFunctions = () => {
         // console.log()
-        let scoreToDisplay = levelCompleteData.timeToComplete
-        if (popUps[0].textBoxes[1].text <= scoreToDisplay)
+        let scoreToDisplay = round(levelCompleteData.timeToComplete)
+        if (popUps[0].textBoxes[1].text < scoreToDisplay)
         {
             if (frameCount % 2 == 0)
             {
@@ -181,7 +183,7 @@ function createLevelCompletePopUp()
         textBoxes: textBoxes,
         images: images,
         shapes: shapes,
-        functions: functions,
+        functions: myFunctions,
         backgroundAnimation: true,
     })
 }

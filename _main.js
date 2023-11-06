@@ -8,7 +8,6 @@ function preload()
     banner = loadImage('images/banner.png')
     ribbon = loadImage('images/ribbon.png')
     stamp = loadImage('images/stamp.svg')
-    levelCompleteImage = loadImage('images/levelComplete.svg')
 
     coinImages = {
         gold: loadImage('images/coin (1).png'),
@@ -44,6 +43,7 @@ function preload()
         next: loadImage('images/icons/arrow-right-solid.svg'),
         trash: loadImage('images/icons/trash-can-solid.svg'),
         classroom: loadImage('images/icons/chalkboard-user-solid.svg'),
+        click: loadImage('images/icons/arrow-pointer-solid.svg'),
         };
 
     setScale()
@@ -444,4 +444,33 @@ function getLevelName(levelIndex)
     {
         return "level " + (levelIndex - 2)
     }
+}
+
+function createArrow(start, end, color, scale)
+{
+        // Calculate the difference in coordinates
+    const deltaX = end.x - start.x;
+    const deltaY = end.y - start.y;
+
+    // Calculate the angle in radians using Math.atan2
+    const radians = Math.atan2(deltaY, deltaX);
+
+    // Convert radians to degrees
+    const angle = radians * (180 / Math.PI);
+    
+    push();
+        angleMode(DEGREES)
+        stroke(color);
+        strokeWeight(scale * 4);
+        noFill();
+        line(start.x, start.y, end.x, end.y);
+
+        translate(end.x, end.y)
+            rotate(angle);
+            fill(color);
+
+        triangle(0, 0, -10 * scale, -5 * scale, -10 * scale, 5 * scale);
+        angleMode(RADIANS)
+        
+    pop();
 }

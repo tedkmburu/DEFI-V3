@@ -1,3 +1,5 @@
+"use strict";
+
 class TestCharge extends Charge
 {
     constructor(props)
@@ -83,10 +85,12 @@ class TestCharge extends Charge
             let point1 = {pos: levels[currentLevel].border[i]};
             let point2 = {pos: levels[currentLevel].border[i + 1]};
 
-            if (isLineIntersectingCircle(point1, point2, this))
+            if (isLineIntersectingCircle(point1, point2, this) && !this.stuck)
             {
                 this.stuck = true
                 console.log("Hit the wall!");
+                failedTestChargePos = this.pos.copy()
+                levelFailed = true
             }
         }
 

@@ -1,3 +1,5 @@
+"use strict";
+
 function createLoadingScreen()
 {
     let screenName = "Loading Screen";
@@ -152,7 +154,7 @@ function createLoadingScreen()
         onClick: function(){ navigateTo("Game");  }
     }))
 
-    functions = () => {
+    let myFunctions = () => {
         let loadBarSize = screens[2].shapes[1].size.x
         if (loadBarSize < 1920)
         {
@@ -173,7 +175,7 @@ function createLoadingScreen()
         images: images,
         textBoxes: textBoxes,
         shapes: shapes,
-        functions: functions,
+        functions: myFunctions,
         backgroundAnimation: true,
     })
 }

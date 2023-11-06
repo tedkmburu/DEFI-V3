@@ -1,3 +1,5 @@
+"use strict";
+
 function createHomeScreen()
 {
     let screenName = "Home"

@@ -1,3 +1,5 @@
+"use strict";
+
 function navigateTo(nextScreen)
 {
     let nextScreenIndex = screens.findIndex(obj => obj.name == nextScreen)
@@ -73,14 +75,17 @@ function createScreens()
     // screens[4] = createLevelCompleteScreen()
     screens[5] = createComingSoonScreen()
     screens[6] = createSettingsScreen()
+
+    updatePlayButton()
 }
 
 function createPopUps()
 {
     popUps[0] = createLevelCompletePopUp()
-    popUps[1] = createTutorial1PopUp()
-    popUps[2] = createTutorial2PopUp()
-    popUps[3] = createTutorial3PopUp()
+    popUps[1] = createPausePopUp()
+    popUps[2] = createTutorial1PopUp()
+    popUps[3] = createTutorial2PopUp()
+    popUps[4] = createTutorial3PopUp()
 }
 
 // function setScreenName

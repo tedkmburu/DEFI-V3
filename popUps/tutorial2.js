@@ -1,3 +1,5 @@
+"use strict";
+
 function createTutorial2PopUp()
 {
     let screenName = "Tutorial 2";
@@ -156,7 +158,7 @@ function createTutorial2PopUp()
         }),
     )
 
-    functions = () => {
+    let myFunctions = () => {
         // console.log()
         let scoreToDisplay = levelCompleteData.timeToComplete
         if (popUps[0].textBoxes[1].text <= scoreToDisplay)
@@ -181,7 +183,7 @@ function createTutorial2PopUp()
         textBoxes: textBoxes,
         images: images,
         shapes: shapes,
-        functions: functions,
+        functions: myFunctions,
         backgroundAnimation: true,
     })
 }

@@ -1,3 +1,5 @@
+"use strict";
+
 class Charge extends Particle
 {
     constructor(props)

@@ -1,3 +1,5 @@
+"use strict";
+
 function createGameScreen()
 {
     let screenName = "Game";
@@ -25,11 +27,11 @@ function createGameScreen()
 
 
 
-    shapes.push(new Shape({
-        pos: new p5.Vector(0, 0), 
-        size: new p5.Vector(innerWidth * 3, 200),
-        fillColor: "rgba(0, 0, 0, 0.5)",
-    }))
+    // shapes.push(new Shape({
+    //     pos: new p5.Vector(0, 0), 
+    //     size: new p5.Vector(innerWidth * 3, 200),
+    //     fillColor: "rgba(0, 0, 0, 0.5)",
+    // }))
 
     let buttonSize = new p5.Vector(150, 150)
     
@@ -43,7 +45,7 @@ function createGameScreen()
             size: buttonSize,
             fillColor: purpleColor[0],
             fontColor: 255,
-            onClick: function(){ navigateTo("Level Select"); },
+            onClick: function(){ popUps[1] = createPausePopUp(); popUpVisible = true; resetCharges() },
         }),
         new Button({
             text: (buildMode) ? "test" : "edit",
@@ -88,8 +90,8 @@ function createGameScreen()
     // console.log(buildMode);
     images = [
         new MyImage({
-            pos: new p5.Vector(400, 220), 
-            size: new p5.Vector(maxWidth, maxHeight),
+            pos: new p5.Vector(commonButtonSpace, commonButtonSpace / 2), 
+            size: 1920 - (commonButtonSpace * 2),
             myImage: trackImageToShow,
         }),
         new MyImage({
@@ -103,30 +105,47 @@ function createGameScreen()
             myImage: coinImages.gold,
         })]
 
-
     textBoxes = [
         new TextBox({
             text: millisecondsToString(silverCoinTime),
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "black",
             fontSize: 60,
-            pos: new p5.Vector(1920 - 200, 70), 
-            size: new p5.Vector(200, 73),
+            pos: new p5.Vector(1920 - 250, 70), 
+            size: new p5.Vector(300, 73),
         }),
-        
+
+        new TextBox({
+            text: "click anywhere to place a charge",
+            fillColor: purpleColor[0],
+            strokeColor: purpleColor[4],
+            fontColor: "white",
+            fontSize: 48,
+            fontAlign: CENTER,
+            pos: new p5.Vector((1920 / 2) - 200, 25), 
+            size: new p5.Vector(400, 150),
+        }),
+
     ]
 
-    let functions = () => {
+
+    let myFunctions = () => {
         
-        updateTrackImage()
-        updateTimer()
-        displayCoins()
-        displayCharges()
         if (!buildMode)
         {
             checkCoinsCollisions();
             checkBorderCollisions();
         }
+        updateTrackImage()
+        updateTimer()
+        displayCoins()
+        displayCharges()
+
+        // if (currentLevel < 2)
+        // {
+            showTutorial()
+        // }
+        
         if (gameDevMode)
         {
             displayTrackBorder()
@@ -135,7 +154,6 @@ function createGameScreen()
         updatePlayButton()
     }
 
-
     return new Screen({
         name: screenName,
         backgroundImage: buildMode ? blueprintImage : spaceImage,
@@ -143,38 +161,70 @@ function createGameScreen()
         images: images,
         textBoxes: textBoxes,
         shapes: shapes,
-        functions: functions
+        functions: myFunctions
     })
 }
 
 function updateTimer()
 {
-    
+    let timeLeft = 0
     let textToShow = ""
     let coinToShow = coinImages.gold
     if (elapsedTime < silverCoinTime) 
     {
         textToShow = millisecondsToString(silverCoinTime - elapsedTime)
+        timeLeft = silverCoinTime - elapsedTime
         coinToShow = coinImages.gold
         
     }
     else if (elapsedTime > silverCoinTime && elapsedTime < bronzeCoinTime) 
     {
         textToShow = millisecondsToString(bronzeCoinTime - elapsedTime)
+        timeLeft = bronzeCoinTime - elapsedTime
         coinToShow = coinImages.silver
     }
     else if (elapsedTime > bronzeCoinTime) 
     {
         coinToShow = coinImages.bronze
+        timeLeft = 0
         textToShow = ""
+    }
+
+    if ((silverCoinTime - elapsedTime < 1000 && coinToShow == coinImages.gold) || 
+        (bronzeCoinTime - elapsedTime < 1000 && coinToShow == coinImages.silver))
+    {
+        screens[3].textBoxes[0].fontColor = positiveChargeColor
+    }
+    else
+    {
+        screens[3].textBoxes[0].fontColor = "white"
+
     }
     screens[3].textBoxes[0].text = textToShow
     screens[3].images[2].myImage = coinToShow
 
-    if (!popUpVisible)
+    let coinAngle = (timeLeft / silverCoinTime) * PI * 2
+
+
+    let coinAngleOffset = (PI / 2)
+
+
+    // this.pos.x, this.pos.y, this.size.x, this.size.y, this.start, this.stop, this.mode
+    new Shape({
+        shape: "arc", 
+        // 1920 - 180, 25
+        pos: new p5.Vector(1815, 100), 
+        size: new p5.Vector(commonButtonSize, commonButtonSize),
+        strokeColor: "black", 
+        start: 0 - coinAngleOffset,
+        stop: coinAngle - coinAngleOffset,
+    }).display()
+
+    if (!popUpVisible && buildMode)
     {
         elapsedTime += deltaTime
     }
+
 }
 
 function updateTrackImage()
@@ -188,22 +238,17 @@ function millisecondsToString(milliseconds)
 {    
     if (milliseconds == 1e+34)
     {
-        return "12.34 s";
+        return "99 s";
     }
     else if (milliseconds != null)
     {
-        const seconds = (milliseconds / 1000).toFixed(1);
+        const seconds = (milliseconds / 1000).toFixed(0);
         return seconds.toString() + " s";
     }
     else 
     {
-        return "0.00 s";
+        return "0 s";
     }
-}
-
-function drawEquiPotentialLines()
-{
-    console.log("draw <3");
 }
 
 function displayCoins()
@@ -245,7 +290,11 @@ function toggleBuildMode()
     resetCoins()
     resetTestCharges()
 
+    
+
 }
+
+
 
 function resetCharges()
 {
@@ -261,6 +310,7 @@ function resetCoins()
     levels[currentLevel].coins.forEach(coin => {
         coin.visible = true;
     })
+
 }
 
 function resetTestCharges()
@@ -276,6 +326,12 @@ function displayCharges()
 {
     displayFieldAllLines()
     displayFieldAllLineArrows()
+
+    if (!buildMode) 
+    {
+        createVelocityArrow();    
+    }
+    
     displayTestCharges()
 
     charges.forEach(charge => {
@@ -312,6 +368,25 @@ function displayTestCharges()
 // updates the image on the play button
 function updatePlayButton()
 {
+    // change the button visibility
+    let showButton = false
+
+    if (charges.length > 0)
+    {
+        if (charges[0].charge != 0)
+        {
+            showButton = true
+        }
+    }
+
+    if (!buildMode)
+    {
+        showButton = true
+    }
+
+    screens[3].buttons[1].visible = showButton
+
+    // change the image and text on the button
     screens[3].buttons[1].myImage = (buildMode) ? icons.play : icons.edit
     screens[3].buttons[1].text = (buildMode) ? "test" : "edit";
 }
@@ -414,7 +489,20 @@ function checkWinConditions()
         }
         
     }
+
+    if (levelFailed)
+    {
+        // setTimeout(delayedFunction, 1000);
+        // levelFailed = false
+        
+        outlineTrack()
+    }
+    if (buildMode)
+    {
+        levelFailed = false
+    }
 }
+
 
 function calculateScore(elapsedTime, coins)
 {
@@ -430,7 +518,389 @@ function calculateScore(elapsedTime, coins)
     return score
 }
 
+function createVelocityArrow()
+{
+    levels[currentLevel].testCharges.forEach(testCharge => {
+        let testChargeAcc = testCharge.acc.copy().mult(4000)
 
+        let start = testCharge.pos.copy()
+        let end = testCharge.pos.copy().add(testChargeAcc)
+        let color = "white"
+        let arrowScale = 1;
+        createArrow(start, end, color, arrowScale)
+
+        fill(255)
+        textSize(36 * scale.x)
+        text("force", end.x  + 10, end.y + 10)
+    })
+}
+
+function outlineTrack()
+{
+    let borderPoints = levels[currentLevel].border
+    
+    push();
+        noStroke();
+        fill("rgba(237, 32, 36, 0.25)")
+        beginShape();
+            // Exterior part of shape, clockwise winding
+                vertex(0, 0);
+                vertex(gameWidth, 0);
+                vertex(gameWidth, gameHeight);
+                vertex(0, gameHeight);
+
+
+            // Interior part of shape, counter-clockwise winding
+            
+            let sideLength = testChargeDiameter * 2
+            beginContour();
+                vertex(-sideLength + failedTestChargePos.x, -sideLength + failedTestChargePos.y);
+                vertex(-sideLength + failedTestChargePos.x, sideLength + failedTestChargePos.y);
+                vertex(sideLength + failedTestChargePos.x, sideLength + failedTestChargePos.y);
+                vertex(sideLength + failedTestChargePos.x, -sideLength + failedTestChargePos.y);
+            endContour();
+        endShape(CLOSE);
+
+        noFill()
+        stroke("white")
+        strokeWeight(20 * scale.x)
+        rect(failedTestChargePos.x - sideLength, failedTestChargePos.y - sideLength, sideLength * 2, sideLength * 2)
+
+
+        // beginShape();
+        // // beginShape(POINTS);
+        //     noFill();
+            
+        //     stroke("rgba(237, 32, 36, 1)");
+        //     strokeWeight(5 * scale.x)
+        //     vertex(borderPoints[0].x, borderPoints[0].y)
+
+        //     borderPoints.forEach(point => {
+        //         vertex(point.x, point.y);
+        //     })
+        // endShape();
+    pop()
+
+
+    
+
+//     console.log(borderPoints);
+}
+
+
+function showTutorial()
+{
+    if (currentLevel == 0)
+    {
+        let xPos = 300
+        let yPos = 530
+        let tutorialText = "";
+
+        if (charges.length == 0)
+        {
+            tutorialText = "place a charge here"
+            // new Shape({
+            //     shape: "rect",
+            //     pos: new p5.Vector(0, 0),
+            //     size: new p5.Vector(1920, 1080),
+            //     fillColor: "rgba(0, 0, 0, 0.5)",
+            // }).display()
+            let circleColor = (frameCount % 60 > 30) ? positiveChargeColor : "rgba(0, 0, 0, 0)"
+            new Shape({
+                shape: "ellipse",
+                pos: new p5.Vector(xPos, yPos),
+                size: new p5.Vector(commonButtonSize, commonButtonSize),
+                fillColor: circleColor,
+                strokeColor: positiveChargeColor,
+            }).display()
+            new MyImage({
+                pos: new p5.Vector(xPos - 20, yPos), 
+                size: 100,
+                myImage: icons.click,
+            }).display()
+
+        }
+        else
+        {
+            let showChargeLocation = false;
+
+            charges.forEach(charge => {
+                let chargePos = charge.pos.copy()
+                if (chargePos.dist(new p5.Vector(xPos, yPos)) > commonButtonSize)
+                {
+                    showChargeLocation = true
+                }
+            })
+            if (showChargeLocation)
+            {
+                new Shape({
+                    shape: "ellipse",
+                    pos: new p5.Vector(xPos, yPos),
+                    size: new p5.Vector(commonButtonSize + 50, commonButtonSize + 50),
+                    strokeColor: positiveChargeColor,
+                }).display()
+            }
+            
+
+            let selectedChargeIndex = charges.findIndex(charge => charge.selected === true);
+
+            if (selectedChargeIndex != -1)
+            {
+                if (charges[selectedChargeIndex].charge != 5) 
+                {
+                    tutorialText = "set the charge to +5 C"
+                    xPos = 300
+                    yPos = 900
+                }
+            }
+            if(charges[0].charge == 5) 
+            {
+                tutorialText = "test your configuration"
+                xPos = 1450
+                yPos = 1100
+            }
+        }
+
+        if (!buildMode)
+        {
+            tutorialText = "you can edit any time"
+        }
+
+        if (tutorialText == "")
+        {
+            screens[3].textBoxes[1].visible = false;
+        }
+
+        screens[3].textBoxes[1].text = tutorialText;
+        screens[3].textBoxes[1].pos = new p5.Vector(xPos - 200, yPos - 250);
+    }
+    if (currentLevel == 1)
+    {
+        let xPos = 300
+        let yPos = 320
+        let tutorialText = "";
+
+        // new p5.Vector(293, 333),
+        // new p5.Vector(1060, 430),
+
+        if (charges.length < 3)
+        {
+            
+            
+
+
+            
+            if (charges.length == 0)
+            {
+                tutorialText = "place a +5 charge here"
+                let circleColor = (frameCount % 60 > 30) ? positiveChargeColor : "rgba(255, 255, 255, 0)"
+                new Shape({
+                    shape: "ellipse",
+                    pos: new p5.Vector(xPos, yPos),
+                    size: new p5.Vector(commonButtonSize, commonButtonSize),
+                    fillColor: circleColor,
+                    strokeColor: positiveChargeColor,
+                }).display()
+                
+            }
+            else if(charges.length == 1)
+            {
+                let charge1Pos = charges[0].pos.copy()
+                let chargeToCircleDist = charge1Pos.dist(new p5.Vector(xPos, yPos))            
+                if (chargeToCircleDist > chargeDiameter)
+                {
+                    tutorialText = "place a +5 charge here"
+                    let circleColor = (frameCount % 60 > 30) ? positiveChargeColor : "rgba(255, 255, 255, 0)"
+                    new Shape({
+                        shape: "ellipse",
+                        pos: new p5.Vector(xPos, yPos),
+                        size: new p5.Vector(commonButtonSize, commonButtonSize),
+                        fillColor: circleColor,
+                        strokeColor: positiveChargeColor,
+                    }).display()
+                }
+                if (charges[0].charge != 5)
+                {
+                    tutorialText = "place a +5 charge here"
+                }
+
+                if (chargeToCircleDist < chargeDiameter && charges[0].charge == 5)
+                {
+                    xPos = 1080
+                    yPos = 430
+
+                    if (charges.length == 2)
+                    {
+                        let charge2Pos = charges[1].pos.copy()
+                        let chargeToCircleDist = charge2Pos.dist(new p5.Vector(xPos, yPos))            
+                        if (chargeToCircleDist > chargeDiameter)
+                        {
+                            tutorialText = "place a -3 charge here"
+                            
+                            let circleColor = (frameCount % 60 > 30) ? positiveChargeColor : "rgba(255, 255, 255, 0)"
+                            new Shape({
+                                shape: "ellipse",
+                                pos: new p5.Vector(xPos, yPos),
+                                size: new p5.Vector(commonButtonSize, commonButtonSize),
+                                fillColor: circleColor,
+                                strokeColor: positiveChargeColor,
+                            }).display()
+                        }
+                        if (charges[1].charge != -3)
+                        {
+                            tutorialText = "place a -3 charge here"
+                        }
+                    }
+                    else
+                    {
+                        tutorialText = "place a -3 charge here"
+                        let circleColor = (frameCount % 60 > 30) ? negativeChargeColor : "rgba(255, 255, 255, 0)"
+                        new Shape({
+                            shape: "ellipse",
+                            pos: new p5.Vector(xPos, yPos),
+                            size: new p5.Vector(commonButtonSize, commonButtonSize),
+                            fillColor: circleColor,
+                            strokeColor: negativeChargeColor,
+                        }).display()
+                    }
+
+                    
+
+
+                    
+
+
+
+                    // new TextBox({
+                    //     text: "place a -3 charge here",
+                    //     fillColor: purpleColor[0],
+                    //     strokeColor: purpleColor[4],
+                    //     fontColor: "white",
+                    //     fontSize: 48,
+                    //     fontAlign: CENTER,
+                    //     pos: new p5.Vector(xPos2 - 200, yPos2 - 250), 
+                    //     size: new p5.Vector(400, 150),
+                    // }).display()
+
+                    // circleColor = (frameCount % 60 > 30) ? negativeChargeColor : "rgba(255, 255, 255, 0)"
+                    // new Shape({
+                    //     shape: "ellipse",
+                    //     pos: new p5.Vector(xPos2, yPos2),
+                    //     size: new p5.Vector(commonButtonSize, commonButtonSize),
+                    //     fillColor: circleColor,
+                    //     strokeColor: negativeChargeColor,
+                    // }).display()
+                }
+            }
+
+
+            if (charges.length == 2)
+            {
+                xPos = 1080
+                yPos = 430
+
+                let charge2Pos = charges[1].pos.copy()
+                let chargeToCircleDist = charge2Pos.dist(new p5.Vector(xPos, yPos))     
+
+
+                if (chargeToCircleDist > chargeDiameter)
+                {
+                    tutorialText = "place a -3 charge here"
+                    circleColor = (frameCount % 60 > 30) ? negativeChargeColor : "rgba(255, 255, 255, 0)"
+                    new Shape({
+                        shape: "ellipse",
+                        pos: new p5.Vector(xPos, yPos),
+                        size: new p5.Vector(commonButtonSize, commonButtonSize),
+                        fillColor: circleColor,
+                        strokeColor: negativeChargeColor,
+                    }).display()
+                }
+                if (charges[1].charge != -3)
+                {
+                    tutorialText = "place a -3 charge here"
+                }
+                if (chargeToCircleDist < chargeDiameter && charges[1].charge == -3)
+                {
+                    tutorialText = "test your configuration"
+                    xPos = 1450
+                    yPos = 1100
+                }
+                // let xPos2 = 1060
+                // let yPos2 = 430
+                // new TextBox({
+                //     text: "place a -3 charge here",
+                //     fillColor: purpleColor[0],
+                //     strokeColor: purpleColor[4],
+                //     fontColor: "white",
+                //     fontSize: 48,
+                //     fontAlign: CENTER,
+                //     pos: new p5.Vector(xPos2 - 200, yPos2 - 250), 
+                //     size: new p5.Vector(400, 150),
+                // }).display()
+                // let charge2Pos = charges[0].pos.copy()
+                // chargeToCircleDist = charge2Pos.dist(new p5.Vector(xPos, yPos))            
+                // if (chargeToCircleDist > chargeDiameter)
+                // {
+                //     circleColor = (frameCount % 60 > 30) ? negativeChargeColor : "rgba(255, 255, 255, 0)"
+                //     new Shape({
+                //         shape: "ellipse",
+                //         pos: new p5.Vector(xPos2, yPos2),
+                //         size: new p5.Vector(commonButtonSize, commonButtonSize),
+                //         fillColor: circleColor,
+                //         strokeColor: negativeChargeColor,
+                //     }).display()
+                // }
+            }
+            
+
+        }
+        else
+        {
+            let selectedChargeIndex = charges.findIndex(charge => charge.selected === true);
+
+            if (selectedChargeIndex != -1)
+            {
+                if (charges[selectedChargeIndex].charge != 5) 
+                {
+                    tutorialText = "set the charge to +5 C"
+                    xPos = 300
+                    yPos = 700
+                }
+            }
+            if(charges[0].charge == 5) 
+            {
+                tutorialText = "test your configuration"
+                xPos = 1450
+                yPos = 1100
+            }
+        }
+
+        if (!buildMode)
+        {
+            tutorialText = "you can edit any time"
+        }
+
+        
+        screens[3].textBoxes[1].pos = new p5.Vector(xPos - 200, yPos - 250);
+    }
+
+    if (currentLevel > 1)
+    {
+        tutorialText = ""
+    }
+    if (charges.length == 0)
+    {
+        tutorialText = "click anywhere to place a charge"
+        screens[3].textBoxes[1].pos = new p5.Vector((1920 / 2) - 200, 25)
+    }
+    if (tutorialText == "")
+    {
+        screens[3].textBoxes[1].visible = false;
+    }
+
+    screens[3].textBoxes[1].text = tutorialText;
+    
+}
 
 // :todo
 

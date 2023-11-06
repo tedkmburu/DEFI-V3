@@ -1,3 +1,5 @@
+"use strict";
+
 class Coin extends Particle
 {
     constructor(props)

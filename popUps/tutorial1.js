@@ -1,3 +1,5 @@
+"use strict";
+
 function createTutorial1PopUp()
 {
     let screenName = "Tutorial 1";
@@ -107,7 +109,7 @@ function createTutorial1PopUp()
 
 
 
-    functions = () => {
+    let myFunctions = () => {
         
     }
 
@@ -118,7 +120,7 @@ function createTutorial1PopUp()
         textBoxes: textBoxes,
         images: images,
         shapes: shapes,
-        functions: functions,
+        functions: myFunctions,
         backgroundAnimation: true,
     })
 }

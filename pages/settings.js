@@ -1,3 +1,5 @@
+"use strict";
+
 function createSettingsScreen()
 {
     let screenName = "Settings"

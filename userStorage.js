@@ -1,3 +1,5 @@
+"use strict";
+
 function saveData()
 {
     let gameProgress = []

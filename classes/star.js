@@ -1,3 +1,5 @@
+"use strict";
+
 class Star extends Particle
 {
     constructor(props)

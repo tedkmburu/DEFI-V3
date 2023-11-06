@@ -1,3 +1,5 @@
+"use strict";
+
 class Screen 
 {
     constructor(props)
@@ -9,7 +11,7 @@ class Screen
         this.textBoxes = props.textBoxes || []
         this.images = props.images || []
         this.shapes = props.shapes || []
-        this.functions = props.functions
+        this.functions = props.functions || null
     }
 
     display()

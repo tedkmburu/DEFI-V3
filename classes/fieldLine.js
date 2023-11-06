@@ -1,3 +1,5 @@
+"use strict";
+
 class FieldLine
 {
     constructor(fieldLinePoints)

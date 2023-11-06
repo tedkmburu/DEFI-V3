@@ -1,11 +1,13 @@
-let gameDevMode = true;
+"use strict";
+
+let gameDevMode = false;
 let currentFPS = 0;
 
 let screens = []
 let popUps = []
-let currentScreen = 3;
+let currentScreen = 0;
 let currentPopUp = 1;
-let popUpVisible = true;
+let popUpVisible = false;
 
 let levels = []
 let currentLevel = 0;
@@ -27,6 +29,10 @@ let testCharges = [];
 let fieldLines = [];
 let fieldLineArrows = [];
 let noPositiveCharges = true;
+let failedTestChargePos;
+let levelFailed = false;
+
+
 const trailLength = 800;
 const chargeDiameter = 150; // diameter of a point charge
 const chargeRadius = chargeDiameter / 2;
@@ -49,8 +55,6 @@ let icons;
 let coinImages;
 let tutorialImages;
 
-let levelCompleteImage;
-
 let mousePosition;
 
 let dataToPrint = ""
@@ -62,8 +66,8 @@ let levelCompleteData = {coinsCollected: [], timeToComplete: 9999999999999999999
 
 let animations = []
 
-const silverCoinTime = 1000000 // 10 s
-const bronzeCoinTime = 2000000 // 30 s
+const silverCoinTime = 10000 // 10 s
+const bronzeCoinTime = silverCoinTime * 2 // 30 s
 const goldValue = 3;
 const silverValue = 2;
 const bronzeValue = 1;

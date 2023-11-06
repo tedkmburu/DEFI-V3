@@ -1,3 +1,5 @@
+"use strict";
+
 function openPopUp(popUpTitle)
 {
     popUpVisible = true;
@@ -18,7 +20,7 @@ class PopUp
         this.textBoxes = props.textBoxes || []
         this.images = props.images || []
         this.shapes = props.shapes || []
-        this.functions = props.functions
+        this.functions = props.functions || null
     }
 
     display()

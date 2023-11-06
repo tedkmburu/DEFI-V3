@@ -1,3 +1,5 @@
+"use strict";
+
 function mouseClicked()
 {
     let buttonWasClicked = false; 
@@ -86,7 +88,7 @@ function mouseClicked()
     
 
     // console.log(`new p5.Vector(` + mouseX + `, ` + mouseY + `)`);
-    // console.log(dataToPrint);
+    console.log(dataToPrint);
 
     // let working = isPointInRectangle(mousePosition, {
     //     pos: new p5.Vector(1920 - 550, 830),

@@ -1,3 +1,5 @@
+"use strict";
+
 function createComingSoonScreen()
 {
     let screenName = "Coming Soon"

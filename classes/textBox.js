@@ -1,3 +1,5 @@
+"use strict";
+
 class TextBox extends Particle
 {
     constructor(props)

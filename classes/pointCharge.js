@@ -1,3 +1,5 @@
+"use strict";
+
 class PointCharge extends Charge
 {
     constructor(props)

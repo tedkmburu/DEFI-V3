@@ -1,3 +1,5 @@
+"use strict";
+
 class Button extends Particle
 {
     constructor(props)
@@ -77,7 +79,7 @@ class Button extends Particle
                 textSize(this.fontSize)
                 fill(this.fontColor)
                 noStroke()
-                text(this.text, this.pos.x, this.pos.y + (this.fontSize * 2), this.size.x, this.size.y)
+                text(this.text, this.pos.x, this.pos.y + (this.fontSize * 2 * (this.size.y / commonButtonSize)), this.size.x, this.size.y)
             }
     
             if (this.text != "" && this.myImage == null)
@@ -100,6 +102,7 @@ class Button extends Particle
             this.onClick();
             createScreens()
             createPopUps()
+            updateTimer()
         }
     }
 }

@@ -1,3 +1,5 @@
+"use strict";
+
 class Shape extends Particle
 {
     constructor(props)
@@ -12,6 +14,14 @@ class Shape extends Particle
 
         this.shape = props.shape || "rect";
         this.visible = props.visible || true;
+
+        if (this.shape == "arc")
+        {
+            this.start = props.start || 0;
+            this.stop = props.stop || PI;
+            this.mode = props.mode || OPEN;
+            this.strokeColor = props.strokeColor || "rgba(255, 255, 255, 1)"
+        }
     }
 
     display()
@@ -24,6 +34,7 @@ class Shape extends Particle
 
             fill(this.fillColor)
             stroke(this.strokeColor)
+            strokeWeight(10 * scale.x)
 
             if (this.shape == "rect")
             {
@@ -32,6 +43,10 @@ class Shape extends Particle
             if (this.shape == "ellipse")
             {
                 ellipse(this.pos.x, this.pos.y, this.size.x, this.size.y)
+            }
+            if (this.shape == "arc")
+            {
+                arc(this.pos.x, this.pos.y, this.size.x, this.size.y, this.start, this.stop, this.mode)
             }
 
             pop()
