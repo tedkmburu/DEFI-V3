@@ -480,9 +480,9 @@ function unlockLevels()
         level.size = new p5.Vector(width, height)
 
         // load their high scores to the variable
-        if (userData[i].highScore != 0)
+        if (userScoresData[i].highScore != 0)
         {
-            levels[i].highScore = userData[i].highScore
+            levels[i].highScore = userScoresData[i].highScore
         }
         else
         {
@@ -490,20 +490,20 @@ function unlockLevels()
         }
 
         // load their collectedCoins to the variable
-        levels[i].collectedCoins = userData[i].coins
+        levels[i].collectedCoins = userScoresData[i].coins
 
 
 
 
 
         // unlock levels and assign current level
-        if (userData[i].highScore != 0 && i < levels.length - 1)
+        if (userScoresData[i].highScore != 0 && i < levels.length - 1)
         {
             levels[i + 1].locked = false
             currentLevel = i + 1;
         }
 
-        if (userData[i].highScore != 0 && i < levels.length - 1)
+        if (userScoresData[i].highScore != 0 && i < levels.length - 1)
         {
             levels[i + 1].locked = false
             currentLevel = i + 1;

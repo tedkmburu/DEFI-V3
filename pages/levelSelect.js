@@ -182,7 +182,7 @@ function createLevelSelect()
 
 
 
-            // let coins = userData[i].coins;
+            // let coins = userScoresData[i].coins;
             // coins.forEach((coin, coinIndex) => {
             //     if (coin == 0) 
             //     {
@@ -321,6 +321,5 @@ function createLevelSelect()
         images: images,
         textBoxes: textBoxes,
         shapes: shapes,
-        backgroundAnimation: true,
     })
 }

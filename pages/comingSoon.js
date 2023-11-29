@@ -43,6 +43,5 @@ function createComingSoonScreen()
         buttons: buttons,
         textBoxes: textBoxes,
         images: images,
-        backgroundAnimation: true,
     })
 }

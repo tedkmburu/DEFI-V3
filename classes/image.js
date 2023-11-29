@@ -7,6 +7,7 @@ class MyImage extends Particle
         super(props)
         
         this.myImage = props.myImage || null;
+        this.imageMode = props.imageMode || CORNER
 
         if (this.myImage == null)
         {
@@ -49,6 +50,7 @@ class MyImage extends Particle
         this.shape = props.shape || "rect";
         this.font = props.font;
         this.visible = props.visible || true;
+        this.opacity = props.opacity || 1
 
         
     }
@@ -78,7 +80,14 @@ class MyImage extends Particle
     
             if (this.myImage != null)
             {
-                image(this.myImage, this.pos.x, this.pos.y, this.size.x, this.size.y)
+                push()
+                    translate(this.pos.x, this.pos.y)
+                    rotate(this.angle)
+                    imageMode(this.imageMode)
+                    tint(255, 255, 255, this.opacity * 255);
+                    image(this.myImage, 0, 0, this.size.x, this.size.y)
+                    
+                pop()
             }
     
             if (this.text != "")

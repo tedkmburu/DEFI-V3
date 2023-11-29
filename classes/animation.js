@@ -43,7 +43,6 @@ function createAnimations()
         shapes.push(new Shape({
             shape: "ellipse",
             pos: new p5.Vector(random(0, 1920), random(0, 1080)),
-            vel: new p5.Vector(random(-velMag, velMag), random(-velMag, velMag)),
             size: size,
             fillColor: color,
             frameCount: random(0, 2000 * maxOpacity),
@@ -69,6 +68,23 @@ function createAnimations()
             }
         ]
 
+        if (mouseIsPressed == true)
+        {
+            shapes.push(new Shape({
+                shape: "ellipse",
+                pos: mousePosition,
+                size: size,
+                fillColor: color,
+                frameCount: random(0, 2000 * maxOpacity),
+                countFrames: true
+            }))
+        }
+
+        if (animations[0].shapes.length > 100)
+        {
+            animations[0].shapes.splice(4, 1);
+        }
+
 
         animations[0].shapes.forEach((shape, i) => {
             if (i > 1)
@@ -79,7 +95,7 @@ function createAnimations()
 
                 
                 groupOfCharges.forEach(charge => {
-                    let touchingCharge = p5.Vector.dist(shape.pos, charge.pos) < chargeDiameter 
+                    let touchingCharge = p5.Vector.dist(shape.pos, charge.pos) < chargeRadius 
                    
                     distanceToCharges.push(touchingCharge)
                 })

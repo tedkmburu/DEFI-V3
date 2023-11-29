@@ -10,8 +10,9 @@ function mouseClicked()
             if (isPointInRectangle(mousePosition, button))
             {
                 buttonWasClicked = true;
-                button.clicked()
                 popUpVisible =  false;
+                button.clicked()
+                
             }
         });
         
@@ -70,7 +71,7 @@ function mouseClicked()
 
             if (currentScreen == 3 && buildMode && !chargeSelected && !mouseOverCharge)
             {
-                pos = new p5.Vector(mouseX, mouseY).div(scale);
+                let pos = new p5.Vector(mouseX, mouseY).div(scale);
                 charges.push(new PointCharge({pos: pos}))
             }
         }
@@ -81,6 +82,21 @@ function mouseClicked()
     `;
         }
     }
+
+    if (currentScreen != 3)
+    {
+        let color = "rgba(237, 32, 36, 0.12)" 
+        let size = new p5.Vector(testChargeDiameter, testChargeDiameter)
+
+        animations[0].shapes.push(new Shape({
+            shape: "ellipse",
+            pos: mousePosition.copy().mult(2),
+            size: size,
+            fillColor: color,
+            frameCount: random(0, 2000 * 0.12),
+            countFrames: true
+        }))
+    }
     
 
     
@@ -88,7 +104,7 @@ function mouseClicked()
     
 
     // console.log(`new p5.Vector(` + mouseX + `, ` + mouseY + `)`);
-    console.log(dataToPrint);
+    // console.log(dataToPrint);
 
     // let working = isPointInRectangle(mousePosition, {
     //     pos: new p5.Vector(1920 - 550, 830),
@@ -110,11 +126,48 @@ function mouseReleased()
         // }
         charge.dragging = false;
      })
+     displayTrashIcon()
 }
 
+function mouseMoved()
+{
+    let buttonHover
+
+    cursor('default')
+    if (popUpVisible)
+    {
+        popUps[currentPopUp].buttons.forEach(button => {
+            button.hover = isPointInRectangle(mousePosition, button)
+            if (button.hover)
+            {
+                cursor('pointer')
+                buttonHover = true
+            }
+        });
+    }
+    else 
+    {
+        screens[currentScreen].buttons.forEach(button => {
+            button.hover = isPointInRectangle(mousePosition, button)
+            if (button.hover)
+            {
+                cursor('pointer')
+                buttonHover = true
+            }
+            
+        });
+    }
+
+    if (!buttonHover)
+    {
+        buttonTextOffset = 0
+    }
+}
 
 function mouseDragged()
 {
+    displayTrashIcon()
+
     let noChargeIsBeingDragged = !charges.some(charge => charge.dragging) // this will be true if no charge is currently being dragged.
     if (noChargeIsBeingDragged && buildMode) // if no charge is being dragged, check if the mouse is over a charge and is dragging
     {
@@ -163,7 +216,7 @@ function mouseDragged()
 
 function mouseWheel(event) 
 {
-    if (currentScreen == 1)
+    if (screens[currentScreen].name == "Level Select")
     {
         
         if (scrollOffset <= 0)
@@ -193,6 +246,40 @@ function mouseWheel(event)
             screens[1].images.forEach(image => { image.pos.x = image.startingPos.x + rowHeight })
             screens[1].textBoxes.forEach(textBox => { textBox.pos.x = textBox.startingPos.x + rowHeight })
             screens[1].shapes.forEach(shape => { shape.pos.x = shape.startingPos.x + rowHeight })
+        }
+
+    }
+
+    if (screens[currentScreen].name == "Leaderboard")
+    {
+        
+        if (scrollOffset <= 0)
+        {
+            scrollOffset -= event.delta
+            screens[7].buttons.forEach(button => { button.pos.y -= event.delta })
+            screens[7].images.forEach(image => { image.pos.y -= event.delta })
+            screens[7].textBoxes.forEach(textBox => { textBox.pos.y -= event.delta })
+            screens[7].shapes.forEach(shape => { shape.pos.y -= event.delta })
+        } 
+
+        if (scrollOffset > 0)
+        {
+            scrollOffset = 0
+            screens[7].buttons.forEach(button => { button.pos.y = button.startingPos.y })
+            screens[7].images.forEach(image => { image.pos.y = image.startingPos.y })
+            screens[7].textBoxes.forEach(textBox => { textBox.pos.y = textBox.startingPos.y })
+            screens[7].shapes.forEach(shape => { shape.pos.y = shape.startingPos.y })
+        }
+
+        let rowHeight = -1 * (160 * (levels.length / 2) + 10080)
+        if (scrollOffset < rowHeight)
+        {
+            scrollOffset = rowHeight
+
+            screens[7].buttons.forEach(button => { button.pos.y = button.startingPos.y + rowHeight })
+            screens[7].images.forEach(image => { image.pos.y = image.startingPos.y + rowHeight })
+            screens[7].textBoxes.forEach(textBox => { textBox.pos.y = textBox.startingPos.y + rowHeight })
+            screens[7].shapes.forEach(shape => { shape.pos.y = shape.startingPos.y + rowHeight })
         }
 
     }

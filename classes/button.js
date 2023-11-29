@@ -19,7 +19,9 @@ class Button extends Particle
         this.onClick = props.onClick;
         this.shape = props.shape || "ellipse";
         this.font = props.font;
-        this.visible = props.visible;
+        this.visible = props.visible || true;
+        this.hover = false; 
+        this.toggleState = props.toggleState || false; 
         if (this.visible == null) this.visible = true;
 
     }
@@ -32,32 +34,62 @@ class Button extends Particle
         {
             push()
 
+            if (this.hover)
+            {
+                this.strokeColor = "rgba(0, 0, 0, 1)";
+            }
+            else
+            {
+                this.strokeColor = "rgba(0, 0, 0, 0)";
+            }
+            fill(this.fillColor)
+            strokeWeight(3)
+            stroke(this.strokeColor)
+
+
+            
+            translate(this.pos.x, this.pos.y)
+
             if (this.shape == "rect")
             {
-                fill(this.fillColor)
-                stroke(this.strokeColor)
-                rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
+                rect(0, 0, this.size.x, this.size.y)
 
                 if (gameDevMode) 
                 {
                     stroke("rgba(0, 0, 0, 1)")
                     fill("rgba(0, 0, 0, 0.25)")
-                    rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
+                    rect(0, 0, this.size.x, this.size.y)
                 }
             }
 
             if (this.shape == "ellipse")
             {
-                fill(this.fillColor)
-                stroke(this.strokeColor)
-                ellipse(this.pos.x + (this.size.x / 2), this.pos.y + (this.size.y / 2), this.size.x, this.size.y)
+                ellipse((this.size.x / 2), (this.size.y / 2), this.size.x, this.size.y)
 
                 if (gameDevMode) 
                 {
                     stroke("rgba(0, 0, 0, 1)")
                     fill("rgba(0, 0, 0, 0.25)")
-                    rect(this.pos.x, this.pos.y, this.size.x, this.size.y)
+                    rect(0, 0, this.size.x, this.size.y)
                 }
+            }
+
+            if (this.shape == "toggle")
+            {
+                let xOffset = 25
+                
+
+                fill(purpleColor[3])
+                noStroke()
+                if (!this.toggleState) fill("gray")
+                rect(xOffset + 0, -10, this.size.y, this.size.y + 20)
+                ellipse(xOffset + (this.size.x / 2), (this.size.y / 2), this.size.y + 20, this.size.y + 20)
+                ellipse(xOffset + 0, (this.size.y / 2), this.size.y + 20, this.size.y + 20)
+
+                let x = this.size.x / 2
+                if (!this.toggleState) x -= (this.size.x / 2)
+                fill("white")
+                ellipse(xOffset + x, (this.size.y / 2), this.size.y, this.size.y)
             }
     
             if (this.myImage != null && this.text == "")
@@ -65,7 +97,7 @@ class Button extends Particle
                 let width = this.size.x;
                 let height = this.size.x * (this.myImage.height / this.myImage.width)
                 
-                image(this.myImage, this.pos.x, this.pos.y, width, height)
+                image(this.myImage, 0, 0, width, height)
             }
 
             if (this.myImage != null && this.text != "")
@@ -73,13 +105,22 @@ class Button extends Particle
                 let width = this.size.x;
                 let height = this.size.x * (this.myImage.height / this.myImage.width)
                 
-                image(this.myImage, this.pos.x + (width * 0.15), this.pos.y + (height * 0.15), width * 0.7, height * 0.7)
+                image(this.myImage, 0 + (width * 0.15), 0 + (height * 0.15), width * 0.7, height * 0.7)
 
                 textAlign(this.fontAlign, CENTER)
                 textSize(this.fontSize)
                 fill(this.fontColor)
                 noStroke()
-                text(this.text, this.pos.x, this.pos.y + (this.fontSize * 2 * (this.size.y / commonButtonSize)), this.size.x, this.size.y)
+                if (this.hover)
+                {
+                    buttonTextOffset+=2
+                    if (buttonTextOffset >= 20) buttonTextOffset = 20
+                    text(this.text, 0, buttonTextOffset + (this.fontSize * 2 * (this.size.y / commonButtonSize)), this.size.x, this.size.y)
+                }
+                else
+                {
+                    text(this.text, 0, 0 + (this.fontSize * 2 * (this.size.y / commonButtonSize)), this.size.x, this.size.y)
+                }
             }
     
             if (this.text != "" && this.myImage == null)
@@ -88,8 +129,9 @@ class Button extends Particle
                 textSize(this.fontSize)
                 fill(this.fontColor)
                 noStroke()
-                text(this.text, this.pos.x, this.pos.y, this.size.x, this.size.y)   
+                text(this.text, 0, 0, this.size.x, this.size.y)   
             }
+
             pop()
         }
         if (this.countFrames) { this.frameCount++ }
@@ -100,6 +142,18 @@ class Button extends Particle
         if (this.visible)
         {
             this.onClick();
+
+            // if (this.fillColor == positiveChargeColor)
+            // {
+            //     sounds.succeed.play()
+               
+            // }
+            // else
+            // {
+            if (userData.soundEffects) sounds.click.play()
+
+            // }
+            
             createScreens()
             createPopUps()
             updateTimer()

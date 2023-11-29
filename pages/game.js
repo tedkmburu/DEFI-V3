@@ -9,9 +9,6 @@ function createGameScreen()
     let textBoxes = []
     let shapes = []
 
-
-
-
     levels[currentLevel].coins.forEach(coin => {
         coin.visible = true;
         coin.value = goldValue;
@@ -21,13 +18,7 @@ function createGameScreen()
 
     levelCompleteData = {coinsCollected: [], timeToComplete: 9999999999999999999999999999999999}
 
-    
-
-
-
-
-
-    // shapes.push(new Shape({
+        // shapes.push(new Shape({
     //     pos: new p5.Vector(0, 0), 
     //     size: new p5.Vector(innerWidth * 3, 200),
     //     fillColor: "rgba(0, 0, 0, 0.5)",
@@ -45,7 +36,7 @@ function createGameScreen()
             size: buttonSize,
             fillColor: purpleColor[0],
             fontColor: 255,
-            onClick: function(){ popUps[1] = createPausePopUp(); popUpVisible = true; resetCharges() },
+            onClick: function(){ createPausePopUp(); currentPopUp = 1; popUpVisible = true; resetCharges() },
         }),
         new Button({
             text: (buildMode) ? "test" : "edit",
@@ -61,7 +52,7 @@ function createGameScreen()
         new Button({
             text: "trash",
             shape: "ellipse",
-            fillColor: purpleColor[0],
+            fillColor: "rgba(0, 0, 0, 0)",
             myImage: icons.trash,
             pos: new p5.Vector(25, 1080 - 225), 
             fontSize: 36,
@@ -103,7 +94,14 @@ function createGameScreen()
             pos: new p5.Vector(1920 - 180, 25), 
             size: commonButtonSize,
             myImage: coinImages.gold,
-        })]
+        }),
+        new MyImage({
+            pos: new p5.Vector(25 + 75, 1080 - 225 + 70), 
+            size: commonButtonSize / 1.5,
+            imageMode: CENTER,
+            myImage:  icons.trashLid,
+        })
+    ]
 
     textBoxes = [
         new TextBox({
@@ -210,15 +208,20 @@ function updateTimer()
 
 
     // this.pos.x, this.pos.y, this.size.x, this.size.y, this.start, this.stop, this.mode
-    new Shape({
-        shape: "arc", 
-        // 1920 - 180, 25
-        pos: new p5.Vector(1815, 100), 
-        size: new p5.Vector(commonButtonSize, commonButtonSize),
-        strokeColor: "black", 
-        start: 0 - coinAngleOffset,
-        stop: coinAngle - coinAngleOffset,
-    }).display()
+    
+
+    if (currentScreen == 3)
+    {
+        new Shape({
+            shape: "arc", 
+            // 1920 - 180, 25
+            pos: new p5.Vector(1815, 100), 
+            size: new p5.Vector(commonButtonSize, commonButtonSize),
+            strokeColor: "black", 
+            start: 0 - coinAngleOffset,
+            stop: coinAngle - coinAngleOffset,
+        }).display()
+    }
 
     if (!popUpVisible && buildMode)
     {
@@ -268,9 +271,11 @@ function resetGame()
         charge.selected = false;
         charge.dragging = false;
     })
+    
 
     charges = []
     elapsedTime = 0
+    coinsCollected = 0
 
     resetTestCharges()
     resetCoins()
@@ -283,15 +288,11 @@ function toggleHelp()
 
 function toggleBuildMode()
 {
-    
     buildMode = !buildMode;
     
     resetCharges()
     resetCoins()
     resetTestCharges()
-
-    
-
 }
 
 
@@ -388,7 +389,7 @@ function updatePlayButton()
 
     // change the image and text on the button
     screens[3].buttons[1].myImage = (buildMode) ? icons.play : icons.edit
-    screens[3].buttons[1].text = (buildMode) ? "test" : "edit";
+    screens[3].buttons[1].text = (buildMode) ? "Go!" : "edit";
 }
 
 // checks to see if any test charge collides with a star
@@ -457,7 +458,7 @@ function checkWinConditions()
         if (!popUpVisible)
         {
             levelCompleteData.timeToComplete = elapsedTime
-            coinsCollected = []
+            let coinsCollected = []
 
             for (let i = 0; i < 3; i++) 
             {
@@ -545,13 +546,11 @@ function outlineTrack()
         beginShape();
             // Exterior part of shape, clockwise winding
                 vertex(0, 0);
-                vertex(gameWidth, 0);
-                vertex(gameWidth, gameHeight);
+                vertex(gameWidth - commonButtonSpace - 100, 0);
+                vertex(gameWidth - commonButtonSpace - 100, gameHeight);
                 vertex(0, gameHeight);
 
-
             // Interior part of shape, counter-clockwise winding
-            
             let sideLength = testChargeDiameter * 2
             beginContour();
                 vertex(-sideLength + failedTestChargePos.x, -sideLength + failedTestChargePos.y);
@@ -561,10 +560,35 @@ function outlineTrack()
             endContour();
         endShape(CLOSE);
 
+        beginShape();
+            // Exterior part of shape, clockwise winding
+                vertex(gameWidth - commonButtonSpace - 100, 0);
+                vertex(gameWidth, 0);
+                vertex(gameWidth, gameHeight);
+                vertex(gameWidth - commonButtonSpace - 100, gameHeight);
+
+            // Interior part of shape, counter-clockwise winding
+            sideLength = commonButtonSpace / 2
+            let redoButtonPos = screens[3].buttons[1].pos.copy().add(new p5.Vector(75, 75))
+            beginContour();
+                vertex(-sideLength + redoButtonPos.x, -sideLength + redoButtonPos.y);
+                vertex(-sideLength + redoButtonPos.x, sideLength + redoButtonPos.y);
+                vertex(sideLength + redoButtonPos.x, sideLength + redoButtonPos.y);
+                vertex(sideLength + redoButtonPos.x, -sideLength + redoButtonPos.y);
+            endContour();
+        endShape(CLOSE);
+
+        sideLength = testChargeDiameter * 2
         noFill()
         stroke("white")
         strokeWeight(20 * scale.x)
         rect(failedTestChargePos.x - sideLength, failedTestChargePos.y - sideLength, sideLength * 2, sideLength * 2)
+
+        sideLength = commonButtonSpace / 2
+        noFill()
+        stroke("white")
+        strokeWeight(20 * scale.x)
+        rect(redoButtonPos.x - sideLength, redoButtonPos.y - sideLength, sideLength * 2, sideLength * 2)
 
 
         // beginShape();
@@ -590,15 +614,31 @@ function outlineTrack()
 
 function showTutorial()
 {
+    
+    let tutorialText = ""
+    if (charges.length == 0)
+    {
+        tutorialText = "click anywhere to place a charge"
+        screens[3].textBoxes[1].pos = new p5.Vector((1920 / 2) - 200, 25)
+    }
+
+
+
+
+
+
+
+    
     if (currentLevel == 0)
     {
         let xPos = 300
         let yPos = 530
-        let tutorialText = "";
+        // let tutorialText = "";
 
         if (charges.length == 0)
         {
             tutorialText = "place a charge here"
+            console.log(tutorialText);
             // new Shape({
             //     shape: "rect",
             //     pos: new p5.Vector(0, 0),
@@ -793,20 +833,21 @@ function showTutorial()
                 }
             }
 
-
+           
             if (charges.length == 2)
             {
                 xPos = 1080
                 yPos = 430
 
                 let charge2Pos = charges[1].pos.copy()
-                let chargeToCircleDist = charge2Pos.dist(new p5.Vector(xPos, yPos))     
+                let chargeToCircleDist = charge2Pos.dist(new p5.Vector(xPos, yPos))   
+                  
 
 
                 if (chargeToCircleDist > chargeDiameter)
                 {
                     tutorialText = "place a -3 charge here"
-                    circleColor = (frameCount % 60 > 30) ? negativeChargeColor : "rgba(255, 255, 255, 0)"
+                    let circleColor = (frameCount % 60 > 30) ? negativeChargeColor : "rgba(255, 255, 255, 0)"
                     new Shape({
                         shape: "ellipse",
                         pos: new p5.Vector(xPos, yPos),
@@ -888,18 +929,39 @@ function showTutorial()
     {
         tutorialText = ""
     }
-    if (charges.length == 0)
-    {
-        tutorialText = "click anywhere to place a charge"
-        screens[3].textBoxes[1].pos = new p5.Vector((1920 / 2) - 200, 25)
-    }
+    
     if (tutorialText == "")
     {
         screens[3].textBoxes[1].visible = false;
     }
 
     screens[3].textBoxes[1].text = tutorialText;
-    
+    console.log("final tutorialText: ", tutorialText);
+}
+
+function displayTrashIcon()
+{
+    let buttonVisibility = false;
+    let lidAngle = 0
+    if (charges.some(charge => charge.dragging === true))
+    {
+        buttonVisibility = true
+        lidAngle += ((Math.cos(frameCount * 2)) / 8)
+        screens[3].images[3].pos = screens[3].images[3].startingPos.copy().sub(new p5.Vector(0, 5))
+
+
+    }
+    else
+    {
+        screens[3].images[3].pos = screens[3].images[3].startingPos.copy()
+
+    }
+
+    // buttonVisibility = true
+
+    screens[3].buttons[2].visible = buttonVisibility
+    screens[3].images[3].visible = buttonVisibility
+    screens[3].images[3].angle = lidAngle
 }
 
 // :todo

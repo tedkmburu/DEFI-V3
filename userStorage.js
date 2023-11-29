@@ -14,35 +14,68 @@ function saveData()
     })
     
     // load whatever saved data into this variable
-    userData = JSON.parse(localStorage.getItem(GAME_DATA_KEY));
+    userScoresData = JSON.parse(localStorage.getItem(GAME_DATA_KEY));
+    userData = JSON.parse(localStorage.getItem(USER_DATA_KEY));
     
-    if (!userData) // if there is no saved data, save the default data in gameProgress
+    if (!userScoresData || localStorage['v3'] == undefined ) // if there is no saved data, save the default data in gameProgress
     {
-        userData = gameProgress; // Initialize with default values
-        localStorage.setItem(GAME_DATA_KEY, JSON.stringify(userData));
+        userData = {username: "enter username", classCode: "enter class code", volume: 1, soundEffects: true, music: true}
+        userScoresData = gameProgress; // Initialize with default values
+        localStorage.setItem(GAME_DATA_KEY, JSON.stringify(userScoresData));
+        localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+        
+        console.log("v3.1");
     }
 }
 
 function reloadSavedData()
 {
-    userData = JSON.parse(localStorage.getItem(GAME_DATA_KEY));
+    userData = JSON.parse(localStorage.getItem(USER_DATA_KEY));
+    userScoresData = JSON.parse(localStorage.getItem(GAME_DATA_KEY));
 }
 
 
 function updateLevelData(level, timeToComplete, coinsCollected) 
 {
     let score = calculateScore(timeToComplete, coinsCollected)
-    let userData = JSON.parse(localStorage.getItem(GAME_DATA_KEY));
+    let userScoresData = JSON.parse(localStorage.getItem(GAME_DATA_KEY));
 
-    if(userData[level].highScore < score)
+    if(userScoresData[level].highScore < score)
     {
-        userData[level].highScore = score;
-        userData[level].timeToComplete = timeToComplete;
-        userData[level].coins = coinsCollected
+        userScoresData[level].highScore = score;
+        userScoresData[level].timeToComplete = timeToComplete;
+        userScoresData[level].coins = coinsCollected
     }
 
     // Save the updated user data to LocalStorage
-    localStorage.setItem(GAME_DATA_KEY, JSON.stringify(userData));
+    localStorage.setItem(GAME_DATA_KEY, JSON.stringify(userScoresData));
+    localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
 
     levelCompleteData = {coinsCollected: coinsCollected, timeToComplete: timeToComplete}
+}
+
+function reloadUserData()
+{
+    userNameInputBox.placeholder = userData.username
+    classCodeInputBox.placeholder = userData.classCode
+}
+
+
+function changeClassCode()
+{
+    userData.classCode = classCodeInputBox.value;
+    classCodeInputBox.placeholder = userData.classCode
+    classCodeInputBox.value = ""
+    localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+    reloadUserData()
+}
+
+function updateUserName()
+{
+    userData.username = userNameInputBox.value;
+    userNameInputBox.placeholder = userData.username
+    userNameInputBox.value = ""
+    localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+    reloadUserData()
+    popUpVisible =  true;
 }

@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEFI</title>
+    <title>Dynamic Electric Field Interactive</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
     <script src="p5.min.js"></script>
+    <script src="p5.sound.min.js"></script>
     <script src="_variables.js"></script>
     <script src="userStorage.js"></script>
     <script src="levels.js"></script>
@@ -32,15 +35,17 @@
     <script src="pages/loadScreen.js"></script>
     <script src="pages/game.js"></script>
     <script src="pages/leaderboard.js"></script>
-    <script src="pages/settings.js"></script>
+    <script src="pages/class.js"></script>
     <script src="pages/help.js"></script>
     <script src="pages/comingSoon.js"></script>
+    <script src="pages/credits.js"></script>
 
     <script src="popUps/levelComplete.js"></script>
     <script src="popUps/pause.js"></script>
     <script src="popUps/tutorial1.js"></script>
     <script src="popUps/tutorial2.js"></script>
     <script src="popUps/tutorial3.js"></script>
+    <script src="popUps/changeUsername.js"></script>
 
 
     <script src="_main.js"></script>
@@ -54,9 +59,19 @@
             top: 0;
             left: 0;
         }
+        input[type=text]
+        {
+            position: fixed;
+            background-color: white;
+            font-size: 36pt;
+            text-align: center;
+            display: none;
+            border: 5px solid rgba(100,64, 141, 1);
+        }
     </style>
 </head>
-<body>
-    
+<body onclick="return false;"  oncontextmenu="return false;">
+<input type="text" id="classCode" placeholder="class code" />
+<input type="text" id="userName" placeholder="user name" />
 </body>
 </html>

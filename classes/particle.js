@@ -11,6 +11,7 @@ class Particle
         this.acc = props.acc || new p5.Vector(0, 0);
 
         this.angle = props.angle || 0;
+        this.startingAngle = props.angle || 0
         this.omega = props.omega || 0;
         this.angularAcc = props.angularAcc || 0;
 

@@ -184,6 +184,5 @@ function createLevelCompletePopUp()
         images: images,
         shapes: shapes,
         functions: myFunctions,
-        backgroundAnimation: true,
     })
 }

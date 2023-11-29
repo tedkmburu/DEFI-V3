@@ -121,6 +121,5 @@ function createTutorial1PopUp()
         images: images,
         shapes: shapes,
         functions: myFunctions,
-        backgroundAnimation: true,
     })
 }

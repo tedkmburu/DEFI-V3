@@ -38,7 +38,7 @@ function createPausePopUp()
             text: "home",
             pos: new p5.Vector((-0.5 * commonButtonSpace) + xPos,  yPos), 
             myImage: icons.home, 
-            onClick: function(){ navigateTo("Home"); },
+            onClick: function(){ navigateTo("Home");  },
         }),  
         new Button({
             text: "restart",
@@ -194,6 +194,5 @@ function createPausePopUp()
         images: images,
         shapes: shapes,
         functions: myFunctions,
-        backgroundAnimation: true,
     })
 }

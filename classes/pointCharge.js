@@ -43,7 +43,7 @@ class PointCharge extends Charge
         }
 
         // if a charge is no longer being dragged and is over the trash can, it will be removed
-        if (!this.dragging && this.pos.x < 100 && this.pos.y > innerHeight - 100)
+        if (!this.dragging && this.pos.x < commonButtonSpace && this.pos.y > innerHeight - commonButtonSpace)
         {         
             pointCharge.remove();
             createFieldLines();

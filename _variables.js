@@ -1,13 +1,20 @@
 "use strict";
 
+let sounds;
+
 let gameDevMode = false;
 let currentFPS = 0;
 
 let screens = []
 let popUps = []
-let currentScreen = 0;
-let currentPopUp = 1;
+let currentScreen = 7;
+let currentPopUp = 5;
 let popUpVisible = false;
+
+let userNameInputBox;
+let classCodeInputBox;
+
+let loadScreenTestChargeIndex = 0
 
 let levels = []
 let currentLevel = 0;
@@ -15,9 +22,12 @@ let currentLevel = 0;
 let scale;
 let scrollOffset = 0;
 let trueScrollOffset = 0;
+let screenOpacity = 1
+let buttonTextOffset = 0
 
 let buildMode = true;
 let elapsedTime = 0;
+let coinsCollected = 0;
 
 const k = 899000; // k = 8.99 * Math.pow(10, -9) adjusted because all charges are in micro coulombs;
 
@@ -49,17 +59,20 @@ const commonButtonSpace = 200
 const gameWidth = 1920
 const gameHeight = 1080
 
-let spaceImage, blueprintImage, homeTrack, banner, stamp, ribbon;
+let spaceImage, blueprintImage, homeTrack, banner, bigBanner, stamp, ribbon;
 let trackImages;
 let icons;
 let coinImages;
+let carImages;
 let tutorialImages;
 
 let mousePosition;
 
 let dataToPrint = ""
 
-const GAME_DATA_KEY = '10/23';
+const GAME_DATA_KEY = 'v3.1';
+const USER_DATA_KEY = 'v3';
+let userScoresData;
 let userData;
 
 let levelCompleteData = {coinsCollected: [], timeToComplete: 9999999999999999999999999999999999}

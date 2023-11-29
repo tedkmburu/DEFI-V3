@@ -2,10 +2,27 @@
 
 function preload() 
 {
+    classCodeInputBox = document.getElementById("classCode")
+    userNameInputBox = document.getElementById("userName")
+
+    
+
+    sounds = {
+        theme: loadSound('sounds/Theme_1_11-17.wav'),
+        click: loadSound('sounds/General_Click_11-17.wav'),
+        fail: loadSound('sounds/Test_Failed_11-17.wav'),
+        succeed: loadSound('sounds/Test_Succeed_11-17.wav'),
+        coins: loadSound('sounds/Collecting_Points_11-17.wav')
+        
+    }
+
+    sounds.theme.setVolume(0.15)
+
     spaceImage = loadImage('images/light.png');
     blueprintImage = loadImage('images/dark.png');
     homeTrack = loadImage('images/homeTrack.png');
     banner = loadImage('images/banner.png')
+    bigBanner = loadImage('images/bigBanner.png')
     ribbon = loadImage('images/ribbon.png')
     stamp = loadImage('images/stamp.svg')
 
@@ -22,6 +39,11 @@ function preload()
         loadImage('images/tutorial/tutorial (3).png'),
         loadImage('images/tutorial/tutorial (4).png'),
     ]
+
+    carImages = {
+        pos: loadImage('images/carPos.png'),
+        neg: loadImage('images/carNeg.png'),
+    }
 
     icons = {
         back: loadImage('images/icons/arrow-left-solid.svg'),
@@ -42,8 +64,15 @@ function preload()
         pause: loadImage('images/icons/pause-solid.svg'),
         next: loadImage('images/icons/arrow-right-solid.svg'),
         trash: loadImage('images/icons/trash-can-solid.svg'),
+        trashLid: loadImage('images/icons/trash-lid-solid.svg'),
         classroom: loadImage('images/icons/chalkboard-user-solid.svg'),
         click: loadImage('images/icons/arrow-pointer-solid.svg'),
+        gradCap: loadImage('images/icons/graduation-cap-solid.svg'),
+        usersRectangle: loadImage('images/icons/users-rectangle-solid.svg'),
+        save: loadImage('images/icons/floppy-disk-solid.svg'),
+        oldScreenshot: loadImage('images/icons/screenshot.png'),
+        iclogo: loadImage('images/icons/iclogo.png'),
+        summerScholars: loadImage('images/icons/summerscholars.png'),
         };
 
     setScale()
@@ -62,6 +91,13 @@ function setup()
     createScreens()
     createPopUps()
     createCanvas(innerWidth, innerHeight)
+    reloadUserData()
+
+    // sounds.theme.play()
+   
+    if (userData.music) sounds.theme.loop()
+    
+    // console.log("height: ", classCodeInputBox.style.height);
 }
 
 function draw()
@@ -448,7 +484,7 @@ function getLevelName(levelIndex)
 
 function createArrow(start, end, color, scale)
 {
-        // Calculate the difference in coordinates
+    // Calculate the difference in coordinates
     const deltaX = end.x - start.x;
     const deltaY = end.y - start.y;
 
@@ -473,4 +509,13 @@ function createArrow(start, end, color, scale)
         angleMode(RADIANS)
         
     pop();
+}
+
+function windowResized() 
+{
+    resizeCanvas(windowWidth, windowHeight);
+    setScale()
+    createScreens()
+    createPopUps()
+    console.log("resize");
 }
