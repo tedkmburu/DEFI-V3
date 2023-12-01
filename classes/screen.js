@@ -24,7 +24,7 @@ class Screen
             size: new p5.Vector(1920, 1080),
         }).display()
 
-        if(this.backgroundAnimation)
+        if(this.backgroundAnimation && buildMode)
         {
             animations[0].display()
         }

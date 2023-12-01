@@ -46,13 +46,7 @@ class TestCharge extends Charge
             pop()
         }
 
-        push();
-            stroke(0);
-            fill(this.color);
-            let x = this.pos.x;
-            let y = this.pos.y;
-            ellipse(x, y, this.diameter, this.diameter);
-        pop();
+        
 
         push()
             translate(this.pos.x, this.pos.y)
@@ -62,8 +56,16 @@ class TestCharge extends Charge
             rotate(this.angle)
             
             let imageToShow = this.charge > 0 ? carImages.pos : carImages.neg
-            image(imageToShow, -(testChargeRadius * 4), -(testChargeRadius * 2), (testChargeDiameter * 4) * scale.x, (testChargeRadius * 4) * scale.y)
+            image(imageToShow, -(testChargeRadius * 3), -(testChargeRadius * 1), (testChargeDiameter * 4) * scale.x, (testChargeRadius * 4) * scale.y)
         pop()
+
+        push();
+            stroke(0);
+            fill(this.color);
+            let x = this.pos.x;
+            let y = this.pos.y;
+            ellipse(x, y, this.diameter, this.diameter);
+        pop();
 
         // carImages
 

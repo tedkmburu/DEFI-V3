@@ -85,8 +85,8 @@ function createScreens()
     classCodeInputBox.style.display = "none"
     classCodeInputBox.style.height = (commonButtonSize - 12) + "px"
     classCodeInputBox.style.top = (800 * scale.y) + "px"
-    classCodeInputBox.style.left = (1000 * scale.y) + "px"
-    classCodeInputBox.style.width = (500 * scale.y) + "px"
+    classCodeInputBox.style.left = (1000 * scale.x) + "px"
+    classCodeInputBox.style.width = (500 * scale.x) + "px"
     
 
     screens[0] = createHomeScreen()
@@ -114,9 +114,9 @@ function createPopUps()
 {
     userNameInputBox.style.display = "none"
     userNameInputBox.style.height  = (commonButtonSize - 12) + "px"
-    userNameInputBox.style.top  = (550 * scale.y) + "px"
-    userNameInputBox.style.left  = (450 * scale.y) + "px"
-    userNameInputBox.style.width  = (386 * scale.y) + "px"
+    userNameInputBox.style.top  = (565 * scale.y) + "px"
+    userNameInputBox.style.left  = (700 * scale.x) + "px"
+    userNameInputBox.style.width  = (386 * scale.x) + "px"
 
     popUps[0] = createLevelCompletePopUp()
     popUps[1] = createPausePopUp()
@@ -125,6 +125,7 @@ function createPopUps()
     popUps[4] = createTutorial3PopUp()
 
     popUps[5] = createChangeUsernamePopUp()
+    popUps[6] = createTeacherPopUp()
 
     if (popUps[currentPopUp].name == "ChangeUsername" && popUpVisible)
     {

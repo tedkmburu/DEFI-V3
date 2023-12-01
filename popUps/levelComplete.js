@@ -16,19 +16,19 @@ function createLevelCompletePopUp()
     buttons.push(
         new Button({
             text: "home",
-            pos: new p5.Vector((0 * commonButtonSpace) + xPos, yPos), 
+            pos: new p5.Vector((0.5 * commonButtonSpace) + xPos, yPos), 
             myImage: icons.home, 
             onClick: function(){ navigateTo("Home"); },
         }),
-        new Button({
-            text: "settings",
-            pos: new p5.Vector((1 * commonButtonSpace) + xPos,  yPos), 
-            myImage: icons.settings, 
-            onClick: function(){ navigateTo("Settings"); },
-        }),        
+        // new Button({
+        //     text: "settings",
+        //     pos: new p5.Vector((1 * commonButtonSpace) + xPos,  yPos), 
+        //     myImage: icons.settings, 
+        //     onClick: function(){ navigateTo("Settings"); },
+        // }),        
         new Button({
             text: "levels",
-            pos: new p5.Vector((2 * commonButtonSpace) + xPos,  yPos), 
+            pos: new p5.Vector((1.5 * commonButtonSpace) + xPos,  yPos), 
             myImage: icons.race, 
             onClick: function(){ navigateTo("Level Select"); },
         })
@@ -184,5 +184,6 @@ function createLevelCompletePopUp()
         images: images,
         shapes: shapes,
         functions: myFunctions,
+        closeButton: false,
     })
 }

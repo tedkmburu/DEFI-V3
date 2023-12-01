@@ -76,15 +76,16 @@ class Button extends Particle
 
             if (this.shape == "toggle")
             {
-                let xOffset = 25
+                let xOffset = 25 * scale.x
                 
 
                 fill(purpleColor[3])
                 noStroke()
+                let bleed = 10 * scale.y;
                 if (!this.toggleState) fill("gray")
-                rect(xOffset + 0, -10, this.size.y, this.size.y + 20)
-                ellipse(xOffset + (this.size.x / 2), (this.size.y / 2), this.size.y + 20, this.size.y + 20)
-                ellipse(xOffset + 0, (this.size.y / 2), this.size.y + 20, this.size.y + 20)
+                rect(xOffset + 0, -bleed, this.size.y, this.size.y + (bleed * 2))
+                ellipse(xOffset + (this.size.x / 2), (this.size.y / 2), this.size.y + (bleed * 2), this.size.y + (bleed * 2))
+                ellipse(xOffset + 0, (this.size.y / 2), this.size.y + (bleed * 2), this.size.y + (bleed * 2))
 
                 let x = this.size.x / 2
                 if (!this.toggleState) x -= (this.size.x / 2)
@@ -113,13 +114,13 @@ class Button extends Particle
                 noStroke()
                 if (this.hover)
                 {
-                    buttonTextOffset+=2
-                    if (buttonTextOffset >= 20) buttonTextOffset = 20
+                    buttonTextOffset+= (2 * scale.y)
+                    if (buttonTextOffset >= (20 * scale.y)) buttonTextOffset = (20 * scale.y)
                     text(this.text, 0, buttonTextOffset + (this.fontSize * 2 * (this.size.y / commonButtonSize)), this.size.x, this.size.y)
                 }
                 else
                 {
-                    text(this.text, 0, 0 + (this.fontSize * 2 * (this.size.y / commonButtonSize)), this.size.x, this.size.y)
+                    text(this.text, 0, (5 / scale.y) + (this.fontSize * 2 * (this.size.y / commonButtonSize)), this.size.x, this.size.y)
                 }
             }
     

@@ -38,7 +38,7 @@ function createPausePopUp()
             text: "home",
             pos: new p5.Vector((-0.5 * commonButtonSpace) + xPos,  yPos), 
             myImage: icons.home, 
-            onClick: function(){ navigateTo("Home");  },
+            onClick: function(){ navigateTo("Home"); },
         }),  
         new Button({
             text: "restart",
@@ -141,6 +141,29 @@ function createPausePopUp()
         })
     )
 
+    textBoxes.push(
+        new TextBox({
+            text: "1. place charges ",
+            fillColor: "rgba(0, 0, 0, 0)",
+            fontColor: "black",
+            fontAlign: LEFT,
+            fontSize: 48,
+            pos: new p5.Vector(500, yPos + 200), 
+            size: new p5.Vector(550, 50),
+        })
+    )
+    textBoxes.push(
+        new TextBox({
+            text: "2. 'test' your build",
+            fillColor: "rgba(0, 0, 0, 0)",
+            fontColor: "black",
+            fontAlign: LEFT,
+            fontSize: 48,
+            pos: new p5.Vector(500, yPos + 260), 
+            size: new p5.Vector(550, 50),
+        })
+    )
+
     // textBoxes.push(
     //     new TextBox({
     //         text: "test charges should",
@@ -194,5 +217,6 @@ function createPausePopUp()
         images: images,
         shapes: shapes,
         functions: myFunctions,
+        backgroundAnimation: true,
     })
 }

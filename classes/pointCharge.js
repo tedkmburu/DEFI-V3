@@ -1,5 +1,26 @@
 "use strict";
 
+function playSound(value)
+{
+    console.log(value);
+    if (userData.soundEffects)
+    {
+        if (value == -1) sounds.charge0.play()
+        if (value == -2) sounds.charge1.play()
+        if (value == -3) sounds.charge2.play()
+        if (value == -4) sounds.charge3.play()
+        if (value == -5) sounds.charge4.play()
+        if (value == 0) sounds.charge5.play()
+        if (value == 1) sounds.charge6.play()
+        if (value == 2) sounds.charge7.play()
+        if (value == 3) sounds.charge8.play()
+        if (value == 4) sounds.charge9.play()
+        if (value == 5) sounds.charge10.play()
+
+        console.log("play sound slider");
+    }
+}
+
 class PointCharge extends Charge
 {
     constructor(props)
@@ -16,8 +37,8 @@ class PointCharge extends Charge
         this.slider.style("zIndex", "999");
         // this.slider.style("width", "200px");
         this.showSlider();
-        this.slider.input( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen
-        this.slider.changed( function(){  createFieldLines();  } ); // recalculate everything that's displayed on screen
+        this.slider.input( function(){  createFieldLines(); playSound(this.value())  } ); // recalculate everything that's displayed on screen
+        this.slider.changed( function(){  createFieldLines();   } ); // recalculate everything that's displayed on screen
     }
 
     display()

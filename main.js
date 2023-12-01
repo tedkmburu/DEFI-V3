@@ -12,7 +12,19 @@ function preload()
         click: loadSound('sounds/General_Click_11-17.wav'),
         fail: loadSound('sounds/Test_Failed_11-17.wav'),
         succeed: loadSound('sounds/Test_Succeed_11-17.wav'),
-        coins: loadSound('sounds/Collecting_Points_11-17.wav')
+        win: loadSound('sounds/Scoreboard_Short_11-17.wav'),
+        coins: loadSound('sounds/Collecting_Points_11-17.wav'),
+        charge0: loadSound('sounds/Changing_Charge_-1_11-17.wav'),
+        charge1: loadSound('sounds/Changing_Charge_-2_11-17.wav'),
+        charge2: loadSound('sounds/Changing_Charge_-3_11-17.wav'),
+        charge3: loadSound('sounds/Changing_Charge_-4_11-17.wav'),
+        charge4: loadSound('sounds/Changing_Charge_-5_11-17.wav'),
+        charge5: loadSound('sounds/Changing_Charge_+0_11-17.wav'),
+        charge6: loadSound('sounds/Changing_Charge_+1_11-17.wav'),
+        charge7: loadSound('sounds/Changing_Charge_+2_11-17.wav'),
+        charge8: loadSound('sounds/Changing_Charge_+3_11-17.wav'),
+        charge9: loadSound('sounds/Changing_Charge_+4_11-17.wav'),
+        charge10: loadSound('sounds/Changing_Charge_+5_11-17.wav'),
         
     }
 
@@ -73,6 +85,7 @@ function preload()
         oldScreenshot: loadImage('images/icons/screenshot.png'),
         iclogo: loadImage('images/icons/iclogo.png'),
         summerScholars: loadImage('images/icons/summerscholars.png'),
+        close: loadImage('images/icons/circle-xmark-regular.svg'),
         };
 
     setScale()
@@ -81,6 +94,8 @@ function preload()
     createLevels()
 
     saveData()
+
+    
     unlockLevels()
 
     createAnimations()
@@ -519,3 +534,7 @@ function windowResized()
     createPopUps()
     console.log("resize");
 }
+
+function openLinkInNewTab(url) {
+    window.open(url, '_blank');
+  }

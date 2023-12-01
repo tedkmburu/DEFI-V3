@@ -68,6 +68,25 @@ function createAnimations()
             }
         ]
 
+        if (charges.length != 0 || currentScreen == 3)
+        {
+            groupOfCharges = []
+            charges.forEach(charge => {
+                groupOfCharges.push({
+                    charge: charge.charge,
+                    pos: charge.pos,
+                })
+            })
+
+            animations[0].shapes[0].fillColor = "rgba(0, 0, 0, 0)"
+            animations[0].shapes[1].fillColor = "rgba(0, 0, 0, 0)"
+        }
+        else
+        {
+            animations[0].shapes[0].fillColor = chargeColors[0]
+            animations[0].shapes[1].fillColor = chargeColors[1]
+        }
+
         if (mouseIsPressed == true)
         {
             shapes.push(new Shape({
@@ -82,7 +101,7 @@ function createAnimations()
 
         if (animations[0].shapes.length > 100)
         {
-            animations[0].shapes.splice(4, 1);
+            animations[0].shapes.splice(3, 1);
         }
 
 

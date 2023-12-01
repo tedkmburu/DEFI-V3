@@ -62,8 +62,9 @@ function createLoadingScreen()
     }
 
     levels[currentLevel].coins.forEach(coin => {
+        console.log("coin pos:", coin.pos.copy().mult(0.6).add(new p5.Vector(25, 250)));
         images.push(new MyImage({
-            pos: coin.pos.copy().mult(0.6).add(new p5.Vector(25, 250)), 
+            pos: coin.pos.copy().mult(0.6).add(new p5.Vector(125, 400)), 
             size: testChargeDiameter,
             myImage: coinImages.gold,
         }))
@@ -71,10 +72,10 @@ function createLoadingScreen()
 
     levels[currentLevel].testCharges.forEach(testCharge => {
         images.push(new MyImage({
-            pos: testCharge.pos.copy().mult(0.6).add(new p5.Vector(-50, 230)),
+            pos: testCharge.pos.copy().mult(0.6).add(new p5.Vector(25, 400)),
             size: testChargeDiameter * 2,
             myImage: carImages.pos,
-            imageMode: CENTER
+            // imageMode: CENTER
         }))
     });
     
@@ -182,13 +183,13 @@ function createLoadingScreen()
 
     let myFunctions = () => {
         let loadBarSize = screens[2].shapes[1].size.x
-        if (loadBarSize < 1920)
+        if (loadBarSize < (1920 * scale.x))
         {
-            screens[2].shapes[1].size.x += 20;
+            screens[2].shapes[1].size.x += (20 * scale.x);
             // screens[2].shapes[1].size.x *= 1.1;
         }
 
-        if (loadBarSize >= 1920)
+        if (loadBarSize >= (1920 * scale.x))
         {
             screens[2].buttons[2].visible = true;
         }
@@ -199,14 +200,14 @@ function createLoadingScreen()
         
         testChargeDestination.push(testChargeStartPos)
         testChargeDestination.push(testChargeStartPos)
-        testChargeDestination.push(screens[currentScreen].images[5].pos.copy().add(new p5.Vector(testChargeRadius, testChargeRadius)))
-        testChargeDestination.push(screens[currentScreen].images[6].pos.copy().add(new p5.Vector(testChargeRadius, testChargeRadius)))
-        testChargeDestination.push(screens[currentScreen].images[7].pos.copy().add(new p5.Vector(testChargeRadius, testChargeRadius)))
+        testChargeDestination.push(screens[currentScreen].images[5].startingPos.copy())
+        testChargeDestination.push(screens[currentScreen].images[6].startingPos.copy())
+        testChargeDestination.push(screens[currentScreen].images[7].startingPos.copy())
 
         let finishLineSize = levels[currentLevel].finishLine.size.copy().div(2)
         let finishLinPos = levels[currentLevel].finishLine.pos.copy().add(finishLineSize)
-        finishLinPos.mult(0.65)
-        finishLinPos.y += 250
+        finishLinPos.mult(0.6).add(new p5.Vector(125 * scale.x, 250 * scale.y))
+        // finishLinPos.y += (250  )
         testChargeDestination.push(finishLinPos)
         testChargeDestination.push(finishLinPos)
 
@@ -225,7 +226,7 @@ function createLoadingScreen()
                     let t = i / steps;
                     let x = curvePoint(testChargeDestination[0 + index].x, testChargeDestination[1 + index].x, testChargeDestination[2 + index].x, testChargeDestination[3 + index].x, t);
                     let y = curvePoint(testChargeDestination[0 + index].y, testChargeDestination[1 + index].y, testChargeDestination[2 + index].y, testChargeDestination[3 + index].y, t);
-                    // ellipse(x, y, 20, 20);
+                    ellipse(x, y, 20, 20);
                     pointsToShow.push({pos: new p5.Vector(x, y), visited: false})
                 }
             }
@@ -286,7 +287,7 @@ function createLoadingScreen()
                 let currentTargetPos = pointsToShow[loadScreenTestChargeIndex].pos.copy()
                 vel = currentTargetPos.sub(testChargePos)
                 
-                vel.setMag(0.2)
+                vel.setMag(0.02)
 
                 screens[currentScreen].images[8].pos.add(vel)
 

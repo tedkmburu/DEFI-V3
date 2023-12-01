@@ -17,14 +17,20 @@ function saveData()
     userScoresData = JSON.parse(localStorage.getItem(GAME_DATA_KEY));
     userData = JSON.parse(localStorage.getItem(USER_DATA_KEY));
     
-    if (!userScoresData || localStorage['v3'] == undefined ) // if there is no saved data, save the default data in gameProgress
+    if (!userScoresData || localStorage[GAME_DATA_KEY] == undefined ) // if there is no saved data, save the default data in gameProgress
     {
-        userData = {username: "enter username", classCode: "enter class code", volume: 1, soundEffects: true, music: true}
+        localStorage.clear()
+        userData = {username: "enter username", classCode: "enter class code", volume: 1, soundEffects: true, music: true, sendScores: true}
         userScoresData = gameProgress; // Initialize with default values
         localStorage.setItem(GAME_DATA_KEY, JSON.stringify(userScoresData));
         localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
         
         console.log("v3.1");
+
+        createPopUps()
+
+        openPopUp("ChangeUsername")
+        popUpVisible = true;
     }
 }
 
@@ -72,10 +78,22 @@ function changeClassCode()
 
 function updateUserName()
 {
-    userData.username = userNameInputBox.value;
-    userNameInputBox.placeholder = userData.username
-    userNameInputBox.value = ""
-    localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
-    reloadUserData()
-    popUpVisible =  true;
+    if (!includesProfanity(userNameInputBox.value))
+    {
+        userData.username = userNameInputBox.value;
+        userNameInputBox.placeholder = userData.username
+        userNameInputBox.value = ""
+        localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+        reloadUserData()
+        popUpVisible =  false;
+    }
+    else
+    {
+        userNameInputBox.style.border = "5px solid red";
+        userNameInputBox.placeholder = "enter username"
+        userNameInputBox.value = ""
+        popUps[5].textBoxes[1].text = "be nice :)";
+        popUpVisible =  true;
+    }
+    
 }

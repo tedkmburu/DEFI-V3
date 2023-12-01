@@ -7,7 +7,7 @@ let currentFPS = 0;
 
 let screens = []
 let popUps = []
-let currentScreen = 7;
+let currentScreen = 0;
 let currentPopUp = 5;
 let popUpVisible = false;
 
@@ -70,8 +70,8 @@ let mousePosition;
 
 let dataToPrint = ""
 
-const GAME_DATA_KEY = 'v3.1';
-const USER_DATA_KEY = 'v3';
+const GAME_DATA_KEY = 'v3.7';
+const USER_DATA_KEY = 'v3.8';
 let userScoresData;
 let userData;
 
@@ -168,3 +168,5 @@ const timePhrases = [
     "",
     "",
 ]
+
+const teacherPoralLink = "https://www.ithaca.edu/academics/school-humanities-and-sciences/physics-and-astronomy/research-opportunities/physics-education-research"

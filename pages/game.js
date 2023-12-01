@@ -36,7 +36,7 @@ function createGameScreen()
             size: buttonSize,
             fillColor: purpleColor[0],
             fontColor: 255,
-            onClick: function(){ createPausePopUp(); currentPopUp = 1; popUpVisible = true; resetCharges() },
+            onClick: function(){ openPopUp("Pause"); resetCharges() },
         }),
         new Button({
             text: (buildMode) ? "test" : "edit",
@@ -480,8 +480,10 @@ function checkWinConditions()
             // unlock next level
             levels[currentLevel + 1].locked = false;
 
-            // go to the next screen
+            // update popUp with new scores
             popUps[0] = createLevelCompletePopUp()
+
+            sounds.win.play()
             
             openPopUp("Level Complete")
 
@@ -638,7 +640,7 @@ function showTutorial()
         if (charges.length == 0)
         {
             tutorialText = "place a charge here"
-            console.log(tutorialText);
+            // console.log(tutorialText);
             // new Shape({
             //     shape: "rect",
             //     pos: new p5.Vector(0, 0),
@@ -936,7 +938,7 @@ function showTutorial()
     }
 
     screens[3].textBoxes[1].text = tutorialText;
-    console.log("final tutorialText: ", tutorialText);
+    // console.log("final tutorialText: ", tutorialText);
 }
 
 function displayTrashIcon()

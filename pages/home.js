@@ -16,31 +16,31 @@ function createHomeScreen()
     buttons = [
         new Button({
             text: "class",
-            pos: new p5.Vector((3 * commonButtonSpace) + xPos, yPos), 
-            fillColor: purpleColor[0],
+            pos: new p5.Vector((2 * commonButtonSpace) + xPos, yPos), 
+            fillColor: purpleColor[2],
             myImage: icons.usersRectangle, 
             onClick: function(){ navigateTo("Class"); },
         }),
         new Button({
             text: "leaderboard",
-            pos: new p5.Vector((0 * commonButtonSpace) + xPos, yPos), 
-            fillColor: purpleColor[1],
+            pos: new p5.Vector((3 * commonButtonSpace) + xPos, yPos), 
+            fillColor: purpleColor[3],
             myImage: icons.leaderboard, 
             onClick: function(){ navigateTo("Leaderboard"); },
         }),
         new Button({
             text: "help",
-            pos: new p5.Vector((1 * commonButtonSpace) + xPos,  yPos), 
-            fillColor: purpleColor[2],
+            pos: new p5.Vector((0 * commonButtonSpace) + xPos,  yPos), 
+            fillColor: purpleColor[0],
             myImage: icons.help, 
             onClick: function(){ navigateTo("Help"); },
         }),        
         new Button({
             text: "teacher",
-            pos: new p5.Vector((2 * commonButtonSpace) + xPos,  yPos), 
-            fillColor: purpleColor[3],
+            pos: new p5.Vector((1 * commonButtonSpace) + xPos,  yPos), 
+            fillColor: purpleColor[1],
             myImage: icons.classroom, 
-            onClick: function(){ navigateTo("Settings"); },
+            onClick: function(){ openPopUp("Teacher")  },
         }),
 
 

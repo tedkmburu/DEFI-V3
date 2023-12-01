@@ -15,6 +15,8 @@ function createLevelSelect()
     let y = 225;
     let shapeWidth = 700
 
+    unlockLevels()
+    
     levels.forEach((level, i) => {
 
         shapes.push(new Shape({
@@ -50,7 +52,7 @@ function createLevelSelect()
                 onClick: function(){ currentLevel = i; navigateTo("Loading Screen"); }
             }))
 
-            let imagePos
+            // let imagePos
 
             images.push(new MyImage({
                 pos: new p5.Vector(x + 50, y + 325), 
@@ -66,6 +68,7 @@ function createLevelSelect()
 
             // display coins
             // console.log("level.collectedCoins: ", level.collectedCoins);
+            console.log("level: ", level);
             level.collectedCoins.forEach((coin, coinIndex) => {
                 // console.log(coin);
 
@@ -256,20 +259,6 @@ function createLevelSelect()
                 fontSize: 72,
             }))
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         else
         {
             images.push(new MyImage({

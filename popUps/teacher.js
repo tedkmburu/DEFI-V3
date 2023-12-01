@@ -1,8 +1,8 @@
 "use strict";
 
-function createChangeUsernamePopUp()
+function createTeacherPopUp()
 {
-    let screenName = "ChangeUsername";
+    let screenName = "Teacher";
 
     let buttons = []
     let images = []
@@ -35,13 +35,13 @@ function createChangeUsernamePopUp()
 
     buttons.push(
         new Button({
-            text: "save",
-            shape: "rect",
-            myImage: icons.save,
+            text: "our site",
+            myImage: icons.next,
             fillColor: "#6CA468",
             fontColor: "black",
-            pos: new p5.Vector(1100, 565), 
-            onClick: function(){ updateUserName(); }
+            pos: new p5.Vector(900, 565), 
+            onClick: function(){ openLinkInNewTab(teacherPoralLink) },
+            // onClick: function(){  }
         }),
         //  
     )
@@ -77,7 +77,7 @@ function createChangeUsernamePopUp()
 
     textBoxes.push(
         new TextBox({
-            text: "set username",
+            text: "are you a teacher?",
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "white",
             fontSize: 72,
@@ -87,7 +87,7 @@ function createChangeUsernamePopUp()
     )
     textBoxes.push(
         new TextBox({
-            text: "if you do not set a username, your scores will not be visible on leaderboards",
+            text: "you can manage your students on our website",
             fillColor: "rgba(0, 0, 0, 0)",
             fontColor: "black",
             fontSize: 48,
