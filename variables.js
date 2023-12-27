@@ -1,3 +1,5 @@
+// these are all the global variables
+
 "use strict";
 
 let sounds;
